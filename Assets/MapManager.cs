@@ -62,7 +62,8 @@ public class MapManager : MonoBehaviour {
 		map.enabled=false;
 		guiText.enabled = false;
 		mapCamera.SetActive(false);
-		showingMap=false;	
+		showingMap=false;
+        mapCamera.GetComponent<Camera>().targetTexture.Release();
 	}
 	
 	private Rect ResizeGUI(Rect _rect)
