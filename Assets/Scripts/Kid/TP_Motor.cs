@@ -8,6 +8,8 @@ public class TP_Motor : MonoBehaviour {
 	public float forwardSpeed = 10f;
 	public float backwardSpeed = 2f;
 	public float strafingSpeed = 5f;
+
+	public static bool oculusRift = true;
 	
 	
 	private SneakWalkRunController sneak_script;
@@ -31,12 +33,24 @@ public class TP_Motor : MonoBehaviour {
 	{
 		SnapAlignCharacterWithCamera();
 		ProcessMotion();
+		RayCastForColliders();
 	}
-	
+
+	void RayCastForColliders(){
+		RaycastHit hit;
+		if (Physics.Raycast (transform.position, Camera.main.transform.forward, out hit)) {
+			InteractiveCollider col = hit.collider.GetComponent<InteractiveCollider>();
+			ActionOnSight act = hit.collider.GetComponent<ActionOnSight>();
+			if(col!=null) col.SendMessage("OnMouseOver");
+			if(act!=null) act.SendMessage("OnMouseOver");
+		}
+
+	}
+
 	void ProcessMotion()
 	{
 		// Transform our moveVector into World Space relative to our character rotation
-		moveVector = transform.TransformDirection(moveVector);
+		moveVector = Camera.main.transform.TransformDirection(moveVector);
 		
 		// Normalize moveVector if magnitude is > 0
 		if(moveVector.magnitude > 1)
@@ -61,8 +75,8 @@ public class TP_Motor : MonoBehaviour {
 	{
 		if(moveVector.x != 0 || moveVector.z != 0)
 		{
-			transform.rotation = Quaternion.Euler(transform.eulerAngles.x, 
-				Camera.mainCamera.transform.eulerAngles.y, transform.eulerAngles.z);
+			/*transform.rotation = Quaternion.Euler(transform.eulerAngles.x, 
+				Camera.mainCamera.transform.eulerAngles.y, transform.eulerAngles.z);*/
 		}
 	}
 	

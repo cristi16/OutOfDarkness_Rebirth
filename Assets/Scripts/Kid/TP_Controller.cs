@@ -11,8 +11,14 @@ public class TP_Controller : MonoBehaviour {
 	private AudioManager audioManager;
 	private MapManager mapManager;
 	private HelpManager helpManager;
-	
+
 	private GameObject[] flashlights;
+
+	private float YRotation = 0.0f;
+	public float rotationCoef = 10f;
+	
+	private OVRCameraController CameraController;
+
 	
 	public enum Direction
 	{
@@ -32,7 +38,7 @@ public class TP_Controller : MonoBehaviour {
 		mapManager = GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>();
 		// get the reference of the audio source only if this script is on the kid gameobject
 		if( player_sneak != null)
-			audio = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+			audio = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>();
 		
 		characterController=GetComponent("CharacterController") as CharacterController;
 		motor = gameObject.GetComponent<TP_Motor>();
@@ -42,6 +48,8 @@ public class TP_Controller : MonoBehaviour {
 		flashlights = GameObject.FindGameObjectsWithTag("Flashlight");	
 		
 		helpManager = GameObject.FindGameObjectWithTag("HelpManager").GetComponent<HelpManager>();
+
+		CameraController = gameObject.GetComponentInChildren<OVRCameraController>();
 	}
 	
 	public void removeControl(){
@@ -147,6 +155,15 @@ public class TP_Controller : MonoBehaviour {
 	
 	void GetLocomotionInput()
 	{		
+		// compute for key rotation
+		float rotateInfluence = Time.deltaTime * 60f * 1.5f;
+
+		if (Input.GetKey(KeyCode.Q)) 
+			YRotation -= rotateInfluence * rotationCoef;  
+		if (Input.GetKey(KeyCode.E)) 
+			YRotation += rotateInfluence * rotationCoef; 
+		CameraController.SetYRotation(YRotation);
+
 		motor.moveVector = Vector3.zero;
 		float verticalInput = Input.GetAxis("Vertical");
 		float horizontalInput = Input.GetAxis("Horizontal");

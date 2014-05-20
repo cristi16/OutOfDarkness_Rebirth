@@ -11,7 +11,7 @@ public class TextTrigger : MonoBehaviour {
 	public bool firstTextIsMessage=false;
 	public bool secondTextIsMessage=false;
 	public float xPosition=0.5f;
-	public float yPosition=0.2f;
+	public float yPosition=0.4f;
 	internal Player player = Player.Kid;
 	internal bool shown=false;
 	public GlobalVariables variable=GlobalVariables.None;	
@@ -28,7 +28,7 @@ public class TextTrigger : MonoBehaviour {
 	internal bool doNotShowAgain=false;
 	public bool activateSpecialAction=false;
 	public bool removeControl=false;
-	
+
 	// Use this for initialization
 	void Start () {
 		showText = GameObject.FindGameObjectWithTag("HelpManager").GetComponent<ShowText>();

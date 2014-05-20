@@ -14,7 +14,12 @@ public class ScareAction : Action {
 	public override void execute(){		
 		running=true;
 		audio.Play();
-		Camera.mainCamera.GetComponent<ScareController>().Scared();				
+		foreach (Camera c in Camera.allCameras) {
+			if(c.GetComponent<ScareController>()!=null){
+				c.GetComponent<ScareController>().Scared();
+			}
+		}
+
 	}
 	
 	void Start(){
@@ -26,12 +31,17 @@ public class ScareAction : Action {
 		if(running){			
 			time+=Time.deltaTime;
 			if(time>timeToLast){ 
-				Camera.mainCamera.GetComponent<ScareController>().NotScared();								
+				foreach (Camera c in Camera.allCameras) {
+					if(c.GetComponent<ScareController>()!=null){
+						c.GetComponent<ScareController>().NotScared();
+					}
+				}								
+
 				player.transform.localRotation=Quaternion.Euler(0f,player.transform.localEulerAngles.y,0f);
 				Destroy(this.gameObject);
 			} else {
 				//transform.LookAt(player.transform.position - new Vector3(0f,-2f,0f));
-				player.transform.LookAt(transform.position+new Vector3(0f,2f,0f));
+				//player.transform.LookAt(transform.position+new Vector3(0f,2f,0f));
 				Vector3 direction = (player.transform.position - transform.position).normalized;				
 				direction.y=0f;
 				transform.position+=direction*Time.deltaTime*speed;

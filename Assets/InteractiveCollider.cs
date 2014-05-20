@@ -24,11 +24,11 @@ public class InteractiveCollider : MonoBehaviour {
 		hc = player.GetComponent<HidingController>();
 		mapManager = GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {		
 	}
-	
+
 	void OnMouseEnter(){		
 		if(inRange){
 			mouseOver=true;

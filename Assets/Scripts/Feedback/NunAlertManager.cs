@@ -6,7 +6,7 @@ public class NunAlertManager : MonoBehaviour {
 	
 	public HashSet<NunStateMachine> nunsInvestigating;
 	public HashSet<NunStateMachine> nunsChasing;	
-	private CameraColorFeedbackController cameraController;
+	private CameraColorFeedbackController[] cameraController;
 	private bool someone_investigating=false;
 	private bool someone_chasing=false;
 	private AudioSource audio;
@@ -28,7 +28,7 @@ public class NunAlertManager : MonoBehaviour {
 		audio = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioSource>();
 		nunsInvestigating = new HashSet<NunStateMachine>();
 		nunsChasing = new HashSet<NunStateMachine>();
-		cameraController=Camera.mainCamera.GetComponent<CameraColorFeedbackController>();	
+		cameraController=Camera.mainCamera.transform.root.GetComponentsInChildren<CameraColorFeedbackController>();
 		music = GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>();
 	}
 	
@@ -74,10 +74,10 @@ public class NunAlertManager : MonoBehaviour {
 				someone_chasing=true;
 				//PlayAudio(chase);
 			}
-			cameraController.chasing=true;
+			foreach(CameraColorFeedbackController c in cameraController) c.chasing=true;
 		} else {
 			someone_chasing=false;
-			cameraController.chasing=false;
+			foreach(CameraColorFeedbackController c in cameraController) c.chasing=false;
 		}
 		
 		if(nunsInvestigating.Count>0){
@@ -85,10 +85,10 @@ public class NunAlertManager : MonoBehaviour {
 				someone_investigating=true;
 				//PlayAudio(investigate);
 			}
-			cameraController.investigating=true;
+			foreach(CameraColorFeedbackController c in cameraController) c.investigating=true;
 		} else {
 			someone_investigating=false;
-			cameraController.investigating=false;
+			foreach(CameraColorFeedbackController c in cameraController) c.investigating=false;
 		}
 	}	
 	

@@ -25,8 +25,16 @@ public class ShowText : MonoBehaviour {
 	
 	private string message="";
 	private bool changedText=false;
-	
-	public void ShowMessage(string text, float xPosition=0.4f, float yPosition=0.2f, bool systemText=false){
+	 
+	public float xOffset=-0.2f;
+	public float yOffset=0.2f;
+
+	public void ShowMessage(string text, float xPosition=0.4f, float yPosition=0.4f, bool systemText=false){
+		if (TP_Motor.oculusRift) {
+			xPosition += xOffset;
+			yPosition += yOffset;
+		}
+
 		messageQueue.Enqueue(text);
 		xPosQueue.Enqueue(xPosition);
 		yPosQueue.Enqueue(yPosition);

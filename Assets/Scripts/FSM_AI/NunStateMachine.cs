@@ -66,7 +66,7 @@ public class NunStateMachine : StateMachineBase {
 	private AudioSource nunScream;
 	private AudioSource audioFeedback;	
 	
-	private MotionBlur cameraMotionBlur;	
+	private MotionBlur[] cameraMotionBlur;	
 	private Light redLight;
 	private bool willDeactivateChaseElements=false;
 			
@@ -80,7 +80,7 @@ public class NunStateMachine : StateMachineBase {
 		audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 		audioSource = gameObject.GetComponent<AudioSource>();
 		cameraTransform = Camera.mainCamera.transform;
-		cameraMotionBlur = cameraTransform.GetComponent<MotionBlur>();
+		cameraMotionBlur = cameraTransform.root.GetComponentsInChildren<MotionBlur>();
 		nunModel = gameObject.GetComponentInChildren<Animator>().gameObject;
 		GameObject game_manager = GameObject.FindGameObjectWithTag("GameController");
 		gameManager = game_manager.GetComponent<CheckpointsManager_Script>();
@@ -188,14 +188,20 @@ public class NunStateMachine : StateMachineBase {
 		CancelInvoke("destroyNunAfterChase");
 		chaseMusic.volume = chaseMusic.GetComponent<MusicManager>().audioVolume;
 		chaseMusic.Play();
-		if(cameraMotionBlur!=null) cameraMotionBlur.enabled=true;
+		if (cameraMotionBlur != null) {
+			foreach(MotionBlur b in cameraMotionBlur){
+				b.enabled = true;
+			}
+		}
 		NunAlertManager.getInstance().AddNun(this,true);
 		if(redLight!=null) redLight.enabled=true;
 	}
 	
 	protected void deactivateChaseElements(){
 		chaseMusic.GetComponent<MusicManager>().reduceVolumeTemp();
-		if(cameraMotionBlur!=null) cameraMotionBlur.enabled=false;
+		foreach(MotionBlur b in cameraMotionBlur){
+			b.enabled = false;
+		}
 		NunAlertManager.getInstance().RemoveNun(this, true);			
 		if(redLight!=null) redLight.enabled=false;
 		
