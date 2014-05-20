@@ -1,0 +1,128 @@
+fileFormatVersion: 2
+guid: 429f12f1747f1614f864c5ba3f65c093
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: Base Human
+    100002: Base HumanHead
+    100004: Base HumanHeadGizmo
+    100006: Base HumanLCalf
+    100008: Base HumanLFoot
+    100010: Base HumanLPlatform
+    100012: Base HumanLThigh
+    100014: Base HumanNeck1
+    100016: Base HumanNeck2
+    100018: Base HumanPelvis
+    100020: Base HumanPelvisGizmo
+    100022: Base HumanRCalf
+    100024: Base HumanRFoot
+    100026: Base HumanRibcage
+    100028: Base HumanRibcageGizmo
+    100030: Base HumanRPlatform
+    100032: Base HumanRThigh
+    100034: Base HumanSpine1
+    100036: Base HumanSpine2
+    100038: Base HumanSpine3
+    100040: Base HumanSpine4
+    100042: //RootNode
+    100044: Mesh
+    400000: Base Human
+    400002: Base HumanHead
+    400004: Base HumanHeadGizmo
+    400006: Base HumanLCalf
+    400008: Base HumanLFoot
+    400010: Base HumanLPlatform
+    400012: Base HumanLThigh
+    400014: Base HumanNeck1
+    400016: Base HumanNeck2
+    400018: Base HumanPelvis
+    400020: Base HumanPelvisGizmo
+    400022: Base HumanRCalf
+    400024: Base HumanRFoot
+    400026: Base HumanRibcage
+    400028: Base HumanRibcageGizmo
+    400030: Base HumanRPlatform
+    400032: Base HumanRThigh
+    400034: Base HumanSpine1
+    400036: Base HumanSpine2
+    400038: Base HumanSpine3
+    400040: Base HumanSpine4
+    400042: //RootNode
+    400044: Mesh
+    4300000: Mesh
+    7400000: Strafe_Right
+    9500000: //RootNode
+    13700000: Mesh
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations:
+    - name: Strafe_Right
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 100
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      transformMask: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .100000001
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 2
+  userData: 
