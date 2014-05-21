@@ -162,6 +162,15 @@ public class TP_Controller : MonoBehaviour {
 			YRotation -= rotateInfluence * rotationCoef;  
 		if (Input.GetKey(KeyCode.E)) 
 			YRotation += rotateInfluence * rotationCoef; 
+
+		float hr = Input.GetAxis ("HorizontalRotation");
+
+		if (hr<-0.3f) 
+			YRotation += rotateInfluence * rotationCoef * hr;  
+		if (hr>0.3f) 
+			YRotation += rotateInfluence * rotationCoef * hr;  
+
+	
 		CameraController.SetYRotation(YRotation);
 
 		motor.moveVector = Vector3.zero;

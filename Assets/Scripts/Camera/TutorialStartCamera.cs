@@ -56,6 +56,8 @@ public class TutorialStartCamera : MonoBehaviour {
 		{
 			sunrise = gameObject.transform.position;
 			sunset = Camera.mainCamera.transform.position;
+
+
 			slerpStartTime = Time.time;
 			firstTime = false;
 		}
@@ -99,5 +101,6 @@ public class TutorialStartCamera : MonoBehaviour {
 				Destroy(this.gameObject);
 			}
 		}
+		GameObject.FindGameObjectWithTag("CameraController").transform.position=gameObject.transform.position;
 	}
 }

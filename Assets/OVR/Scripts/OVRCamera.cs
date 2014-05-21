@@ -223,7 +223,13 @@ public class OVRCamera : OVRComponent
 //								    CameraPosition.x, CameraPosition.y, CameraPosition.z));
 				}
 			}
-			
+
+			Vector3 auxAngles = CameraOrientation.eulerAngles;			
+			auxAngles *= 2f;			
+			CameraOrientation.eulerAngles = auxAngles;
+
+			CameraPosition = GetComponent<Headbobber>().HeadBobbing(CameraPosition);			
+
 			// This needs to go as close to reading Rift orientation inputs
 			OVRDevice.ProcessLatencyInputs();			
 		}
@@ -242,6 +248,7 @@ public class OVRCamera : OVRComponent
 		qp = orientationOffset * qp;
 		
 		// Multiply in the current HeadQuat (q is now the latest best rotation)
+
 		if(CameraController != null)
 			q = qp * CameraOrientation;
 		
