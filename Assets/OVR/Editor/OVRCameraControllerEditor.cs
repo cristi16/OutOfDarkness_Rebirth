@@ -85,7 +85,7 @@ public class OVRCameraControllerEditor : Editor
 																		typeof(Transform), true) as Transform;
 			m_Component.TrackerRotatesX 	= EditorGUILayout.Toggle("Tracker Rotates X", m_Component.TrackerRotatesX);
 			m_Component.TrackerRotatesY 	= EditorGUILayout.Toggle("Tracker Rotates Y", m_Component.TrackerRotatesY);
-
+			//Added tracker rotates x
 			
 			OVREditorGUIUtility.Separator();	
 

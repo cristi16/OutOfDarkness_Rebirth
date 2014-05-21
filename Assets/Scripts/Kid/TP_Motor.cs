@@ -17,7 +17,9 @@ public class TP_Motor : MonoBehaviour {
 	internal TP_Controller controller;
 	
 	public Vector3 moveVector { get; set; }
-	
+
+	private Collider previousHit;
+
 	public void Start(){
 		
 		sneak_script = gameObject.GetComponent<SneakWalkRunController>();	
@@ -39,10 +41,15 @@ public class TP_Motor : MonoBehaviour {
 	void RayCastForColliders(){
 		RaycastHit hit;
 		if (Physics.Raycast (transform.position, Camera.main.transform.forward, out hit)) {
-			InteractiveCollider col = hit.collider.GetComponent<InteractiveCollider>();
-			ActionOnSight act = hit.collider.GetComponent<ActionOnSight>();
-			if(col!=null) col.SendMessage("OnMouseOver");
-			if(act!=null) act.SendMessage("OnMouseOver");
+			InteractiveCollider col = hit.collider.GetComponent<InteractiveCollider> ();
+			ActionOnSight act = hit.collider.GetComponent<ActionOnSight> ();
+			if (col != null)
+				col.SendMessage ("OnMouseOver");
+			if (act != null)
+				act.SendMessage ("OnMouseOver");
+			if(act!=null || col!=null) previousHit=hit.collider;
+		} else {
+			if(previousHit!=null) previousHit.SendMessage("OnMouseExit");
 		}
 
 	}
