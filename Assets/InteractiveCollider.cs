@@ -61,7 +61,14 @@ public class InteractiveCollider : MonoBehaviour {
 			}
 			
 			yOffset = Mathf.Clamp(-player.transform.position.y - transform.position.y,-4f,4f);
-			GUI.DrawTexture (new Rect(Input.mousePosition.x-cursorSizeX/2 + cursorSizeX/2, (Screen.height-Input.mousePosition.y)-cursorSizeY/2 + cursorSizeY/2 + yOffset*Screen.height/100f, cursorSizeX*(distanceRatio/distance), cursorSizeY*(distanceRatio/distance)),hidingObject?menuManager.hidingCursor:menuManager.cursor);
+			if(TP_Motor.oculusRift){
+				GUI.DrawTexture (new Rect(-Screen.width/5+Input.mousePosition.x-cursorSizeX/2f + cursorSizeX/2f, (Screen.height-Input.mousePosition.y)-cursorSizeY/2 + cursorSizeY/2 + yOffset*Screen.height/100f, cursorSizeX*(distanceRatio/distance), cursorSizeY*(distanceRatio/distance)),hidingObject?menuManager.hidingCursor:menuManager.cursor);
+				GUI.DrawTexture (new Rect(Screen.width/5 + Input.mousePosition.x, (Screen.height-Input.mousePosition.y)-cursorSizeY/2 + cursorSizeY/2 + yOffset*Screen.height/100f, cursorSizeX*(distanceRatio/distance), cursorSizeY*(distanceRatio/distance)),hidingObject?menuManager.hidingCursor:menuManager.cursor);
+
+
+			} else {
+				GUI.DrawTexture (new Rect(Input.mousePosition.x-cursorSizeX/2 + cursorSizeX/2, (Screen.height-Input.mousePosition.y)-cursorSizeY/2 + cursorSizeY/2 + yOffset*Screen.height/100f, cursorSizeX*(distanceRatio/distance), cursorSizeY*(distanceRatio/distance)),hidingObject?menuManager.hidingCursor:menuManager.cursor);
+			}
 	    }
 	}
 }
