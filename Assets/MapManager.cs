@@ -8,6 +8,7 @@ public class MapManager : MonoBehaviour {
 	public Texture mapTexture_16_9;
 	public Texture mapTexture_16_10;
 	public GameObject mapCamera;
+    public GameObject mapPlane;
 	private bool isFullScreen;
 	private ArrayList questList;
 	private ArrayList completedQuestList;
@@ -48,13 +49,20 @@ public class MapManager : MonoBehaviour {
 		}			
 		
 	}
-	
+    int cullingMask;
 	public void ShowMap()
 	{
 		map.enabled=true;
 		guiText.enabled = true;
 		mapCamera.SetActive(true);
-		showingMap=true;	
+		showingMap=true;
+        mapPlane.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 1.5f;
+        mapPlane.transform.LookAt(Camera.main.transform, Vector3.up);
+        mapPlane.transform.Rotate(new Vector3(90f, 0f, 0f));
+        cullingMask = Camera.main.cullingMask;
+        Camera.main.cullingMask = 1 << LayerMask.NameToLayer("MapPlane");
+        GameObject.FindGameObjectWithTag("MainCamera2").GetComponent<Camera>().cullingMask = 1 << LayerMask.NameToLayer("MapPlane");
+        mapPlane.SetActive(true);
 	}
 	
 	public void HideMap()
@@ -63,6 +71,9 @@ public class MapManager : MonoBehaviour {
 		guiText.enabled = false;
 		mapCamera.SetActive(false);
 		showingMap=false;
+        mapPlane.SetActive(false);
+        Camera.main.cullingMask = cullingMask;
+        GameObject.FindGameObjectWithTag("MainCamera2").GetComponent<Camera>().cullingMask = cullingMask;
         mapCamera.GetComponent<Camera>().targetTexture.Release();
 	}
 	
