@@ -46,6 +46,7 @@ public class OVRGUI
 	private float DisplayHeight  =  800.0f;
 
 	private Rect  DrawRect;
+	
 
 	/// <summary>
 	/// Gets the replacement font.

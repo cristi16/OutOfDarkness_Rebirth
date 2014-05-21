@@ -95,7 +95,8 @@ public class TP_Controller : MonoBehaviour {
 	
 	public void EnableDisableFlashlights(){
 		foreach(GameObject flashlight in flashlights){
-			flashlight.light.enabled=!flashlight.light.enabled;
+			if(TP_Motor.oculusRift) flashlight.light.enabled=true;
+			else flashlight.light.enabled=!flashlight.light.enabled;
 			if(flashlight.light.enabled){
 				FlashlightSound(true);
 			} else {				

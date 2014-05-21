@@ -54,7 +54,9 @@ public class HelpTrigger : MonoBehaviour {
 				if(!showHelpMoreThanOnce) feedbackShown=true;		
 				if(disableTriggerAfterUse) collider.enabled=false;
 				if(activateIndependently) feedback.showHelp(); 
-				if(activateFlashlight) LevelState.getInstance().flashlightActivated=true;
+				if(activateFlashlight){
+					LevelState.getInstance().flashlightActivated=true;
+				}
 				if(activateSneak) LevelState.getInstance().sneakActivated=true;
 				if(helpKey==HelpKeys.Move) levelState.shownMoveFeedback=true;
 				if(requiresLoss) feedbackShownWhenRequiresLoss=true;

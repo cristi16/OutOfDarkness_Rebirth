@@ -67,6 +67,17 @@ public class MenuManager : MonoBehaviour {
 		}
 		
 		LevelState.getInstance().inPlay=inPlay();
+
+		if(isMainMenu && showMainMenu && Input.GetButtonDown("Interaction")){
+			tutorialCamera.isActivated = true;						
+			if(soundNotice!=null){
+				Destroy(soundNotice.gameObject);
+			}
+			Screen.lockCursor = true;
+			if(disableIntroMusicAtStart) GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>().reduceVolumeTemp();						
+			//notesNotice.enabled=true;		
+		}
+
 		if(Input.GetKeyDown(KeyCode.Escape) && !LevelState.getInstance().puzzleMode && !mapManager.showingMap)
 		{
 			if(!isMainMenu && !isCredits && !isControls && !LevelState.getInstance().puzzleMode){				
@@ -172,43 +183,94 @@ public class MenuManager : MonoBehaviour {
 			if(isQuiting)
 				fader.gameEnding = true;
 			GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, tutorialCamera.guiAlpha);
-			GUI.DrawTexture(new Rect((screenW - 200), screenH-350, 400, 400),logo);
+			if(!TP_Motor.oculusRift){
+				GUI.DrawTexture(new Rect((screenW - 200), screenH-350, 400, 400),logo);
+			} else {
+				//OVRGUI.instance.StereoDrawTexture(screenW/2f,screenH/2f,300f,300f,ref logo,Color.white);
+				GUI.DrawTexture(new Rect((screenW/2 - 100), screenH/4, 300, 300),logo);
+				GUI.DrawTexture(new Rect((3*screenW/2 - 200), screenH/4, 300, 300),logo);
+			}
 			//Put button images up first, then the buttons on top
-			GUILayout.BeginArea (new Rect((screenW - (buttonWidth/2)), screenH,buttonWidth,260));
-				GUILayout.BeginVertical();
-					if(GUILayout.Button("Start",GUILayout.Width(buttonWidth))){							
-						tutorialCamera.isActivated = true;						
-						if(soundNotice!=null){
-							Destroy(soundNotice.gameObject);
-						}
-						Screen.lockCursor = true;
-						if(disableIntroMusicAtStart) GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>().reduceVolumeTemp();						
-						//notesNotice.enabled=true;						
+
+			/*GUILayout.BeginArea (new Rect((screenW - (buttonWidth/2)) + screenW/2, screenH/2,buttonWidth,260));
+			GUILayout.BeginVertical();					
+			GUILayout.Button("Start",GUILayout.Width(buttonWidth));
+			GUILayout.Button("Level 2",GUILayout.Width(buttonWidth));
+			GUILayout.Button("Controls",GUILayout.Width(buttonWidth));
+			GUILayout.Button("Quit",GUILayout.Width(buttonWidth));
+			GUILayout.EndVertical();
+			GUILayout.EndArea();
+			GUILayout.BeginArea (new Rect((screenW) - screenW/2, screenH/2,buttonWidth,260));
+				GUILayout.BeginVertical();					
+				if(GUILayout.Button("Start",GUILayout.Width(buttonWidth))){							
+					tutorialCamera.isActivated = true;						
+					if(soundNotice!=null){
+						Destroy(soundNotice.gameObject);
 					}
-					if(GUILayout.Button("Level 2",GUILayout.Width(buttonWidth))){						
-						
-						LevelState.created=false;
-						Destroy(LevelState.getInstance().gameObject);
-						LevelState.mainMenuOrder=false;
-						loadingLevel=true;												
+					Screen.lockCursor = true;
+					if(disableIntroMusicAtStart) GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>().reduceVolumeTemp();						
+					//notesNotice.enabled=true;						
+				}
+				if(GUILayout.Button("Level 2",GUILayout.Width(buttonWidth))){						
+					
+					LevelState.created=false;
+					Destroy(LevelState.getInstance().gameObject);
+					LevelState.mainMenuOrder=false;
+					loadingLevel=true;												
+				}
+				if(GUILayout.Button("Controls",GUILayout.Width(buttonWidth))){
+					isControls = true;				
+					controlsFromMenu=true;
+				}
+
+			//Exiting the application doesn't work in web build, so disable the button
+			if(!Application.isWebPlayer){
+				if(GUILayout.Button("Quit",GUILayout.Width(buttonWidth))){
+					isQuiting = true;							
+					Application.Quit();	
+				}
+			}
+			GUILayout.EndVertical();
+			GUILayout.EndArea();
+*/
+
+			if(!TP_Motor.oculusRift){
+				GUILayout.BeginArea (new Rect((screenW - (buttonWidth/2)), screenH,buttonWidth,260));
+				GUILayout.BeginVertical();					
+				if(GUILayout.Button("Start",GUILayout.Width(buttonWidth))){							
+					tutorialCamera.isActivated = true;						
+					if(soundNotice!=null){
+						Destroy(soundNotice.gameObject);
 					}
-					if(GUILayout.Button("Controls",GUILayout.Width(buttonWidth))){
-						isControls = true;				
-						controlsFromMenu=true;
-					}
-					/*
+					Screen.lockCursor = true;
+					if(disableIntroMusicAtStart) GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>().reduceVolumeTemp();						
+					//notesNotice.enabled=true;						
+				}
+				if(GUILayout.Button("Level 2",GUILayout.Width(buttonWidth))){						
+					
+					LevelState.created=false;
+					Destroy(LevelState.getInstance().gameObject);
+					LevelState.mainMenuOrder=false;
+					loadingLevel=true;												
+				}
+				if(GUILayout.Button("Controls",GUILayout.Width(buttonWidth))){
+					isControls = true;				
+					controlsFromMenu=true;
+				}
+				/*
 					if(GUILayout.Button("Credits",GUILayout.Width(buttonWidth))){
 						isCredits = true;
 					}	*/				
-					//Exiting the application doesn't work in web build, so disable the button
-					if(!Application.isWebPlayer){
-						if(GUILayout.Button("Quit",GUILayout.Width(buttonWidth))){
-							isQuiting = true;							
-							Application.Quit();	
-						}
+				//Exiting the application doesn't work in web build, so disable the button
+				if(!Application.isWebPlayer){
+					if(GUILayout.Button("Quit",GUILayout.Width(buttonWidth))){
+						isQuiting = true;							
+						Application.Quit();	
 					}
+				}
 				GUILayout.EndVertical();
-			GUILayout.EndArea();
+				GUILayout.EndArea();
+			}
 		}
 		if(isCredits){
 			Time.timeScale = 0.01f;

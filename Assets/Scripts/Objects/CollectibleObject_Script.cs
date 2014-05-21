@@ -104,8 +104,8 @@ public class CollectibleObject_Script : MonoBehaviour {
 			return;
 		
 		//GUI.Label(new Rect ((Screen.width-image_dimension)/2,(Screen.height-image_dimension)/2, image_dimension, image_dimension), image);
-		float width = Screen.width*image_width;
-		float height = Screen.height*image_height;
+		float width = Screen.width*image_width/3f;
+		float height = Screen.height*image_height/3f;
 		
 		collectibles_manager.showTexture=true;
 		collectiblesTexture.transform.localScale = new Vector3(width/Screen.width,height/Screen.height,0.1f);
@@ -116,6 +116,7 @@ public class CollectibleObject_Script : MonoBehaviour {
 		if(triggerToActivate!=null){
 			if(Input.GetButton("Interaction") && timer < Time.time){
 				if(!triggerToActivate.shown) triggerToActivate.ShowMessages();
+				collectiblesTexture.transform.localScale = new Vector3(0f,0f,0f);
 			}
 			if(showText.messageQueue.Count==0 && !showText.showing && triggerToActivate.shown){
 				gui=false;

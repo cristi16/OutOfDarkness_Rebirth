@@ -41,7 +41,7 @@ public class ScareAction : Action {
 				Destroy(this.gameObject);
 			} else {
 				//transform.LookAt(player.transform.position - new Vector3(0f,-2f,0f));
-				//player.transform.LookAt(transform.position+new Vector3(0f,2f,0f));
+				player.transform.LookAt(transform.position+new Vector3(0f,2f,0f));
 				Vector3 direction = (player.transform.position - transform.position).normalized;				
 				direction.y=0f;
 				transform.position+=direction*Time.deltaTime*speed;

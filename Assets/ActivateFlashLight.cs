@@ -11,18 +11,26 @@ public class ActivateFlashLight : MonoBehaviour {
 		hotSpot = GetComponent<InteractiveTrigger>();
 		interactiveObject = GetComponent<InteractiveCollider>();
 	}
-	
+
+	private void ActivateFlashlight(){
+		if(TP_Motor.oculusRift){
+			GameObject.FindGameObjectWithTag("Kid").GetComponent<TP_Controller>().EnableDisableFlashlights();
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if(hotSpot!=null){
 			if(hotSpot.getGui()){	
 				LevelState.getInstance().flashlightActivated=true;
+				Invoke("ActivateFlashlight",1f);
 			}
 		}
 		
 		if(interactiveObject!=null){
 			if(interactiveObject.activateHelpCondition()){
 				LevelState.getInstance().flashlightActivated=true;
+				Invoke("ActivateFlashlight",1f);
 			}
 		}		
 	}

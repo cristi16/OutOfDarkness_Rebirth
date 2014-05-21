@@ -104,6 +104,9 @@ public class HelpManager : MonoBehaviour {
 						case HelpKeys.Flashlight:
 							flashlightHelp.active=true;
 							activeKey=flashlightHelp;
+							if(TP_Motor.oculusRift){
+								GameObject.FindGameObjectWithTag("Kid").GetComponent<TP_Controller>().EnableDisableFlashlights();
+							}
 							break;	
 						case HelpKeys.Map:
 							mapHelp.active=true;

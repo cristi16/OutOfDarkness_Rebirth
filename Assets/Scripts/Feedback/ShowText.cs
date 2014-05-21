@@ -15,27 +15,53 @@ public class ShowText : MonoBehaviour {
 	private float time=0f;
 	public HelpKeys keyToAccept = HelpKeys.Interact;
 	public GUIText text;	
-	public GUIText outline;	
+	public GUIText[] outlines;	
 	private bool disappearing=false;
 	internal Color alphaColor;	
 	internal Color betaColor;	
 	private bool waitingText=false;	
 	public Font dialogueFont;
 	public Font systemFont;	
+
+	public int maxCharsPerLine=22;
 	
 	private string message="";
 	private bool changedText=false;
 	 
-	public float xOffset=-0.2f;
-	public float yOffset=0.2f;
 
 	public void ShowMessage(string text, float xPosition=0.4f, float yPosition=0.4f, bool systemText=false){
 		if (TP_Motor.oculusRift) {
-			xPosition += xOffset;
-			yPosition += yOffset;
+			xPosition =0.52f;
+			yPosition = 0.48f;
+			this.text.fontSize=40;
+			foreach(GUIText outline in outlines){
+				outline.fontSize=40;
+			}
 		}
 
-		messageQueue.Enqueue(text);
+		text = text.Replace("\n"," ");
+		text = text.Replace("  "," ");
+
+		char[] textArray = text.ToCharArray ();
+
+		int pos = 0;
+		while (pos+maxCharsPerLine < text.Length) {
+			pos += maxCharsPerLine;
+			char c = textArray[pos];
+
+			while(c!=' ' && pos>0){
+				pos--;
+				c=textArray[pos];
+			}
+
+			if(c==' '){
+
+				textArray[pos]='\n';
+			}
+
+		}
+		string finalText = new string(textArray);
+		messageQueue.Enqueue(finalText);
 		xPosQueue.Enqueue(xPosition);
 		yPosQueue.Enqueue(yPosition);
 		isDialogueQueue.Enqueue(!systemText);
@@ -43,18 +69,26 @@ public class ShowText : MonoBehaviour {
 	
 	void changeToDialogueFont(){		
 		text.font=dialogueFont;
-		outline.font=dialogueFont;		
+		foreach(GUIText outline in outlines){
+			outline.font=dialogueFont;		
+		}
 		
-		text.material = dialogueFont.material;		
-		outline.material = dialogueFont.material;
+		text.material = dialogueFont.material;	
+		foreach (GUIText outline in outlines) {
+			outline.material = dialogueFont.material;
+		}
 	}
 	
 	void changeToSystemFont(){
 		text.font=systemFont;
-		outline.font=systemFont;		
+		foreach (GUIText outline in outlines) {
+			outline.font = systemFont;		
+		}
 		
 		text.material = systemFont.material;
-		outline.material = systemFont.material;
+		foreach (GUIText outline in outlines) {
+			outline.material = systemFont.material;
+		}
 	}
 	
 	// Use this for initialization
@@ -68,19 +102,28 @@ public class ShowText : MonoBehaviour {
 		
 		text.fontSize = (int)( text.fontSize / 600f * Screen.width );
 		text.pixelOffset = new Vector2( (text.pixelOffset.x / 1024) * Screen.width, (text.pixelOffset.y / 768) * Screen.height);
-		
-		outline.fontSize = text.fontSize;
-		outline.pixelOffset = text.pixelOffset + new Vector2(2f,0f);
+
+		foreach (GUIText outline in outlines) {
+			outline.fontSize = text.fontSize;
+		}
+		outlines[0].pixelOffset = text.pixelOffset + new Vector2(2f,0f);
+		outlines[1].pixelOffset = text.pixelOffset + new Vector2(-2f,0f);
+		outlines[2].pixelOffset = text.pixelOffset + new Vector2(0f,2f);
+		outlines[3].pixelOffset = text.pixelOffset + new Vector2(0f,-2f);
 		
 	}
 	
 	void OnGUI(){		
 		text.material.color = alphaColor;
-		outline.material.color = betaColor;
+		foreach (GUIText outline in outlines) {
+			outline.material.color = betaColor;
+		}
 		
 		if(!changedText && showing){ 
 			text.text=message;	
-			outline.text=message;
+			foreach (GUIText outline in outlines) {
+				outline.text=message;
+			}
 			changedText=true;
 		}
 		
@@ -90,7 +133,9 @@ public class ShowText : MonoBehaviour {
 	void Update () {		
 		if(showing){
 			text.material.color = alphaColor;
-			outline.material.color = betaColor;
+			foreach (GUIText outline in outlines) {
+				outline.material.color = betaColor;
+			}
 		}
 		if(!showing && messageQueue.Count>0){
 			message = messageQueue.Dequeue();
@@ -107,7 +152,9 @@ public class ShowText : MonoBehaviour {
 			showing=true;
 							
 			text.transform.position = new Vector3(xPos,yPos,1f);
-			outline.transform.position = new Vector3(xPos,yPos,0f);
+			foreach (GUIText outline in outlines) {
+				outline.transform.position = new Vector3(xPos,yPos,0f);
+			}
 																
 			//text.text=message;	
 			//outline.text=message;	
@@ -153,7 +200,9 @@ public class ShowText : MonoBehaviour {
 				showing=false;
 				waitingText=false;
 				text.text="";
-				outline.text="";
+				foreach (GUIText outline in outlines) {
+					outline.text="";
+				}
 				time=0f;
 				disappearing=false;
 			}

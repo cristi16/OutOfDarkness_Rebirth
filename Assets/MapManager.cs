@@ -29,7 +29,8 @@ public class MapManager : MonoBehaviour {
 		else if(Mathf.Approximately(Camera.main.aspect, 16f/10f))
 			map.texture = mapTexture_16_10;
 		if(map!=null) 
-			map.pixelInset=ResizeGUI(map.pixelInset);	
+			map.pixelInset= new Rect(-512, -256, 1024, 512);
+		///map.pixelInset=ResizeGUI(map.pixelInset);	
 		
 		guiText.pixelOffset =  new Vector2(Screen.width * objectivesLeftOffset/100, Screen.height * objectivesTopOffset/100);
 		guiText.fontSize = (int) ( Screen.width * 35f / 960f );
