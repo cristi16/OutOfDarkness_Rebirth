@@ -16,6 +16,7 @@ public class MapManager : MonoBehaviour {
 	public int objectivesLeftOffset = 15;
 	[RangeAttribute(0,50)]
 	public int objectivesTopOffset = 49;
+	public GUIText mapText;
 	
 	// Use this for initialization
 	void Start () {
@@ -28,12 +29,12 @@ public class MapManager : MonoBehaviour {
 			map.texture = mapTexture_16_9;
 		else if(Mathf.Approximately(Camera.main.aspect, 16f/10f))
 			map.texture = mapTexture_16_10;
-		if(map!=null) 
-			map.pixelInset= new Rect(-512, -256, 1024, 512);
+		//if(map!=null) 
+			//map.pixelInset= new Rect(-512, -256, 1024, 512);
 		///map.pixelInset=ResizeGUI(map.pixelInset);	
 		
-		guiText.pixelOffset =  new Vector2(Screen.width * objectivesLeftOffset/100, Screen.height * objectivesTopOffset/100);
-		guiText.fontSize = (int) ( Screen.width * 35f / 960f );
+		mapText.pixelOffset =  new Vector2(Screen.width * objectivesLeftOffset/100, Screen.height * objectivesTopOffset/100);
+		mapText.fontSize = (int) ( Screen.width * 35f / 960f );
 		UpdateQuestList();
 	}
 	
@@ -46,7 +47,7 @@ public class MapManager : MonoBehaviour {
 			isFullScreen = Screen.fullScreen;
 			map.pixelInset = new Rect(-Screen.width/2, -Screen.height/2, Screen.width, Screen.height);
 			
-			guiText.pixelOffset =  new Vector2(Screen.width * objectivesLeftOffset/100, Screen.height * objectivesTopOffset/100);
+			mapText.pixelOffset =  new Vector2(Screen.width * objectivesLeftOffset/100, Screen.height * objectivesTopOffset/100);
 		}			
 		
 	}
@@ -54,7 +55,6 @@ public class MapManager : MonoBehaviour {
 	public void ShowMap()
 	{
 		map.enabled=true;
-		guiText.enabled = true;
 		mapCamera.SetActive(true);
 		showingMap=true;
         mapPlane.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 1.5f;
@@ -64,12 +64,13 @@ public class MapManager : MonoBehaviour {
         Camera.main.cullingMask = 1 << LayerMask.NameToLayer("MapPlane");
         GameObject.FindGameObjectWithTag("MainCamera2").GetComponent<Camera>().cullingMask = 1 << LayerMask.NameToLayer("MapPlane");
         mapPlane.SetActive(true);
+		mapText.enabled = true;
 	}
 	
 	public void HideMap()
 	{
 		map.enabled=false;
-		guiText.enabled = false;
+		mapText.enabled = false;
 		mapCamera.SetActive(false);
 		showingMap=false;
         mapPlane.SetActive(false);
@@ -87,8 +88,8 @@ public class MapManager : MonoBehaviour {
 //	    float rectX = (_rect.x / map.texture.width) * Screen.width;
 //	    float rectY = (_rect.y / map.texture.height) * Screen.height;
 		
-//		guiText.text = Screen.width + "*" + Screen.height + "\n";
-//		guiText.text += "x: " + rectX + " y: " + rectY + " w: " + rectWidth + " h: " + rectHeight;
+//		mapText.text = Screen.width + "*" + Screen.height + "\n";
+//		mapText.text += "x: " + rectX + " y: " + rectY + " w: " + rectWidth + " h: " + rectHeight;
 	 
 	    return new Rect( -Screen.width / 2, -Screen.height / 2, Screen.width, Screen.height);
 	}
@@ -126,19 +127,19 @@ public class MapManager : MonoBehaviour {
 		questList = LevelState.getInstance().GetQuestList();
 		completedQuestList = LevelState.getInstance().GetCompletedQuestList();
 		
-		guiText.text = "Objectives:\n";
+		/*mapText.text = "Objectives:\n";
 		
 		for(int i=0; i<questList.Count; i++)
 		{
-			guiText.text += "- " + questList[i] + "\n";
+			mapText.text += "- " + questList[i] + "\n";
 		}
 		
-		guiText.text += "\n\nCompleted Objectives:\n";
+		mapText.text += "\n\nCompleted Objectives:\n";
 		
 		for(int i=0; i<completedQuestList.Count; i++)
 		{
-			guiText.text += "- " + completedQuestList[i] + "\n";
-		}
+			mapText.text += "- " + completedQuestList[i] + "\n";
+		}*/
 		
 	}
 }

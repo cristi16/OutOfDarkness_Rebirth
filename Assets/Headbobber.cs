@@ -39,7 +39,7 @@ public class Headbobber : MonoBehaviour{
 	 }
 
 	public Vector3 HeadBobbing(Vector3 cameraPosition){
-		if(Input.GetButton("Sneak") && !hidingController.isHiddenOrHidingOrComingOut()){
+		if(((Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)) && !hidingController.isHiddenOrHidingOrComingOut()){
 			updatedMidPoint=Mathf.Clamp(updatedMidPoint-goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
 		} else {
 			updatedMidPoint=Mathf.Clamp(updatedMidPoint+goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
@@ -53,7 +53,7 @@ public class Headbobber : MonoBehaviour{
 		} 
 		else { 
 			waveslice = Mathf.Sin(timer);
-			if(!moveWhileStanding) timer = timer + (Input.GetButton("Run")?bobbingSpeed*runningMultiplier:(Input.GetButton("Sneak")?bobbingSpeed*sneakingMultiplier:bobbingSpeed)); 
+			if(!moveWhileStanding) timer = timer + ((Input.GetButton("Run") || Input.GetAxis("Run")>0.5f)?bobbingSpeed*runningMultiplier:((Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)?bobbingSpeed*sneakingMultiplier:bobbingSpeed)); 
 			else timer += bobbingSpeed;
 			
 			if (timer > Mathf.PI * 2) { 
@@ -62,7 +62,7 @@ public class Headbobber : MonoBehaviour{
 		} 
 		if (waveslice != 0) { 		
 			if(sneak!=null)
-				translateChange = waveslice * (Input.GetButton("Run")?bobbingAmount*runningAmountMultiplier:(Input.GetButton("Sneak")?bobbingAmount*sneakingAmountMultiplier:bobbingAmount));
+				translateChange = waveslice * ((Input.GetButton("Run") || Input.GetAxis("Run")>0.5f)?bobbingAmount*runningAmountMultiplier:((Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)?bobbingAmount*sneakingAmountMultiplier:bobbingAmount));
 			else 
 				translateChange = waveslice * (bobbingAmount);
 			
@@ -82,7 +82,7 @@ public class Headbobber : MonoBehaviour{
 
 	 void Update () { 		
 		
-		if(Input.GetButton("Sneak") && !hidingController.isHiddenOrHidingOrComingOut()){
+		if((Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f) && !hidingController.isHiddenOrHidingOrComingOut()){
 			updatedMidPoint=Mathf.Clamp(updatedMidPoint-goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
 		} else {
 			updatedMidPoint=Mathf.Clamp(updatedMidPoint+goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
@@ -96,7 +96,7 @@ public class Headbobber : MonoBehaviour{
 		    } 
 		    else { 
 		       waveslice = Mathf.Sin(timer);
-				if(!moveWhileStanding) timer = timer + (Input.GetButton("Run")?bobbingSpeed*runningMultiplier:(Input.GetButton("Sneak")?bobbingSpeed*sneakingMultiplier:bobbingSpeed)); 
+				if(!moveWhileStanding) timer = timer + ((Input.GetButton("Run") || Input.GetAxis("Run")>0.5f)?bobbingSpeed*runningMultiplier:((Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)?bobbingSpeed*sneakingMultiplier:bobbingSpeed)); 
 				else timer += bobbingSpeed;
 		       
 		       if (timer > Mathf.PI * 2) { 
@@ -105,7 +105,7 @@ public class Headbobber : MonoBehaviour{
 		    } 
 	    if (waveslice != 0) { 		
 			if(sneak!=null)
-	       		translateChange = waveslice * (Input.GetButton("Run")?bobbingAmount*runningAmountMultiplier:(Input.GetButton("Sneak")?bobbingAmount*sneakingAmountMultiplier:bobbingAmount));
+	       		translateChange = waveslice * ((Input.GetButton("Run") || Input.GetAxis("Run")>0.5f)?bobbingAmount*runningAmountMultiplier:((Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)?bobbingAmount*sneakingAmountMultiplier:bobbingAmount));
 			else 
 				translateChange = waveslice * (bobbingAmount);
 			

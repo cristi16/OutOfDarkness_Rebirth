@@ -12,6 +12,8 @@ public class SneakWalkRunController : MonoBehaviour {
 	private TP_Motor motor;
 	private float lastRelease = 0f;	
 	private LevelState level;
+	private float previousSneakAxis=0f;
+	private float previousRunAxis=0f;
 	
 	// Use this for initialization
 	void Start () {
@@ -21,25 +23,34 @@ public class SneakWalkRunController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {						
-		
-		if(Input.GetButtonUp("Run"))
+		Debug.Log (Input.GetAxis("Run"));
+
+		bool stopMethod = false;
+		if((Input.GetButtonUp("Run") || (previousRunAxis!=0f && Input.GetAxis("Run")==0f)))
 		{
 			lastRelease = Time.time;
-			return;
-		} else if(Input.GetButtonUp("Sneak"))
+			stopMethod=true;
+		} else if((Input.GetButtonUp("Sneak") || (previousSneakAxis!=0f &&  Input.GetAxis("Sneak")==0f)))
 		{
 			lastRelease = Time.time;
-			return;
+			stopMethod=true;
 		}
-		
-		if(Input.GetButton("Run") && level.runActivated)
+
+		previousSneakAxis = Input.GetAxis ("Sneak");
+		previousRunAxis = Input.GetAxis ("Run");
+
+		if (stopMethod)
+						return;
+
+
+		if((Input.GetButton("Run") || Input.GetAxis("Run")>0.5f) && level.runActivated)
 		{
 			run=true;
 			sneak=false;
 		}
 		else
 		{
-			if((Input.GetButton("Sneak")&&level.sneakActivated) || motor.moveVector == Vector3.zero)
+			if(((Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)&&level.sneakActivated) || motor.moveVector == Vector3.zero)
 			{
 				sneak = true;
 				run = false;

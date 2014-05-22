@@ -4,6 +4,7 @@ using System.Collections;
 public class CollectibleObject_Script : MonoBehaviour {
 	
 	private bool gui = false;
+	private bool showImage=true;
 	
 	public float image_width = 0.5f;
 	public float image_height = 0.8f;
@@ -58,6 +59,7 @@ public class CollectibleObject_Script : MonoBehaviour {
 				if(!audioSource.isPlaying) audioSource.PlayOneShot(sound);
 				
 				gui = true;
+				showImage=true;
 				
 				//Hide help texts
 				if(commands!=null){
@@ -107,7 +109,7 @@ public class CollectibleObject_Script : MonoBehaviour {
 		float width = Screen.width*image_width/3f;
 		float height = Screen.height*image_height/3f;
 		
-		collectibles_manager.showTexture=true;
+		if(!TP_Motor.oculusRift || showImage) collectibles_manager.showTexture=true;
 		collectiblesTexture.transform.localScale = new Vector3(width/Screen.width,height/Screen.height,0.1f);
 		collectiblesTexture.texture=image;
 			
@@ -116,7 +118,8 @@ public class CollectibleObject_Script : MonoBehaviour {
 		if(triggerToActivate!=null){
 			if(Input.GetButton("Interaction") && timer < Time.time){
 				if(!triggerToActivate.shown) triggerToActivate.ShowMessages();
-				collectiblesTexture.transform.localScale = new Vector3(0f,0f,0f);
+				//gui=false;
+				showImage=false;
 			}
 			if(showText.messageQueue.Count==0 && !showText.showing && triggerToActivate.shown){
 				gui=false;

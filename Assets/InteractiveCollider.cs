@@ -15,6 +15,7 @@ public class InteractiveCollider : MonoBehaviour {
 	internal bool hidingObject=false;
 	private HidingController hc;
 	private MapManager mapManager;
+	private float time=0f;
 
 	
 	// Use this for initialization
@@ -28,18 +29,21 @@ public class InteractiveCollider : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {	
-		mouseOver = false;
+		if (mouseOver) time -= Time.deltaTime;
+		if(time<0f) mouseOver = false;
 	}
 
 	void OnMouseEnter(){		
 		if(inRange){
 			mouseOver=true;
+			time=0.5f;
 		}
 	}
 	
 	void OnMouseOver(){
 		if (inRange) {
 			mouseOver = true;
+			time=0.5f;
 		}
 	}
 	

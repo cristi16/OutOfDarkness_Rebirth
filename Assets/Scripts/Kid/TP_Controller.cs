@@ -14,6 +14,7 @@ public class TP_Controller : MonoBehaviour {
 
 	private GameObject[] flashlights;
 
+	private float XRotation = 0.0f;
 	private float YRotation = 0.0f;
 	public float rotationCoef = 10f;
 	
@@ -173,6 +174,16 @@ public class TP_Controller : MonoBehaviour {
 
 	
 		CameraController.SetYRotation(YRotation);
+
+		float vr = Input.GetAxis ("VerticalRotation");
+		
+		if (vr<-0.3f) 
+			XRotation += rotateInfluence * rotationCoef * vr;  
+		if (vr>0.3f) 
+			XRotation += rotateInfluence * rotationCoef * vr;  
+		
+		
+		CameraController.SetXRotation(XRotation);
 
 		motor.moveVector = Vector3.zero;
 		float verticalInput = Input.GetAxis("Vertical");

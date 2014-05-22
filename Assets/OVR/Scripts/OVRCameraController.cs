@@ -50,6 +50,7 @@ public class OVRCameraController : OVRComponent
 	// zero orientation of the cameras to follow a set forward facing orientation.
 	private Quaternion OrientationOffset = Quaternion.identity;	
 	// Set Y rotation here; this will offset the y rotation of the cameras. 
+	private float   XRotation = 0.0f;
 	private float   YRotation = 0.0f;
 
 	// IPD
@@ -461,6 +462,19 @@ public class OVRCameraController : OVRComponent
 	public void SetYRotation(float yRotation)
 	{
 		YRotation = yRotation;
+	}
+
+	public void GetXRotation(ref float xRotation)
+	{
+		xRotation = XRotation;
+	}
+	/// <summary>
+	/// Sets the Y rotation.
+	/// </summary>
+	/// <param name="yRotation">Y rotation.</param>
+	public void SetXRotation(float xRotation)
+	{
+		XRotation = xRotation;
 	}
 	
 	/// <summary>

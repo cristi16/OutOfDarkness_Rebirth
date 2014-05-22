@@ -46,7 +46,7 @@ public class KidAnimationController : MonoBehaviour
 		//anim.speed = animSpeed;								// set the speed of our animator to the public variable 'animSpeed'
 		currentBaseState = anim.GetCurrentAnimatorStateInfo(0);	// set our currentState variable to the current state of the Base Layer (0) of animation
 		
-		if(Input.GetButton("Sneak"))
+		if(Input.GetButton())
 		{
 			if(currentBaseState.nameHash == strafeRightState || currentBaseState.nameHash == strafeLeftState )
 				anim.speed = animSpeed * controller.player_sneak.sneakingMultiplier;

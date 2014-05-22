@@ -228,7 +228,9 @@ public class OVRCamera : OVRComponent
 			auxAngles *= 2f;			
 			CameraOrientation.eulerAngles = auxAngles;
 
-			CameraPosition = GetComponent<Headbobber>().HeadBobbing(CameraPosition);			
+			if(GetComponent<Headbobber>()!=null){
+				CameraPosition = GetComponent<Headbobber>().HeadBobbing(CameraPosition);			
+			}
 
 			// This needs to go as close to reading Rift orientation inputs
 			OVRDevice.ProcessLatencyInputs();			
@@ -236,9 +238,11 @@ public class OVRCamera : OVRComponent
 		
 		// Calculate the rotation Y offset that is getting updated externally
 		// (i.e. like a controller rotation)
+		float xRotation = 0.0f;
 		float yRotation = 0.0f;
+		CameraController.GetXRotation(ref xRotation);
 		CameraController.GetYRotation(ref yRotation);
-		qp = Quaternion.Euler(0.0f, yRotation, 0.0f);
+		qp = Quaternion.Euler(xRotation, yRotation, 0.0f);
 		dir = qp * Vector3.forward;
 		qp.SetLookRotation(dir, Vector3.up);
 	
