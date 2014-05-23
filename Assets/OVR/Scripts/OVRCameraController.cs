@@ -532,6 +532,14 @@ public class OVRCameraController : OVRComponent
 		quaternion = CameraRight.transform.rotation;
 		return true;
 	}
+
+	public void SetCameraOrientation(Quaternion quaternion)
+	{
+		if(CameraRight == null)
+			return;
+		
+		CameraRight.transform.rotation = quaternion;
+	}
 	
 	/// <summary>
 	/// Gets the camera position.

@@ -14,8 +14,8 @@ public class TP_Controller : MonoBehaviour {
 
 	private GameObject[] flashlights;
 
-	private float XRotation = 0.0f;
-	private float YRotation = 0.0f;
+	internal float XRotation = 0.0f;
+	internal float YRotation = 0.0f;
 	public float rotationCoef = 10f;
 	
 	private OVRCameraController CameraController;
@@ -58,7 +58,7 @@ public class TP_Controller : MonoBehaviour {
 		foreach(MouseLook ml in GetComponentsInChildren<MouseLook>()){
 			ml.enabled=false;
 		}
-		GetComponentInChildren<Headbobber>().enabled=false;
+		foreach(Headbobber hb in GetComponentsInChildren<Headbobber>()) hb.enabled=false;
 	}
 	
 	public void restoreNormalRotation(float timeToChange){
@@ -73,7 +73,7 @@ public class TP_Controller : MonoBehaviour {
 			ml.enabled=true;
 			if(resetCamera) ml.Start();
 		}
-		GetComponentInChildren<Headbobber>().enabled=true;
+		foreach(Headbobber hb in GetComponentsInChildren<Headbobber>()) hb.enabled=true;
 	}
 	
 	void ActivateMap(){
@@ -143,7 +143,9 @@ public class TP_Controller : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.F) && LevelState.getInstance().flashlightActivated && !mapManager.showingMap){ 
 			EnableDisableFlashlights();
 		}				
-		
+
+		RotateOculus ();
+
 		if(hasControl == false)
 			return;
 		
@@ -154,27 +156,31 @@ public class TP_Controller : MonoBehaviour {
 		
 		motor.UpdateMotor();
 	}
-	
-	void GetLocomotionInput()
-	{		
+
+	void RotateOculus(){
 		// compute for key rotation
 		float rotateInfluence = Time.deltaTime * 60f * 1.5f;
-
+		
 		if (Input.GetKey(KeyCode.Q)) 
 			YRotation -= rotateInfluence * rotationCoef;  
 		if (Input.GetKey(KeyCode.E)) 
 			YRotation += rotateInfluence * rotationCoef; 
-
+		
 		float hr = Input.GetAxis ("HorizontalRotation");
-
+		
 		if (hr<-0.3f) 
 			YRotation += rotateInfluence * rotationCoef * hr;  
 		if (hr>0.3f) 
 			YRotation += rotateInfluence * rotationCoef * hr;  
-
-	
+		
+		
 		CameraController.SetYRotation(YRotation);
-
+		
+		if (Input.GetKey(KeyCode.Keypad2)) 
+			XRotation += rotateInfluence * rotationCoef;  
+		if (Input.GetKey(KeyCode.X)) 
+			XRotation -= rotateInfluence * rotationCoef; 
+		
 		float vr = Input.GetAxis ("VerticalRotation");
 		
 		if (vr<-0.3f) 
@@ -184,6 +190,11 @@ public class TP_Controller : MonoBehaviour {
 		
 		
 		CameraController.SetXRotation(XRotation);
+		}
+
+	void GetLocomotionInput()
+	{		
+
 
 		motor.moveVector = Vector3.zero;
 		float verticalInput = Input.GetAxis("Vertical");

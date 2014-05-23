@@ -272,7 +272,7 @@ public class NunStateMachine : StateMachineBase {
 		transform.forward = kid.transform.position - transform.position;
 		transform.forward = new Vector3(transform.forward.x, 0f, transform.forward.z);
 		mashTime = mashingLength * 0.3f;
-		StartCoroutine("FlashInteractionKey");
+		//StartCoroutine("FlashInteractionKey");
 		yield return null;
 	}
 	

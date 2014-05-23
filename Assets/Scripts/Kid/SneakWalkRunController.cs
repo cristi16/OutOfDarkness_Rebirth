@@ -23,7 +23,6 @@ public class SneakWalkRunController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {						
-		Debug.Log (Input.GetAxis("Run"));
 
 		bool stopMethod = false;
 		if((Input.GetButtonUp("Run") || (previousRunAxis!=0f && Input.GetAxis("Run")==0f)))
