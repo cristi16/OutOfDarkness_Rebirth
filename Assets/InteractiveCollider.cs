@@ -69,11 +69,11 @@ public class InteractiveCollider : MonoBehaviour {
 			yOffset = Mathf.Clamp(-player.transform.position.y - transform.position.y,-4f,4f);
 			if(TP_Motor.oculusRift){
 
-				GUI.DrawTexture (new Rect(-Screen.width/4+Input.mousePosition.x + 65f, (Screen.height-Input.mousePosition.y)-cursorSizeY/2 + cursorSizeY/2 + yOffset*Screen.height/100f, cursorSizeX*(distanceRatio/distance), cursorSizeY*(distanceRatio/distance)),hidingObject?menuManager.hidingCursor:menuManager.cursor);
-				GUI.DrawTexture (new Rect(Screen.width/4 + Input.mousePosition.x -35f , (Screen.height-Input.mousePosition.y)-cursorSizeY/2 + cursorSizeY/2 + yOffset*Screen.height/100f, cursorSizeX*(distanceRatio/distance), cursorSizeY*(distanceRatio/distance)),hidingObject?menuManager.hidingCursor:menuManager.cursor);
+				GUI.DrawTexture (new Rect(-Screen.width/4+Input.mousePosition.x + 65f, (Screen.height-Input.mousePosition.y)-cursorSizeY/2 + cursorSizeY/2 + yOffset*Screen.height/100f, hidingObject?cursorSizeX*(distanceRatio/distance)*2:cursorSizeX*(distanceRatio/distance), hidingObject?cursorSizeY*(distanceRatio/distance)*2:cursorSizeY*(distanceRatio/distance)),hidingObject?menuManager.hidingCursor:menuManager.cursor);
+				GUI.DrawTexture (new Rect(Screen.width/4 + Input.mousePosition.x -35f , (Screen.height-Input.mousePosition.y)-cursorSizeY/2 + cursorSizeY/2 + yOffset*Screen.height/100f, hidingObject?cursorSizeX*(distanceRatio/distance)*2:cursorSizeX*(distanceRatio/distance), hidingObject?cursorSizeY*(distanceRatio/distance)*2:cursorSizeY*(distanceRatio/distance)),hidingObject?menuManager.hidingCursor:menuManager.cursor);
 
 			} else {
-				GUI.DrawTexture (new Rect(Input.mousePosition.x-cursorSizeX/2 + cursorSizeX/2, (Screen.height-Input.mousePosition.y)-cursorSizeY/2 + cursorSizeY/2 + yOffset*Screen.height/100f, cursorSizeX*(distanceRatio/distance), cursorSizeY*(distanceRatio/distance)),hidingObject?menuManager.hidingCursor:menuManager.cursor);
+				GUI.DrawTexture (new Rect(Input.mousePosition.x-cursorSizeX/2 + cursorSizeX/2, (Screen.height-Input.mousePosition.y)-cursorSizeY/2 + cursorSizeY/2 + yOffset*Screen.height/100f, hidingObject?cursorSizeX*(distanceRatio/distance)*2:cursorSizeX*(distanceRatio/distance), hidingObject?cursorSizeY*(distanceRatio/distance)*2:cursorSizeY*(distanceRatio/distance)),hidingObject?menuManager.hidingCursor:menuManager.cursor);
 			}
 	    }
 	}

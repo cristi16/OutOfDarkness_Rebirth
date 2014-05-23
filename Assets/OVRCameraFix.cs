@@ -5,6 +5,7 @@ public class OVRCameraFix : MonoBehaviour {
 
 	// Use this for initialization
 	IEnumerator Start () {
+		Screen.SetResolution(1024,512,false);
 
 		yield return new WaitForSeconds(0.2f);
 		GetComponent<OVRCameraController>().SetIPD (0f);
@@ -12,7 +13,7 @@ public class OVRCameraFix : MonoBehaviour {
 		yield return new WaitForSeconds(0.2f);
 		foreach (Camera c in GetComponentsInChildren<Camera>()) {
 			//c.fieldOfView=150f;
-			//c.aspect=4f/3f;
+			c.aspect=4f/3f;
 		}
 	}
 

@@ -22,7 +22,7 @@ public class FeedbackKey : MonoBehaviour {
 		texture = GetComponent<GUITexture>();
 		texture.color = new Color(texture.color.r,texture.color.g,texture.color.b,0);
 		
-		texture.pixelInset = ResizeGUI(texture.pixelInset);
+		//texture.pixelInset = ResizeGUI(texture.pixelInset);
 	}
 	
 	// Update is called once per frame

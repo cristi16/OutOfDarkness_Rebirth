@@ -61,7 +61,8 @@ public class MenuManager : MonoBehaviour {
 	}
 	
 	void Update() {		
-
+		screenW = Screen.width/2;
+		screenH = Screen.height / 2;
 		if(loadingLevel){ 
 			soundNotice.text = "Loading... "+(int)(Application.GetStreamProgressForLevel(1)*100)+"%";
 			if(Application.CanStreamedLevelBeLoaded(1)) Application.LoadLevel(1);			
