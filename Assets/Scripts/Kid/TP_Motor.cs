@@ -9,6 +9,8 @@ public class TP_Motor : MonoBehaviour {
 	public float backwardSpeed = 2f;
 	public float strafingSpeed = 5f;
 
+	public float YOffset = 0f;
+
 	public static bool oculusRift = true;
 	
 	
@@ -47,7 +49,9 @@ public class TP_Motor : MonoBehaviour {
 				col.SendMessage ("OnMouseOver");
 			if (act != null)
 				act.SendMessage ("OnMouseOver");
+
 			if(act!=null || col!=null) previousHit=hit.collider;
+
 		} else {
 			if(previousHit!=null) previousHit.SendMessage("OnMouseExit");
 		}
@@ -58,7 +62,27 @@ public class TP_Motor : MonoBehaviour {
 	{
 		// Transform our moveVector into World Space relative to our character rotation
 		moveVector = Camera.main.transform.TransformDirection(moveVector);
-		
+		/*
+		float rotatingHead = (Mathf.Abs(Camera.main.transform.rotation.eulerAngles.y - controller.YRotation - YOffset))%180;
+		Debug.Log(rotatingHead);
+
+		//float angle = Vector3.Angle(Camera.main.transform.forward,transform.forward);
+		//Debug.Log(angle-controller.YRotation);
+
+		if (moveVector.x > 0 || moveVector.z > 0) {
+			float rotateInfluence = Time.deltaTime * 60f * 1.5f;
+
+			if(rotatingHead>140f)
+			{
+				YOffset+=rotateInfluence;
+			}
+			if(rotatingHead<40f)
+			{
+				YOffset-=rotateInfluence;
+			}
+		}
+		*/
+
 		// Normalize moveVector if magnitude is > 0
 		if(moveVector.magnitude > 1)
 			moveVector = Vector3.Normalize(moveVector);

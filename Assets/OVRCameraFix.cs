@@ -5,6 +5,7 @@ public class OVRCameraFix : MonoBehaviour {
 
 	// Use this for initialization
 	IEnumerator Start () {
+
 		yield return new WaitForSeconds(0.2f);
 		GetComponent<OVRCameraController>().SetIPD (0f);
 

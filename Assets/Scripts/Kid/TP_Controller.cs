@@ -14,8 +14,8 @@ public class TP_Controller : MonoBehaviour {
 
 	private GameObject[] flashlights;
 
-	internal float XRotation = 0.0f;
-	internal float YRotation = 0.0f;
+	public float XRotation = 0.0f;
+	public float YRotation = 0.0f;
 	public float rotationCoef = 10f;
 	
 	private OVRCameraController CameraController;
@@ -174,7 +174,7 @@ public class TP_Controller : MonoBehaviour {
 			YRotation += rotateInfluence * rotationCoef * hr;  
 		
 		
-		CameraController.SetYRotation(YRotation);
+		CameraController.SetYRotation(YRotation+motor.YOffset);
 		
 		if (Input.GetKey(KeyCode.Keypad2)) 
 			XRotation += rotateInfluence * rotationCoef;  
