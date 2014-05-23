@@ -36,7 +36,7 @@ public class PuzzleController : MonoBehaviour {
 	void Start () {		
 		places = GetComponentsInChildren<Place>();
 		numberOfPlaces = GetNumberOfPlaces(places);
-		puzzleCamera = Camera.mainCamera.transform.parent.GetComponent<PuzzleCamera>();
+		puzzleCamera = Camera.mainCamera.transform.parent.root.GetComponentInChildren<PuzzleCamera>();
 		target = transform.FindChild("LookAtPoint");
 		GetComponent<SphereCollider>().isTrigger = true;
 		
@@ -186,8 +186,13 @@ public class PuzzleController : MonoBehaviour {
 	public void ActivatePuzzle()
 	{
 		isActivated = true;
-		Screen.lockCursor=false;
-		Screen.showCursor=true;		
+
+		if(TP_Motor.oculusRift){
+
+		} else {
+			Screen.lockCursor=false;
+			Screen.showCursor=true;		
+		}
 		LevelState.getInstance().puzzleMode = true;
 		puzzleCamera.ActivateLookAt(target, cameraStopDistance, cameraJourneyTime);
 		foreach(Place place in places)

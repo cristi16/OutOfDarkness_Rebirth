@@ -260,9 +260,11 @@ public class TP_Controller : MonoBehaviour {
 	
 	void FlashlightSound(bool activate){
 		if(activate){
-			flashlights[0].audio.Play();
+			if(flashlights[0].audio!=null) flashlights[0].audio.Play();
+			else flashlights[1].audio.Play();
 		} else {
-			flashlights[0].audio.Pause();
+			if(flashlights[0].audio!=null) flashlights[0].audio.Play();
+			else flashlights[1].audio.Play();
 		}
 	}
 	

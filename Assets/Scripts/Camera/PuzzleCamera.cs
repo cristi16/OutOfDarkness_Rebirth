@@ -26,7 +26,7 @@ public class PuzzleCamera : MonoBehaviour {
 	void Start () {
 		currentState = CameraStates.Default;
 		cameraTransform = Camera.mainCamera.transform;
-		inputController = Camera.mainCamera.transform.parent.GetComponent<TP_Controller>();
+		inputController = Camera.mainCamera.transform.root.GetComponentInChildren<TP_Controller>();
 	}
 	
 	// Update is called once per frame

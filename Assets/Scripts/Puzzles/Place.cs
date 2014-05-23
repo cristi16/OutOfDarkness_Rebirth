@@ -32,7 +32,7 @@ public class Place : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		Camera.main.transform.root.GetComponentInChildren<TP_Motor> ().RayCastForColliders ();
 	}
 	
 	void OnMouseDown()

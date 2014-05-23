@@ -40,17 +40,22 @@ public class TP_Motor : MonoBehaviour {
 		RayCastForColliders();
 	}
 
-	void RayCastForColliders(){
+	public void RayCastForColliders(){
 		RaycastHit hit;
 		if (Physics.Raycast (transform.position, Camera.main.transform.forward, out hit,100f)) {
 			InteractiveCollider col = hit.collider.GetComponent<InteractiveCollider> ();
 			ActionOnSight act = hit.collider.GetComponent<ActionOnSight> ();
+			Place pl = hit.collider.GetComponent<Place> ();
 			if (col != null)
 				col.SendMessage ("OnMouseOver");
 			if (act != null)
 				act.SendMessage ("OnMouseOver");
 
 			if(act!=null || col!=null) previousHit=hit.collider;
+
+			if(pl!=null && Input.GetButton ("Interaction")){
+				pl.SendMessage("OnMouseOver");
+			}
 
 		} else {
 			if(previousHit!=null) previousHit.SendMessage("OnMouseExit");
