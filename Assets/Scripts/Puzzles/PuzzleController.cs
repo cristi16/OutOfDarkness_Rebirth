@@ -185,14 +185,14 @@ public class PuzzleController : MonoBehaviour {
 	
 	public void ActivatePuzzle()
 	{
+		if (TP_Motor.oculusRift) {
+			if(actionWhenSolved!=null) actionWhenSolved.execute();	
+			isActivated = true;
+			return;
+		}
+
 		isActivated = true;
 
-		if(TP_Motor.oculusRift){
-
-		} else {
-			Screen.lockCursor=false;
-			Screen.showCursor=true;		
-		}
 		LevelState.getInstance().puzzleMode = true;
 		puzzleCamera.ActivateLookAt(target, cameraStopDistance, cameraJourneyTime);
 		foreach(Place place in places)
@@ -272,6 +272,7 @@ public class PuzzleController : MonoBehaviour {
 	{
 		if(this.selectedObject!=null) this.selectedObject.selected = false;
 		this.selectedObject = null;
+
 		foreach(Place place in places)
 		{
 			if(place.isDefaultPlace == true)

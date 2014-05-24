@@ -151,8 +151,8 @@ public class DoorInteraction : MonoBehaviour {
 //			
 //		}
 		// if the door is locked return
-		if(initiallyLocked && !usedKey && !hasKey){
-			if(Input.GetButtonDown("Interaction") && playerInRange){
+		if(initiallyLocked && !usedKey && !hasKey && playerInRange){
+			if(Input.GetButtonDown("Interaction")){
 				if(!isUnusable){ 
 					audioSource.PlayOneShot(lockedDoorSound);					
 				}

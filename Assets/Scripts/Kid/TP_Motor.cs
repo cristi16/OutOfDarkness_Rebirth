@@ -53,9 +53,9 @@ public class TP_Motor : MonoBehaviour {
 
 			if(act!=null || col!=null) previousHit=hit.collider;
 
-			if(pl!=null && Input.GetButton ("Interaction")){
-				pl.SendMessage("OnMouseOver");
-			}
+			//if(pl!=null && Input.GetButtonDown ("Interaction")){
+			//	pl.SendMessage("OnMouseDown");
+			//}
 
 		} else {
 			if(previousHit!=null) previousHit.SendMessage("OnMouseExit");

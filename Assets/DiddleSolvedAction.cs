@@ -24,7 +24,13 @@ public class DiddleSolvedAction : Action {
 	void Update () {
 		if(deactivate && showText.messageQueue.Count==0 && !showText.showing && GetComponent<TextTrigger>().shown){		
 			deactivate=false;			
-			DeactivatePuzzle();
+			if(!TP_Motor.oculusRift){ 
+				DeactivatePuzzle();
+			} else {
+				text.enabled=true;
+				toBeContinued=true;
+				GameObject.FindGameObjectWithTag("SceneFader").GetComponent<SceneFadeInOut>().fadeToBlack=true;
+			}
 		}
 		
 		if(toBeContinued){
