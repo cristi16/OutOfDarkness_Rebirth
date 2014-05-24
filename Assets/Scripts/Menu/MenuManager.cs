@@ -21,6 +21,7 @@ public class MenuManager : MonoBehaviour {
 	float boxH = 100;
 	int buttonWidth = 200;
 	public Texture logo;
+	public Texture start;
 	public Texture btnExit;
 	public Texture creditImage;
 	public Texture controlsImage;	
@@ -191,6 +192,9 @@ public class MenuManager : MonoBehaviour {
 				//OVRGUI.instance.StereoDrawTexture(screenW/2f,screenH/2f,300f,300f,ref logo,Color.white);
 				GUI.DrawTexture(new Rect((screenW/2 - 100), screenH/4, 300, 300),logo);
 				GUI.DrawTexture(new Rect((3*screenW/2 - 200), screenH/4, 300, 300),logo);
+
+				GUI.DrawTexture(new Rect((screenW/2), screenH/4 + 250, 160, 110),start);
+				GUI.DrawTexture(new Rect((3*screenW/2 - 100), screenH/4 + 250, 160, 110),start);
 			}
 			//Put button images up first, then the buttons on top
 

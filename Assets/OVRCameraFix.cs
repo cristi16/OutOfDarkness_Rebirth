@@ -5,7 +5,7 @@ public class OVRCameraFix : MonoBehaviour {
 
 	// Use this for initialization
 	IEnumerator Start () {
-		Screen.SetResolution(1024,512,false);
+		Screen.SetResolution(Mathf.CeilToInt(Screen.width*0.94f),Mathf.CeilToInt((Screen.width*0.94f)/2),false);
 
 		yield return new WaitForSeconds(0.2f);
 		GetComponent<OVRCameraController>().SetIPD (0f);
