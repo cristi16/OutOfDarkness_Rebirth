@@ -3,6 +3,7 @@ using System.Collections;
 
 public class OVRCalibrator : MonoBehaviour {
 	private OVRCameraController con;
+	private float offsetX=0f;
 
 	// Use this for initialization
 	void Start () {
@@ -10,12 +11,24 @@ public class OVRCalibrator : MonoBehaviour {
 	}
 
 	void SetAspectRatio(){
-		Screen.SetResolution(Screen.width,Screen.width/2,false);
+		//Screen.SetResolution(LevelState.getInstance().resolution,LevelState.getInstance().resolution/2,false);
 
+		float oldAspect = Screen.width / Screen.height;
 		foreach (Camera c in GetComponentsInChildren<Camera>()) {
-			//c.fieldOfView=150f;
-			c.aspect=4f/3f;
+			//c.fieldOfView=150f;		
+			c.aspect=oldAspect/2;
 		}
+
+		offsetX -= 0.001f;
+
+		Rect aux = GetComponentsInChildren<Camera> () [0].rect;
+		aux.x -= offsetX;
+		GetComponentsInChildren<Camera> () [0].rect = aux;
+		
+		Rect aux2 = GetComponentsInChildren<Camera> () [1].rect;
+		aux2.x += offsetX;
+		GetComponentsInChildren<Camera> () [1].rect = aux2;
+
 	}
 
 	// Update is called once per frame
@@ -23,15 +36,15 @@ public class OVRCalibrator : MonoBehaviour {
 
 		
 		//Debug
-		if (Input.GetKey (KeyCode.O)) {
-			con.IPD+=0.05f;
+		if (Input.GetKey (KeyCode.Z)) {
+			//con.IPD+=0.01f;
 
 			Invoke ("SetAspectRatio",0.01f);
 
 		}
 		
-		if (Input.GetKey (KeyCode.P)) {
-			con.IPD-=0.05f;
+		if (Input.GetKey (KeyCode.X)) {
+			//con.IPD-=0.01f;
 
 			Invoke ("SetAspectRatio",0.01f);
 		}

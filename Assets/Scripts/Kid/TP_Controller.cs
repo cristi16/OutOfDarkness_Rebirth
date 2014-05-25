@@ -177,7 +177,7 @@ public class TP_Controller : MonoBehaviour {
 		CameraController.SetYRotation(YRotation+motor.YOffset);
 
 
-		/*float vr = Input.GetAxis ("VerticalRotation");
+		float vr = Input.GetAxis ("VerticalRotation");
 		
 		if (vr<-0.3f) 
 			XRotation += rotateInfluence * rotationCoef * vr;  
@@ -186,7 +186,7 @@ public class TP_Controller : MonoBehaviour {
 		
 		
 		CameraController.SetXRotation(XRotation);
-		*/
+
 		}
 
 	void GetLocomotionInput()

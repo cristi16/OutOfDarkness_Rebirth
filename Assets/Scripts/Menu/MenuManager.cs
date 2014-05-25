@@ -41,9 +41,13 @@ public class MenuManager : MonoBehaviour {
 	public bool showMainMenu=true;
 	private bool loadingLevel=false;
 	internal static bool newScene=false;
-	
+
+	private OVRGUI ovrGUI;
+
 	// Use this for initialization
 	void Start () {		
+		ovrGUI = new OVRGUI ();
+
 		// If you return to the menu from ingame, ensure time is running
 		Time.timeScale = 1;
 		
@@ -189,9 +193,12 @@ public class MenuManager : MonoBehaviour {
 			if(!TP_Motor.oculusRift){
 				GUI.DrawTexture(new Rect((screenW - 200), screenH-350, 400, 400),logo);
 			} else {
-				//OVRGUI.instance.StereoDrawTexture(screenW/2f,screenH/2f,300f,300f,ref logo,Color.white);
-				GUI.DrawTexture(new Rect((screenW/2 - 100), screenH/4, 300, 300),logo);
-				GUI.DrawTexture(new Rect((3*screenW/2 - 200), screenH/4, 300, 300),logo);
+
+				//ovrGUI.StereoDrawTexture(screenW/2f,screenH/2f,300f,300f,ref logo,Color.white);
+				float ipd = Camera.main.transform.root.GetComponentInChildren<OVRCameraController>().IPD;
+
+				GUI.DrawTexture(new Rect((screenW/2 - 100)+Screen.width*ipd/2f, screenH/4, 300, 300),logo);
+				GUI.DrawTexture(new Rect((3*screenW/2 - 200)-Screen.width*ipd/2f, screenH/4, 300, 300),logo);
 
 				GUI.DrawTexture(new Rect((screenW/2), screenH/4 + 250, 160, 110),start);
 				GUI.DrawTexture(new Rect((3*screenW/2 - 100), screenH/4 + 250, 160, 110),start);

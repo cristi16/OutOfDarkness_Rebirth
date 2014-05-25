@@ -52,7 +52,9 @@ public class LevelState : MonoBehaviour {
 	internal bool started=false;
 	
 	private HashSet<string> checkedDoors;
-	
+
+	internal int resolution;
+
 	public static LevelState getInstance(){		
 		return instance;
 	}			
@@ -87,7 +89,9 @@ public class LevelState : MonoBehaviour {
 	{
 		started=true;
 		Screen.showCursor = showCursor;
-		
+
+		resolution = Mathf.CeilToInt (Screen.width * 0.94f);
+
 		initiallyLockedDoors = new Hashtable();
 		hasKeyDoors = new Hashtable();
 		amuletDoors = new Hashtable();
