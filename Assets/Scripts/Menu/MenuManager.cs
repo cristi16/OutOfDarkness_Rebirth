@@ -42,6 +42,9 @@ public class MenuManager : MonoBehaviour {
 	private bool loadingLevel=false;
 	internal static bool newScene=false;
 
+	public GUITexture logoTextureGUI;
+	public GUITexture startTextureGUI;
+
 	private OVRGUI ovrGUI;
 
 	// Use this for initialization
@@ -190,6 +193,10 @@ public class MenuManager : MonoBehaviour {
 			if(isQuiting)
 				fader.gameEnding = true;
 			GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, tutorialCamera.guiAlpha);
+
+			logoTextureGUI.color=new Color(logoTextureGUI.color.r,logoTextureGUI.color.g,logoTextureGUI.color.b,tutorialCamera.guiAlpha);
+			startTextureGUI.color=new Color(startTextureGUI.color.r,startTextureGUI.color.g,startTextureGUI.color.b,tutorialCamera.guiAlpha);
+
 			if(!TP_Motor.oculusRift){
 				GUI.DrawTexture(new Rect((screenW - 200), screenH-350, 400, 400),logo);
 			} else {
@@ -197,11 +204,11 @@ public class MenuManager : MonoBehaviour {
 				//ovrGUI.StereoDrawTexture(screenW/2f,screenH/2f,300f,300f,ref logo,Color.white);
 				float ipd = Camera.main.transform.root.GetComponentInChildren<OVRCameraController>().IPD;
 
-				GUI.DrawTexture(new Rect((screenW/2 - 100)+Screen.width*ipd/2f, screenH/4, 300, 300),logo);
-				GUI.DrawTexture(new Rect((3*screenW/2 - 200)-Screen.width*ipd/2f, screenH/4, 300, 300),logo);
+				//GUI.DrawTexture(new Rect((screenW/2 - 100)+Screen.width*ipd/2f, screenH/4, 300, 300),logo);
+				//GUI.DrawTexture(new Rect((3*screenW/2 - 200)-Screen.width*ipd/2f, screenH/4, 300, 300),logo);
 
-				GUI.DrawTexture(new Rect((screenW/2), screenH/4 + 250, 160, 110),start);
-				GUI.DrawTexture(new Rect((3*screenW/2 - 100), screenH/4 + 250, 160, 110),start);
+				//GUI.DrawTexture(new Rect((screenW/2), screenH/4 + 250, 160, 110),start);
+				//GUI.DrawTexture(new Rect((3*screenW/2 - 100), screenH/4 + 250, 160, 110),start);
 			}
 			//Put button images up first, then the buttons on top
 
