@@ -36,6 +36,9 @@ public class Headbobber : MonoBehaviour{
 		if(sneak!=null) runningMultiplier = sneak.runningMultiplier;
 		if(sneak!=null) sneakingAmountMultiplier = sneak.sneakingMultiplier;
 		if(sneak!=null) runningAmountMultiplier=sneak.runningMultiplier;
+
+		runningMultiplier = 1.3f;
+		runningAmountMultiplier = 1.3f;
 	 }
 
 	public Vector3 HeadBobbing(Vector3 cameraPosition){

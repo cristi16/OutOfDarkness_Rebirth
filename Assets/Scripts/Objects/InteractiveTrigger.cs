@@ -55,6 +55,9 @@ public class InteractiveTrigger : MonoBehaviour {
 	}
 	
 	void OnTriggerStay(Collider col){
+		if(col.tag=="Kid"){
+			if(interactive!=null) interactive.inRange=true;
+		}
 		if(col.CompareTag("Kid") && ((hasInteractiveCollider && interactive.mouseOver) || (!hasInteractiveCollider && triggerToActivate.canActivate))){
 			if((!hasInteractiveCollider || (Input.GetButton("Interaction"))) && timer < Time.time && !gui){
 				if(audioSource!=null && !audioSource.isPlaying && audioClip!=null) audioSource.PlayOneShot(audioClip);

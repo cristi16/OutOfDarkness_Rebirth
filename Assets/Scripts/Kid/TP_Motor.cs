@@ -42,7 +42,7 @@ public class TP_Motor : MonoBehaviour {
 
 	public void RayCastForColliders(){
 		RaycastHit hit;
-		if (Physics.Raycast (transform.position, Camera.main.transform.forward, out hit,100f)) {
+		if (Physics.Raycast (transform.position, Camera.main.transform.forward, out hit)) {
 			InteractiveCollider col = hit.collider.GetComponent<InteractiveCollider> ();
 			ActionOnSight act = hit.collider.GetComponent<ActionOnSight> ();
 			Place pl = hit.collider.GetComponent<Place> ();

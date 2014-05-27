@@ -159,7 +159,7 @@ public class TP_Controller : MonoBehaviour {
 
 	void RotateOculus(){
 		// compute for key rotation
-		float rotateInfluence = Time.deltaTime * 60f * 1.5f;
+		float rotateInfluence = Time.deltaTime * 60f * 1f;
 		
 		if (Input.GetKey(KeyCode.Q)) 
 			YRotation -= rotateInfluence * rotationCoef;  
@@ -184,8 +184,8 @@ public class TP_Controller : MonoBehaviour {
 		if (vr>0.3f) 
 			XRotation += rotateInfluence * rotationCoef * vr;  
 		
-		
-		CameraController.SetXRotation(XRotation);
+		//comment here to remove second analog going up and down
+		//CameraController.SetXRotation(XRotation);
 
 		}
 

@@ -8,10 +8,12 @@ public class DrawingAction : Action {
 
 	private bool running=false;
 	private float a=0f;
+	public AudioSource audioSource;
 
 	public override void execute(){		
 		running = true;	
 		colorToFadeOut = drawingOne.renderer.material.color;
+		audioSource.Play();
 	}
 
 	// Use this for initialization

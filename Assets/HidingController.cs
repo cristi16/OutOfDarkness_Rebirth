@@ -21,7 +21,7 @@ public class HidingController : MonoBehaviour {
 	private Transform outPoint;
 	private float hidingSpotsRange;
 	
-	private float normalFieldOfView;
+	public float normalFieldOfView=90f;
 	public float hidingFieldOfView=10.0f;
 	public bool reduceFieldOfView=false;
 	
@@ -70,9 +70,21 @@ public class HidingController : MonoBehaviour {
         transform.position += center;
 		if(reduceFieldOfView){				
 			if(hiding){		
-				Camera.mainCamera.fieldOfView=normalFieldOfView + (hidingFieldOfView - normalFieldOfView)*fracComplete;				
+				if(TP_Motor.oculusRift){
+					foreach(Camera c in Camera.main.transform.root.GetComponentsInChildren<Camera>()){
+						c.fieldOfView=normalFieldOfView + (hidingFieldOfView - normalFieldOfView)*fracComplete;				
+					}
+				} else {
+					Camera.mainCamera.fieldOfView=normalFieldOfView + (hidingFieldOfView - normalFieldOfView)*fracComplete;				
+				}
 			} else {
-				Camera.mainCamera.fieldOfView=hidingFieldOfView + (-hidingFieldOfView + normalFieldOfView)*fracComplete;
+				if(TP_Motor.oculusRift){
+					foreach(Camera c in Camera.main.transform.root.GetComponentsInChildren<Camera>()){
+						c.fieldOfView=hidingFieldOfView + (-hidingFieldOfView + normalFieldOfView)*fracComplete;
+					}
+				} else {
+					Camera.mainCamera.fieldOfView=hidingFieldOfView + (-hidingFieldOfView + normalFieldOfView)*fracComplete;
+				}
 			}
 		}
 	}

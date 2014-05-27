@@ -14,6 +14,7 @@ public class Teleporter : MonoBehaviour {
 	void Update () {
 		if (firstTime) {
 			transform.position = place.position;
+			LevelState.getInstance().flashlightActivated=true;
 			firstTime=false;
 		}
 	}
