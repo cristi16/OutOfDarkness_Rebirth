@@ -145,6 +145,8 @@ public class HidingController : MonoBehaviour {
 			if(time>timeToHide+timeToRotate){
 				//if nun is close
 				//if(reduceFieldOfView) transform.LookAt(GameObject.FindGameObjectWithTag("LookAt").transform);			
+
+				//if(Input.GetButtonDown("Interaction") || Input.GetAxis("Horizontal")!=0 || Input.GetAxis("Vertical")!=0){
 				if(Input.GetButtonDown("Interaction")){
 					ComeOut();
 				}

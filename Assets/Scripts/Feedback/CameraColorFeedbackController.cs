@@ -26,9 +26,11 @@ public class CameraColorFeedbackController : MonoBehaviour {
 	public bool feedbackTextActivated=false;
 	
 	private bool firstTime=true;
+	private bool showText = true;
 	
 	private AudioSource heartBeat;
 	private AudioSource breathing;
+	private HidingController hc;
 	
 	// Use this for initialization
 	void Start () {
@@ -37,6 +39,7 @@ public class CameraColorFeedbackController : MonoBehaviour {
 		hideText.text="Hide!";	
 		heartBeat = GameObject.FindGameObjectWithTag("heartBeat").GetComponent<AudioSource>();
 		breathing = GameObject.FindGameObjectWithTag("breathing").GetComponent<AudioSource>();
+		hc = GameObject.FindGameObjectWithTag("Kid").GetComponentInChildren<HidingController>();
 	}
 	
 	// Update is called once per frame
@@ -55,9 +58,11 @@ public class CameraColorFeedbackController : MonoBehaviour {
 				screenOverlayShader.texture = investigatingTexture;
 				changeToInvestigation=false;
 			}
+			if(!investigating && !chasing) showText=true;
 		} else {
 			//Change
 			firstTime=true;
+
 			if(chasing){				
 				screenOverlayShader.texture = chasingTexture;
 				if(!oldChasing){
@@ -98,6 +103,7 @@ public class CameraColorFeedbackController : MonoBehaviour {
 			//change intensity value
 			if(intensity<=lowerBorder){
 				goingUp=true;
+				if(hc.hiding) showText=false;
 			} else if(intensity>=upperBorder){
 				goingUp=false;
 			}
@@ -123,7 +129,9 @@ public class CameraColorFeedbackController : MonoBehaviour {
 		
 		screenOverlayShader.intensity=intensity;
 		if(feedbackTextActivated){
-			hideText.material.color = new Color(1f,1f,1f,intensity*80*3 * Time.deltaTime);
+			if(showText){
+				hideText.material.color = new Color(1f,1f,1f,intensity*80*3 * Time.deltaTime);
+			}
 		}
 	}
 		

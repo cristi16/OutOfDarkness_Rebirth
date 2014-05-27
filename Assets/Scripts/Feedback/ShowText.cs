@@ -22,12 +22,16 @@ public class ShowText : MonoBehaviour {
 	private bool waitingText=false;	
 	public Font dialogueFont;
 	public Font systemFont;	
+	public GameObject button;
+	public Texture2D dialogueTex;
+	public Texture2D systemTex;
 
 	public int maxCharsPerLine=22;
 	
 	private string message="";
 	private bool changedText=false;
-	 
+	public bool dialogueWindows=true;
+
 
 	public void ShowMessage(string text, float xPosition=0.4f, float yPosition=0.4f, bool systemText=false){
 		if (TP_Motor.oculusRift) {
@@ -74,6 +78,7 @@ public class ShowText : MonoBehaviour {
 		}
 		
 		text.material = dialogueFont.material;	
+		button.guiTexture.texture = dialogueTex;
 		foreach (GUIText outline in outlines) {
 			outline.material = dialogueFont.material;
 		}
@@ -86,6 +91,7 @@ public class ShowText : MonoBehaviour {
 		}
 		
 		text.material = systemFont.material;
+		button.guiTexture.texture = systemTex;
 		foreach (GUIText outline in outlines) {
 			outline.material = systemFont.material;
 		}
@@ -115,6 +121,8 @@ public class ShowText : MonoBehaviour {
 	
 	void OnGUI(){		
 		text.material.color = alphaColor;
+
+		//button.guiTexture.color = alphaColor;
 		foreach (GUIText outline in outlines) {
 			outline.material.color = betaColor;
 		}
@@ -133,6 +141,7 @@ public class ShowText : MonoBehaviour {
 	void Update () {		
 		if(showing){
 			text.material.color = alphaColor;
+			//button.guiTexture.color = alphaColor;
 			foreach (GUIText outline in outlines) {
 				outline.material.color = betaColor;
 			}
@@ -141,7 +150,9 @@ public class ShowText : MonoBehaviour {
 			message = messageQueue.Dequeue();
 			float xPos = xPosQueue.Dequeue();
 			float yPos = yPosQueue.Dequeue();
-			
+
+			if(message!="") Invoke("ActivateButton",0f);
+
 			bool dialogue = isDialogueQueue.Dequeue();
 			if(dialogue){
 				changeToDialogueFont();
@@ -188,6 +199,7 @@ public class ShowText : MonoBehaviour {
 					}
 				} else if(Input.GetButtonDown(HelpManager.getButtonName(keyToAccept))){								
 					disappearing=true;
+					if(messageQueue.Count==0 || messageQueue.Peek()=="") Invoke("DeactivateButton",0.1f);
 					time=0f;
 				}
 			}
@@ -209,9 +221,20 @@ public class ShowText : MonoBehaviour {
 		}
 		betaColor.a = alphaColor.a;
 	}
+
+	public void ActivateButton(){
+		if(dialogueWindows) button.SetActive (true);
+	}
+
+	public void DeactivateButton(){
+		if(dialogueWindows) button.SetActive (false);
+	}
 	
 	public void HideText(){
-		if(showing) disappearing=true;
+		if (showing) {
+			disappearing = true;
+			Invoke("DeactivateButton",0.1f);
+		}
 	}
 	
 }

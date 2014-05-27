@@ -3,10 +3,10 @@ using System.Collections;
 
 public class CameraZoomer : MonoBehaviour {
 
-	private float timeToZoom=1f;
+	private float timeToZoom=0.7f;
 	private float speed=0f;
 	private float initialFOV;
-	private float finalFOV;
+	private float finalFOV=80f;
 	private bool firstTime=true;
 	private HidingController hidingController;
 
@@ -19,7 +19,6 @@ public class CameraZoomer : MonoBehaviour {
 	void Update () {
 		if (firstTime) {
 			initialFOV=Camera.main.fieldOfView;
-			finalFOV=70f;
 			firstTime=false;
 			speed=(finalFOV-initialFOV)/timeToZoom;
 		}
