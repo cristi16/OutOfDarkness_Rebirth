@@ -20,6 +20,7 @@ public class HidingController : MonoBehaviour {
 	internal HidingSpot hidingSpot;
 	private Transform outPoint;
 	private float hidingSpotsRange;
+	public static bool rotateHeadAfterHiding = false;
 	
 	public float normalFieldOfView=90f;
 	public float hidingFieldOfView=10.0f;
@@ -123,15 +124,17 @@ public class HidingController : MonoBehaviour {
 					//Quaternion lookAtRotation = Quaternion.LookRotation(hidingSpot.transform.position - hidingPoint.transform.position);
 					//gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, lookAtRotation, (time - timeToHide)/(timeToRotate));					
 
-					float yRotation=0; 
-					Quaternion orient=Quaternion.identity;
-					GetComponentInChildren<OVRCameraController>().GetYRotation(ref yRotation);
-					//GetComponentInChildren<OVRCameraController>().GetOrientationOffset(ref orient);
-
-					Quaternion lookAtRotation = Quaternion.LookRotation(hidingSpot.transform.position - hidingPoint.transform.position);
-
-					GetComponentInChildren<OVRCameraController>().SetYRotation(yRotation-Time.deltaTime*170f);
-					GetComponent<TP_Controller>().YRotation-=Time.deltaTime*170f;
+					if(rotateHeadAfterHiding){
+						float yRotation=0; 
+						Quaternion orient=Quaternion.identity;
+						GetComponentInChildren<OVRCameraController>().GetYRotation(ref yRotation);
+						//GetComponentInChildren<OVRCameraController>().GetOrientationOffset(ref orient);
+						
+						Quaternion lookAtRotation = Quaternion.LookRotation(hidingSpot.transform.position - hidingPoint.transform.position);
+						
+						GetComponentInChildren<OVRCameraController>().SetYRotation(yRotation-Time.deltaTime*170f);
+						GetComponent<TP_Controller>().YRotation-=Time.deltaTime*170f;
+					}
 
 
 				} else {

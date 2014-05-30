@@ -16,6 +16,7 @@ public class LoadNewLevel : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider other){
 		if(other.tag=="Kid"){
+			//LevelState.getInstance().audio.PlayOneShot(audio.clip);
 			LevelState.mainMenuOrder=false;
 			MenuManager.newScene=true;
 			LevelState.getInstance().NewScene();

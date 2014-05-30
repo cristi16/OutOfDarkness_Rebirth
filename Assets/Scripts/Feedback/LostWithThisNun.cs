@@ -15,14 +15,11 @@ public class LostWithThisNun : MonoBehaviour {
 	void Update () {
 	
 	}
-	
-	void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Kid") ){
-			RaycastHit hit;
-			Vector3 targetDir = player.transform.position - transform.position;
-	        if (Physics.Raycast(transform.position,  targetDir, out hit) && hit.collider==player.collider){
-				LevelState.getInstance().SaveLoss(transform.parent.GetComponentInChildren<NunStateMachine>());					
-			}
-		}
+
+	public void SaveLoss(){
+		LevelState.getInstance().SaveLoss(transform.parent.GetComponentInChildren<NunStateMachine>());					
+	}
+
+	void OnTriggerEnter(Collider other) {        
     }
 }

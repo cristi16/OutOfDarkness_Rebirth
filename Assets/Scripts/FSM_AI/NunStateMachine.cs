@@ -145,7 +145,7 @@ public class NunStateMachine : StateMachineBase {
 		StopCoroutine("GoToState");		
 		
 		if(!chaseMusic.isPlaying) audioFeedback.PlayOneShot(audioManager.nunSecondAlert);
-		
+		//NunAlertManager.getInstance().AddNun(this,false);
 		//In case the nun goes was going out of a chase
 		//CancelInvoke("deactivateChaseElements");
 		//CancelInvoke("destroyNunAfterChase");				
@@ -304,6 +304,7 @@ public class NunStateMachine : StateMachineBase {
 		}
 		else if(mashRatio == 1)
 		{
+			if(GetComponentInChildren<LostWithThisNun>()!=null) GetComponentInChildren<LostWithThisNun>().SaveLoss();
 			gameManager.ResetLevel();
 		}
 	}
