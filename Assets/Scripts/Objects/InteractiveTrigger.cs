@@ -12,9 +12,9 @@ public class InteractiveTrigger : MonoBehaviour {
 	private InteractiveCollider interactive;
 	private TP_Controller controller;	
 	
-	private TextTrigger triggerToActivate;
+	internal TextTrigger triggerToActivate;
 	private ShowText showText;
-	private HelpManager helpManager;
+	internal HelpManager helpManager;
 	public AudioClip audioClip;	
 	public bool removeControl=true;
 	public bool disableAfterUse=false;
@@ -26,7 +26,13 @@ public class InteractiveTrigger : MonoBehaviour {
 	private bool hasInteractiveCollider=true;
 	
 	private Key_Script key;
-	
+
+	public void DefineTextTrigger(){
+		if((triggerToActivate==null || !triggerToActivate.enabled) && transform.parent!=null){
+			triggerToActivate = transform.parent.GetComponentInChildren<TextTrigger>();		
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 		showText = GameObject.FindGameObjectWithTag("HelpManager").GetComponent<ShowText>();		
@@ -46,9 +52,7 @@ public class InteractiveTrigger : MonoBehaviour {
 		controller = GameObject.FindGameObjectWithTag("Kid").GetComponent<TP_Controller>();
 		helpManager = GameObject.FindGameObjectWithTag("HelpManager").GetComponent<HelpManager>();
 		triggerToActivate = GetComponentInChildren<TextTrigger>();		
-		if((triggerToActivate==null || !triggerToActivate.enabled) && transform.parent!=null){
-			triggerToActivate = transform.parent.GetComponentInChildren<TextTrigger>();		
-		}
+		DefineTextTrigger ();
 		if(activateKey){
 			key=GetComponent<Key_Script>();
 		}
@@ -74,7 +78,7 @@ public class InteractiveTrigger : MonoBehaviour {
 				//Hide help texts
 				if(GetComponent<DoorInteraction>()==null){
 					helpManager.hideHelp();
-				}				
+				}
 				
 				if(removeControl){
 					if(hasInteractiveCollider) interactive.showingInteractiveObject = true;

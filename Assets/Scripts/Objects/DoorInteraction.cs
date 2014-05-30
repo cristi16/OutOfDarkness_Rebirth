@@ -332,6 +332,12 @@ public class DoorInteraction : MonoBehaviour {
 			playerTransform = hit.gameObject.transform;
 			count++;
 		}
+		else if(hit.gameObject.tag == "Friend")
+		{		
+			playerTransform = hit.gameObject.transform;
+			opensOnInside=false;
+			count++;
+		}
 	}
 	
 	private void OnTriggerExit(Collider hit){

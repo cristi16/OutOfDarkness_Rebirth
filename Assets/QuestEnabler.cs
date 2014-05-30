@@ -24,6 +24,8 @@ public class QuestEnabler : MonoBehaviour {
 		if(!map.ContainsQuest(questID) && !map.ContainsCompletedQuest(questID)){
 			map.AddQuest(questID,questDescription);		
 			questTrigger.activateHelp();
+			if(GetComponentInChildren<KidAnimationController>()!=null)
+			GetComponentInChildren<KidAnimationController>().Walk();
 		}		
 	}
 	

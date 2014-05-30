@@ -39,6 +39,7 @@ public class LevelState : MonoBehaviour {
 	public bool diddleSolved=false;
 	public bool ignorePreviousLevelState=false;
 	public bool keyToServiceStairs=false;
+	public bool solvedKidPuzzle=false;
 		
 	internal List<Keys> pickedUpKeys=new List<Keys>();
 	
@@ -54,6 +55,8 @@ public class LevelState : MonoBehaviour {
 	private HashSet<string> checkedDoors;
 
 	internal int resolution;
+
+	public int chapter=-1;
 
 	public static LevelState getInstance(){		
 		return instance;
@@ -262,6 +265,31 @@ public class LevelState : MonoBehaviour {
 				foreach(GameObject g in disappear) Destroy(g);
 				appear.transform.GetChild(0).gameObject.SetActive(true);
 			}
+		}
+
+		if (solvedKidPuzzle) {
+			GameObject puzzle = GameObject.FindGameObjectWithTag ("KidPuzzle");
+			if (puzzle != null)
+				puzzle.GetComponent<KidPuzzleController> ().SolvePuzzle ();
+
+			GameObject bookcasePuzzle = GameObject.FindGameObjectWithTag ("BookcasePuzzle");
+			if (bookcasePuzzle != null) {
+				bookcasePuzzle.GetComponent<GameObjectEnabler> ().Enable ();
+
+				bookcasePuzzle.collider.enabled = false;
+
+				bookcasePuzzle.GetComponent<GameObjectDestroyer> ().Destroy ();
+
+				KidPuzzleFriend k = GameObject.FindObjectOfType<KidPuzzleFriend>();
+				if(k!=null){
+					k.execute();
+					k.collider.enabled=false;
+				}
+
+			}
+		} else {
+			GameObject bookcasePuzzle = GameObject.FindGameObjectWithTag ("BookcasePuzzle");
+			if(bookcasePuzzle!=null) bookcasePuzzle.SetActive(false);
 		}
 		
 		if(!mainMenuOrder && GameObject.FindGameObjectWithTag("IntroCamera")!=null) GameObject.FindGameObjectWithTag("IntroCamera").GetComponent<TutorialStartCamera>().isActivated=true;

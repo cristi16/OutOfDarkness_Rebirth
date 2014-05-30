@@ -103,7 +103,12 @@ public class TextTrigger : MonoBehaviour {
 			helpManager.hideHelp();			
 		}
 	}
-	
+
+	public void ActivateTextTrigger(){
+		ShowMessages();
+		if(removeControl) controller.removeControl();
+	}
+
 	void OnTriggerExit(Collider other){
 		if(other.tag=="Kid" && showManyTimes) shown=false;
 		if(showText.showing){ 

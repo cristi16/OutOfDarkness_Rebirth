@@ -14,7 +14,7 @@ public class GameObjectEnabler : MonoBehaviour {
 		interactiveObject = GetComponent<InteractiveCollider>();
 	}
 	
-	void Enable(){
+	public void Enable(){
 		foreach(GameObject g in gameObjectsToBeEnabled) if(g!=null) g.SetActive(true);
 	}
 	

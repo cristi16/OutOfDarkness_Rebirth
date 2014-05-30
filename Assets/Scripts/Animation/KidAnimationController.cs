@@ -7,8 +7,8 @@ public class KidAnimationController : MonoBehaviour
 {
 	public float animSpeed = 1.5f;				// a public setting for overall animator animation speed
 
-	private Animator anim;							// a reference to the animator on the character
-	private AnimatorStateInfo currentBaseState;			// a reference to the current state of the animator, used for base layer
+	internal Animator anim;							// a reference to the animator on the character
+	protected AnimatorStateInfo currentBaseState;			// a reference to the current state of the animator, used for base layer
 
 	static int idleState = Animator.StringToHash("Base Layer.Idle");	
 	static int walkState = Animator.StringToHash("Base Layer.Walk");	
@@ -17,15 +17,18 @@ public class KidAnimationController : MonoBehaviour
 	static int strafeRightState = Animator.StringToHash("Base Layer.Strafe_Right");
 	static int strafeLeftState = Animator.StringToHash("Base Layer.Strafe_Left");
 	
-	private TP_Controller controller;
+	protected TP_Controller controller;
 	internal bool hasControl = true;
 
-	void Start ()
+	protected bool moving=false;
+	protected bool firstTime=true;
+	public bool use=false;
+	protected void Start ()
 	{
 		// initialising reference variables
 		anim = GetComponent<Animator>();					  
 		
-		controller = transform.parent.GetComponent<TP_Controller>();
+		controller = GameObject.FindGameObjectWithTag("Kid").GetComponentInChildren<TP_Controller>();
 	}
 	
 	void FixedUpdate ()
@@ -70,5 +73,12 @@ public class KidAnimationController : MonoBehaviour
 		hasControl = false;
 		anim.SetFloat("Speed", 0);
 		anim.SetFloat("Direction", 0);
+	}
+
+	public virtual void Walk(){
+
+	}
+
+	public virtual void Stop(){
 	}
 }

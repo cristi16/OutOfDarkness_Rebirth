@@ -73,17 +73,32 @@ public class TP_Motor : MonoBehaviour {
 
 		//float angle = Vector3.Angle(Camera.main.transform.forward,transform.forward);
 		//Debug.Log(angle-controller.YRotation);
+		*/
 
+		float angle = Camera.main.transform.localRotation.eulerAngles.y - controller.YRotation;
+		angle = angle % 360;
+		if (angle < 0)
+						angle += 360;
+		//Debug.Log (angle);
+
+		/*
 		if (moveVector.x > 0 || moveVector.z > 0) {
-			float rotateInfluence = Time.deltaTime * 60f * 1.5f;
 
-			if(rotatingHead>140f)
-			{
-				YOffset+=rotateInfluence;
-			}
-			if(rotatingHead<40f)
+			float rotateInfluence = Time.deltaTime * 60f * 1f;
+
+			if(angle>180f && angle<270f)
 			{
 				YOffset-=rotateInfluence;
+			}
+			if(angle>90f && angle <180f)
+			{
+				YOffset+=rotateInfluence;
+			} else {
+				if(YOffset>0.1f){
+					YOffset-=rotateInfluence;
+				} else if(YOffset<-0.1f){
+					YOffset+=rotateInfluence;
+				}
 			}
 		}
 		*/

@@ -173,7 +173,8 @@ public class TP_Controller : MonoBehaviour {
 		if (hr>0.3f) 
 			YRotation += rotateInfluence * rotationCoef * hr;  
 		
-		
+		YRotation = YRotation % 360;
+		if (YRotation < 0) YRotation += 360;
 		CameraController.SetYRotation(YRotation+motor.YOffset);
 
 
