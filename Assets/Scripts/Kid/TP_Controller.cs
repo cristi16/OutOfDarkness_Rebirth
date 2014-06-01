@@ -93,11 +93,37 @@ public class TP_Controller : MonoBehaviour {
 		audio.pitch=1.0f;
 		audio.PlayOneShot(audio.clip);
 	}
-	
+
+	public void EnableDisableFlashlights(bool enable){
+
+		if (flashlights [0].light.enabled != enable && (!enable || player_sneak.canGetUp)) {
+			foreach(GameObject flashlight in flashlights){
+				//if(TP_Motor.oculusRift) flashlight.light.enabled=true;
+				//else 
+
+				/*if(flashlight.GetComponent<AudioSource>()!=null){
+					if(enable){
+						flashlight.GetComponent<LanternLight>().NormalMidangle();
+					} else {
+						flashlight.GetComponent<LanternLight>().LowMidangle();
+					}
+				}*/
+				flashlight.light.enabled=enable;
+
+			}
+
+			FlashlightSound(enable);
+		}
+
+	}
+
 	public void EnableDisableFlashlights(){
 		foreach(GameObject flashlight in flashlights){
-			if(TP_Motor.oculusRift) flashlight.light.enabled=true;
-			else flashlight.light.enabled=!flashlight.light.enabled;
+			//if(TP_Motor.oculusRift) flashlight.light.enabled=true;
+			//else 
+				flashlight.light.enabled=!flashlight.light.enabled;
+				
+
 			if(flashlight.light.enabled){
 				FlashlightSound(true);
 			} else {				
@@ -159,7 +185,7 @@ public class TP_Controller : MonoBehaviour {
 
 	void RotateOculus(){
 		// compute for key rotation
-		float rotateInfluence = Time.deltaTime * 60f * 1f;
+		float rotateInfluence = Time.deltaTime * 60f * 1.5f;
 		
 		if (Input.GetKey(KeyCode.Q)) 
 			YRotation -= rotateInfluence * rotationCoef;  
@@ -186,7 +212,7 @@ public class TP_Controller : MonoBehaviour {
 			XRotation += rotateInfluence * rotationCoef * vr;  
 		
 		//comment here to remove second analog going up and down
-		//CameraController.SetXRotation(XRotation);
+		CameraController.SetXRotation(XRotation);
 
 		}
 
@@ -275,7 +301,7 @@ public class TP_Controller : MonoBehaviour {
 		{			
 			if(player_sneak.getRun()){
 				audio.clip = audioManager.kidRunning;			
-				audio.pitch=1.9f;
+				audio.pitch=1.55f;
 			} else if(player_sneak.getSneak()){
 				audio.clip = audioManager.kidSneaking;
 				audio.pitch=1.0f;

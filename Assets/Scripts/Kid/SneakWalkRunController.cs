@@ -14,15 +14,25 @@ public class SneakWalkRunController : MonoBehaviour {
 	private LevelState level;
 	private float previousSneakAxis=0f;
 	private float previousRunAxis=0f;
+	private TP_Controller controller;
+
+	public bool canGetUp=true;
 	
 	// Use this for initialization
 	void Start () {
 		motor = gameObject.GetComponent<TP_Motor>();		
 		level = LevelState.getInstance();
+		controller=gameObject.GetComponent<TP_Controller>();
 	}
 	
 	// Update is called once per frame
 	void Update () {						
+
+		if (!canGetUp) {
+			sneak=true;
+			run=false;
+			return;
+		}
 
 		bool stopMethod = false;
 		if((Input.GetButtonUp("Run") || (previousRunAxis!=0f && Input.GetAxis("Run")==0f)))
@@ -42,6 +52,7 @@ public class SneakWalkRunController : MonoBehaviour {
 						return;
 
 
+
 		if((Input.GetButton("Run") || Input.GetAxis("Run")>0.5f) && level.runActivated)
 		{
 			run=true;
@@ -53,19 +64,38 @@ public class SneakWalkRunController : MonoBehaviour {
 			{
 				sneak = true;
 				run = false;
-			}
-			else
-			{
+
+			} else {
 				if( (Time.time - lastRelease) > 0.1f ){
 					sneak = false;
 					run=false; 
 				}
+
+
 			}
-		}		
+
+		}	
+
+		if(!(Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)){
+			controller.EnableDisableFlashlights(level.flashlightActivated);
+		} else {
+			controller.EnableDisableFlashlights(false);
+		}
+
+		if((Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f) && (Input.GetButton("Run") || Input.GetAxis("Run")>0.5f)){
+			sneak=true;
+			run=false;
+			controller.EnableDisableFlashlights(false);
+		}
+
 	}
-	
+
+	public bool Moving(){
+		return  motor.moveVector != Vector3.zero;
+	}
+
 	public bool getSneak(){
-		return sneak;
+		return sneak || !canGetUp;
 	}
 	
 	public void setSneak(bool temp){

@@ -17,6 +17,8 @@ public class LanternLight : MonoBehaviour {
 	
 	private float lightInterval;
 	private float angleInterval;
+
+	private float originalMidAngle;
 	
 	// Use this for initialization
 	void Start () {
@@ -24,11 +26,33 @@ public class LanternLight : MonoBehaviour {
 		
 		midLight = lantern.light.intensity;
 		midAngle = lantern.light.spotAngle;		
-		
+		originalMidAngle = midAngle;
+
+
+		CalculatePercentages ();
+	}
+
+	public void CalculatePercentages(){
 		lightInterval = (midLight*(1+lightPercentage)- midLight*(1-lightPercentage))/1f;
 		angleInterval = (midAngle*(1+anglePercentage)- midAngle*(1-anglePercentage))/0.4f;
 	}
-	
+
+	public void LowMidangle(){
+		if (midAngle == originalMidAngle) {
+			midAngle = originalMidAngle / 3f;
+			light.spotAngle = midAngle;
+			CalculatePercentages ();
+		}
+	}
+
+	public void NormalMidangle(){
+		if (midAngle != originalMidAngle) {
+			midAngle = originalMidAngle;
+			light.spotAngle = midAngle;
+			CalculatePercentages ();
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if(lightGoingUp){

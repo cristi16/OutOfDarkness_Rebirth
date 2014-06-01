@@ -69,7 +69,7 @@ public class NunStateMachine : StateMachineBase {
 	private MotionBlur[] cameraMotionBlur;	
 	private Light redLight;
 	private bool willDeactivateChaseElements=false;
-			
+	
 	protected override void OnAwake()
 	{	
 		//GET COMPONENTS
@@ -96,7 +96,7 @@ public class NunStateMachine : StateMachineBase {
 		currentState = NunStates.Default;
 	}		
 	
-		
+	
 	// Debugging FoV
 	void LateUpdate()
 	{	
@@ -112,7 +112,7 @@ public class NunStateMachine : StateMachineBase {
 		rotation = Quaternion.Euler(new Vector3(0, -viewAngle, 0));
 		Debug.DrawLine(transform.position, transform.position + rotation * transform.forward * chaseRange, chaseColor);
 	}
-		
+	
 	#region Default
 	
 	protected void checkIfChasingNun(){
@@ -121,6 +121,8 @@ public class NunStateMachine : StateMachineBase {
 	
 	protected virtual IEnumerator Default_EnterState()
 	{		
+		Debug.Log ("Abandon Chase Investigate");
+		checkIfChasingNun (); 
 		yield return null;
 	}
 	
@@ -145,10 +147,11 @@ public class NunStateMachine : StateMachineBase {
 		StopCoroutine("GoToState");		
 		
 		if(!chaseMusic.isPlaying) audioFeedback.PlayOneShot(audioManager.nunSecondAlert);
-		//NunAlertManager.getInstance().AddNun(this,false);
+		
+		NunAlertManager.getInstance().AddNun(this,false);
 		//In case the nun goes was going out of a chase
-		//CancelInvoke("deactivateChaseElements");
-		//CancelInvoke("destroyNunAfterChase");				
+		CancelInvoke("deactivateInvestigationElements");
+		CancelInvoke("destroyNunAfterChase");				
 		
 		yield return null;
 	}
@@ -163,25 +166,33 @@ public class NunStateMachine : StateMachineBase {
 		Vector2 nunPosition = new Vector2(transform.position.x, transform.position.z);
 		Vector2 investPosition = new Vector2(agent.destination.x, agent.destination.z);
 		
-		if (Vector2.Distance(nunPosition, investPosition) <= agent.stoppingDistance + 0.1f) //distraction reached
-		{ 	
-			if(!lookingAround)
-			{
+		if (Vector2.Distance (nunPosition, investPosition) <= agent.stoppingDistance + 0.1f) { //distraction reached 	
+			if (!lookingAround) {
 				relativeForwardRotation = transform.rotation;
-				StartCoroutine(GoToState(investigationTime, NunStates.Default));
+				StartCoroutine (GoToState (investigationTime, NunStates.Default));
 				lookingAround = true;
+			} else {
+				LookAround ();		
 			}
-			else
-			{
-				LookAround();		
-			}
+		} else {
+			PlayWalkingAudioClip ();
 		}
-		else
-			PlayWalkingAudioClip();
 	}
 	#endregion
 	
 	#region ChasingKid
+	
+	protected void activateInvestigationElements(){
+		CancelInvoke("deactivateInvestigationElements");
+		CancelInvoke("destroyNunAfterChase");
+		
+		NunAlertManager.getInstance().AddNun(this,false);
+	}
+	
+	protected void deactivateInvestigationElements(){
+		NunAlertManager.getInstance().RemoveNun(this, false);							
+		
+	}
 	
 	protected void activateChaseElements(){
 		CancelInvoke("deactivateChaseElements");
@@ -202,7 +213,9 @@ public class NunStateMachine : StateMachineBase {
 		foreach(MotionBlur b in cameraMotionBlur){
 			b.enabled = false;
 		}
-		NunAlertManager.getInstance().RemoveNun(this, true);			
+		NunAlertManager.getInstance().RemoveNun(this, false);			
+		NunAlertManager.getInstance().RemoveNun(this, true);	
+		
 		if(redLight!=null) redLight.enabled=false;
 		
 		if(GetComponentInChildren<DisappearAfterSuccessfulHiding>()!=null){
@@ -233,7 +246,7 @@ public class NunStateMachine : StateMachineBase {
 	{
 		PlayRunningAudioClip();
 		float distanceToKid = Vector2.SqrMagnitude(new Vector2(transform.position.x, transform.position.z) 
-			- new Vector2(kid.transform.position.x, kid.transform.position.z));
+		                                           - new Vector2(kid.transform.position.x, kid.transform.position.z));
 		if(distanceToKid < stopDistanceOnCatch * stopDistanceOnCatch) //alternatives: raycast & agent.remaining distance
 		{
 			agent.Stop(true);
@@ -242,25 +255,23 @@ public class NunStateMachine : StateMachineBase {
 			currentState = NunStates.CaughtKid;
 		}
 		
-		if(hidingController.hiding == true)
-		{
-			hidingSpots = hidingController.GetHidingSpotsInRange();
-			Debug.Log("hiding count: " + hidingSpots.Count);
+		if (hidingController.hiding) {
+			hidingSpots = hidingController.GetHidingSpotsInRange ();
+			Debug.Log ("hiding count: " + hidingSpots.Count);
 			RaycastHit hit;
-			int layerMask = 1 << LayerMask.NameToLayer("Player");
-			layerMask += 1 << LayerMask.NameToLayer("Wall");
-			if(Physics.Raycast(transform.position, kid.transform.position - transform.position, out hit, 
-				investigationRange, layerMask))
-			{
-				if(hit.transform.tag == kid.tag)
+			int layerMask = 1 << LayerMask.NameToLayer ("Player");
+			layerMask += 1 << LayerMask.NameToLayer ("Wall");
+			if (Physics.Raycast (transform.position, kid.transform.position - transform.position, out hit, 
+			                     investigationRange, layerMask)) {
+				if (hit.transform.tag == kid.tag)
 					currentState = NunStates.SawKidHiding;
 				else
 					currentState = NunStates.MissedKidHiding;
-			}
-			else
+			} else
 				currentState = NunStates.MissedKidHiding;
-			CancelInvoke("SetKidDestination");
+			CancelInvoke ("SetKidDestination");
 		}
+		//}
 	}
 	#endregion
 	
@@ -268,7 +279,7 @@ public class NunStateMachine : StateMachineBase {
 	protected IEnumerator CaughtKid_EnterState()
 	{
 		lookRotation = Quaternion.LookRotation( (transform.position + new Vector3(0, agent.height, 0)) 
-			- kid.transform.position);
+		                                       - kid.transform.position);
 		transform.forward = kid.transform.position - transform.position;
 		transform.forward = new Vector3(transform.forward.x, 0f, transform.forward.z);
 		mashTime = mashingLength * 0.3f;
@@ -281,7 +292,7 @@ public class NunStateMachine : StateMachineBase {
 		kid.transform.rotation = Quaternion.Slerp(kid.transform.rotation, lookRotation, 4f * Time.deltaTime);
 		Vector3 localAngles = cameraTransform.localEulerAngles;
 		cameraTransform.localEulerAngles = new Vector3(Mathf.LerpAngle(localAngles.x, 0, 4f * Time.deltaTime),
-			localAngles.y, localAngles.z);		
+		                                               localAngles.y, localAngles.z);		
 		
 		if(Input.GetButtonDown("Mash"))
 		{
@@ -296,7 +307,7 @@ public class NunStateMachine : StateMachineBase {
 		mashRatio = Mathf.Clamp(mashTime, 0f, mashingLength) / mashingLength;
 		
 		nunModel.transform.localEulerAngles = new Vector3(30f * mashRatio, nunModel.transform.localEulerAngles.y,
-			nunModel.transform.localEulerAngles.z);
+		                                                  nunModel.transform.localEulerAngles.z);
 		if(mashRatio == 0)
 		{
 			StopCoroutine("FlashInteractionKey");
@@ -339,7 +350,7 @@ public class NunStateMachine : StateMachineBase {
 			kid.transform.rotation = Quaternion.Slerp(kid.transform.rotation, lookRotation, 4f * Time.deltaTime);
 			Vector3 localAngles = cameraTransform.localEulerAngles;
 			cameraTransform.localEulerAngles = new Vector3(Mathf.LerpAngle(localAngles.x, 0, 4f * Time.deltaTime),
-				localAngles.y, localAngles.z);
+			                                               localAngles.y, localAngles.z);
 		}
 	}
 	#endregion
@@ -374,12 +385,12 @@ public class NunStateMachine : StateMachineBase {
 		//add kid hiding spot just to scare kid
 		hidingSpots.Add(hidingController.GetCurrentHidingSpot());
 		// since we always add the current hiding place the count can't be 0
-//		if(hidingSpots.Count == 0)
-//		{
-//			deactivateChaseElements();
-//			ActivateDistractionInvestigation(transform);			
-//			yield break;
-//		}
+		//		if(hidingSpots.Count == 0)
+		//		{
+		//			deactivateChaseElements();
+		//			ActivateDistractionInvestigation(transform);			
+		//			yield break;
+		//		}
 		
 		currentNode = (int)Random.Range(0, hidingSpots.Count);
 		agent.SetDestination(hidingSpots[currentNode]);
@@ -399,7 +410,7 @@ public class NunStateMachine : StateMachineBase {
 	
 	protected IEnumerator GetsKidOut_EnterState()
 	{
-		agent.SetDestination(hidingController.GetCurrentHidingSpot());
+		agent.SetDestination(kid.transform.position);
 		yield return null;	
 	}
 	
@@ -410,13 +421,13 @@ public class NunStateMachine : StateMachineBase {
 		
 		float distanceX = Mathf.Abs(transform.position.x - agent.destination.x);
 		float distanceZ = Mathf.Abs(transform.position.z - agent.destination.z);
-
+		
 		if (distanceX <= agent.stoppingDistance && distanceZ <= agent.stoppingDistance)
 		{
 			agent.Stop();
-			if(hidingController.isHidden){
-				hidingController.hidingSpot.DisableHidingSpot();
-				hidingController.ComeOut();			
+			if(hidingController.hiding){
+				//hidingController.hidingSpot.DisableHidingSpot();
+				hidingController.ComeOut(transform);			
 			}
 		}
 	}
@@ -444,16 +455,16 @@ public class NunStateMachine : StateMachineBase {
 	{
 		RaycastHit hit;	
 		Vector3 targetDir = kid.transform.position - transform.position;
-        float angle= Vector3.Angle(targetDir, transform.forward);
+		float angle= Vector3.Angle(targetDir, transform.forward);
 		
-        if (angle > viewAngle) //if outside cone of vision
+		if (angle > viewAngle) //if outside cone of vision
 			return LineOfSight.NotInRange;
 		if(Physics.Raycast(transform.position, targetDir, out hit, Mathf.Infinity))
 		{
 			if(hit.collider == kid.collider)
 			{
 				if (hit.distance <= chaseRange) //if in chase range
-		            return LineOfSight.ChaseRange;
+					return LineOfSight.ChaseRange;
 				else if(hit.distance <= investigationRange)
 					return LineOfSight.InvestigationRange;
 			}
@@ -510,14 +521,14 @@ public class NunStateMachine : StateMachineBase {
 		while(true)
 		{
 			displayKey = true;
-		 	yield return new WaitForSeconds(0.5f);
-		 	displayKey = false;
-		 	yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(0.5f);
+			displayKey = false;
+			yield return new WaitForSeconds(0.5f);
 		}
 	}
 	
 	IEnumerator SetNextNode(float timeToWait, NunStates stateToGo)
-	{
+	{ 
 		yield return new  WaitForSeconds(timeToWait);
 		if(hidingSpots.Count == 0)
 		{
@@ -543,7 +554,7 @@ public class NunStateMachine : StateMachineBase {
 		
 		float distanceX = Mathf.Abs(transform.position.x - agent.destination.x);
 		float distanceZ = Mathf.Abs(transform.position.z - agent.destination.z);
-
+		
 		if (distanceX <= agent.stoppingDistance && distanceZ <= agent.stoppingDistance && !isWaiting)
 		{	
 			isWaiting = true;

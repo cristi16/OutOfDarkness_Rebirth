@@ -26,10 +26,10 @@ public class Headbobber : MonoBehaviour{
 	 private float sneakingAmountMultiplier=0f;
 	 private float runningAmountMultiplier=0f;
 	 
-	 private float updatedMidPoint;
+	 private float updatedMidPoint;	 
 
 	void Start(){
-		if(transform.parent!=null) sneak = transform.parent.GetComponent<SneakWalkRunController>();
+		sneak = GameObject.FindGameObjectWithTag("Kid").GetComponent<SneakWalkRunController>();
 		updatedMidPoint=midpoint;
 		hidingController = GameObject.FindGameObjectWithTag("Kid").GetComponent<HidingController>();
 		if(sneak!=null) sneakingMultiplier = sneak.sneakingMultiplier;
@@ -42,10 +42,12 @@ public class Headbobber : MonoBehaviour{
 	 }
 
 	public Vector3 HeadBobbing(Vector3 cameraPosition){
-		if(((Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)) && !hidingController.isHiddenOrHidingOrComingOut()){
+		if(sneak.getSneak()&&(!sneak.canGetUp || (Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f))){
 			updatedMidPoint=Mathf.Clamp(updatedMidPoint-goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
 		} else {
-			updatedMidPoint=Mathf.Clamp(updatedMidPoint+goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
+			if(sneak.canGetUp){
+				updatedMidPoint=Mathf.Clamp(updatedMidPoint+goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
+			}
 		}
 		
 		waveslice = 0.0f; 
@@ -56,7 +58,7 @@ public class Headbobber : MonoBehaviour{
 		} 
 		else { 
 			waveslice = Mathf.Sin(timer);
-			if(!moveWhileStanding) timer = timer + ((Input.GetButton("Run") || Input.GetAxis("Run")>0.5f)?bobbingSpeed*runningMultiplier:((Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)?bobbingSpeed*sneakingMultiplier:bobbingSpeed)); 
+			if(!moveWhileStanding) timer = timer + ((Input.GetButton("Run") || Input.GetAxis("Run")>0.5f)?bobbingSpeed*runningMultiplier:(sneak.getSneak() && (Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)?bobbingSpeed*sneakingMultiplier:bobbingSpeed)); 
 			else timer += bobbingSpeed;
 			
 			if (timer > Mathf.PI * 2) { 
@@ -65,7 +67,7 @@ public class Headbobber : MonoBehaviour{
 		} 
 		if (waveslice != 0) { 		
 			if(sneak!=null)
-				translateChange = waveslice * ((Input.GetButton("Run") || Input.GetAxis("Run")>0.5f)?bobbingAmount*runningAmountMultiplier:((Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)?bobbingAmount*sneakingAmountMultiplier:bobbingAmount));
+				translateChange = waveslice * ((Input.GetButton("Run") || Input.GetAxis("Run")>0.5f)?bobbingAmount*runningAmountMultiplier:(sneak.getSneak()&&(Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)?bobbingAmount*sneakingAmountMultiplier:bobbingAmount));
 			else 
 				translateChange = waveslice * (bobbingAmount);
 			
@@ -85,10 +87,12 @@ public class Headbobber : MonoBehaviour{
 
 	 void Update () { 		
 		
-		if((Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f) && !hidingController.isHiddenOrHidingOrComingOut()){
+		if(sneak.getSneak()&&(!sneak.canGetUp || (Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f))){
 			updatedMidPoint=Mathf.Clamp(updatedMidPoint-goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
 		} else {
-			updatedMidPoint=Mathf.Clamp(updatedMidPoint+goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
+			if(sneak.canGetUp){
+				updatedMidPoint=Mathf.Clamp(updatedMidPoint+goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
+			}
 		}
 		
 	    waveslice = 0.0f; 
@@ -99,7 +103,7 @@ public class Headbobber : MonoBehaviour{
 		    } 
 		    else { 
 		       waveslice = Mathf.Sin(timer);
-				if(!moveWhileStanding) timer = timer + ((Input.GetButton("Run") || Input.GetAxis("Run")>0.5f)?bobbingSpeed*runningMultiplier:((Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)?bobbingSpeed*sneakingMultiplier:bobbingSpeed)); 
+			if(!moveWhileStanding) timer = timer + ((Input.GetButton("Run") || Input.GetAxis("Run")>0.5f)?bobbingSpeed*runningMultiplier:(sneak.getSneak()&&(Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)?bobbingSpeed*sneakingMultiplier:bobbingSpeed)); 
 				else timer += bobbingSpeed;
 		       
 		       if (timer > Mathf.PI * 2) { 
@@ -108,7 +112,7 @@ public class Headbobber : MonoBehaviour{
 		    } 
 	    if (waveslice != 0) { 		
 			if(sneak!=null)
-	       		translateChange = waveslice * ((Input.GetButton("Run") || Input.GetAxis("Run")>0.5f)?bobbingAmount*runningAmountMultiplier:((Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)?bobbingAmount*sneakingAmountMultiplier:bobbingAmount));
+				translateChange = waveslice * ((Input.GetButton("Run") || Input.GetAxis("Run")>0.5f)?bobbingAmount*runningAmountMultiplier:(sneak.getSneak()&&(Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f)?bobbingAmount*sneakingAmountMultiplier:bobbingAmount));
 			else 
 				translateChange = waveslice * (bobbingAmount);
 			

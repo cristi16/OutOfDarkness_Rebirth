@@ -29,8 +29,5 @@ public class HidingSpot : MonoBehaviour {
 	}
 	
 	void OnTriggerStay(Collider other){
-		if(other.tag=="Kid" && hidingController.hidingMode && Input.GetButton("Interaction") && !hidingController.hiding && canUse){
-			hidingController.Hide(transform.parent.GetComponentInChildren<HidingPoint>().transform,transform.parent.GetComponentInChildren<OutPoint>().transform,this);
-		}
 	}
 }

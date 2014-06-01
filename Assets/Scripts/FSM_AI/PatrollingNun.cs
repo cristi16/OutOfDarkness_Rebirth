@@ -13,6 +13,7 @@ public class PatrollingNun : NunStateMachine {
 	
 	protected override IEnumerator Default_EnterState()
 	{
+		deactivateChaseElements ();
 		int closestNode = 0;
 		float minDist = 999999f;
 		for (int i = 0; i < nodes.Length; i++){

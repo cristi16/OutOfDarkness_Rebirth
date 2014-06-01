@@ -24,7 +24,8 @@ public class ActivateNunInvestigation : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(){
-		Invoke ("AddNun",10f);
-		Invoke ("RemoveNun",20f);
+		//Invoke ("AddNun",10f);
+		//Invoke ("RemoveNun",20f);
+		//Destroy (transform.gameObject, 20f);
 	}
 }

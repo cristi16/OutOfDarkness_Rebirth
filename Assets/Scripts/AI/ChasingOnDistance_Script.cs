@@ -32,7 +32,7 @@ public class ChasingOnDistance_Script : MonoBehaviour {
 	
 	void OnTriggerStay(Collider collider){
 		
-		if(hidingController.isHidden) return;
+		if(hidingController.hiding) return;
 		
 		if(transform.parent.CompareTag("Nun"))
 		{

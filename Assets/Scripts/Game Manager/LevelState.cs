@@ -267,6 +267,13 @@ public class LevelState : MonoBehaviour {
 			}
 		}
 
+		if (chapter >= 0) {
+			if(GameObject.FindGameObjectWithTag("Prologue")!=null){
+				GameObject.FindGameObjectWithTag("Prologue").GetComponent<GameObjectDestroyer>().Destroy();
+				GameObject.FindGameObjectWithTag("Prologue").GetComponent<GameObjectEnabler>().Enable();
+			}
+		}
+
 		if (solvedKidPuzzle) {
 			GameObject puzzle = GameObject.FindGameObjectWithTag ("KidPuzzle");
 			if (puzzle != null)
