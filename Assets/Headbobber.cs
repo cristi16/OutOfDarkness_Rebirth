@@ -19,6 +19,7 @@ public class Headbobber : MonoBehaviour{
 	 private HidingController hidingController;
 	
 	 public float lowerMidpointLimit=-1f;
+	 public float hidingMidpointLimit = -1f;
 	 public float goingUpDownRatio=1.5f;
 	
 	 private float sneakingMultiplier=0f;
@@ -27,6 +28,12 @@ public class Headbobber : MonoBehaviour{
 	 private float runningAmountMultiplier=0f;
 	 
 	 private float updatedMidPoint;	 
+
+	 private float originalPerspective=90f;
+	 private bool changingPerspective=false;
+	 private float perspectiveChangeSpeed=0f;
+	 private float timeToChangePerspective=1f;
+	 private float timerPerspective=0f;
 
 	void Start(){
 		sneak = GameObject.FindGameObjectWithTag("Kid").GetComponent<SneakWalkRunController>();
@@ -39,11 +46,16 @@ public class Headbobber : MonoBehaviour{
 
 		runningMultiplier = 1.3f;
 		runningAmountMultiplier = 1.3f;
+		if(camera!=null) originalPerspective = camera.fieldOfView;
 	 }
 
 	public Vector3 HeadBobbing(Vector3 cameraPosition){
 		if(sneak.getSneak()&&(!sneak.canGetUp || (Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f))){
-			updatedMidPoint=Mathf.Clamp(updatedMidPoint-goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
+			if(hidingController.hiding){
+				updatedMidPoint=Mathf.Clamp(updatedMidPoint-goingUpDownRatio*Time.deltaTime,hidingMidpointLimit,midpoint);
+			} else {
+				updatedMidPoint=Mathf.Clamp(updatedMidPoint-goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
+			}
 		} else {
 			if(sneak.canGetUp){
 				updatedMidPoint=Mathf.Clamp(updatedMidPoint+goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
@@ -85,10 +97,34 @@ public class Headbobber : MonoBehaviour{
 		return cameraPosition;
 	}
 
+	public void StartPerspectiveChange(float change){
+		changingPerspective = true;
+		perspectiveChangeSpeed = change/timeToChangePerspective;
+		timerPerspective = 0f;
+	}
+
+	public void RevertPerspectiveChange(){
+		changingPerspective = true;
+		perspectiveChangeSpeed = (originalPerspective - camera.fieldOfView)/timeToChangePerspective;
+		timerPerspective = 0f;
+	}
+
 	 void Update () { 		
-		
+
+		if (changingPerspective) {
+			timerPerspective+=Time.deltaTime;
+			camera.fieldOfView+=perspectiveChangeSpeed*Time.deltaTime;
+			if(timerPerspective>=timeToChangePerspective){
+				changingPerspective=false;
+			}
+		}
+
 		if(sneak.getSneak()&&(!sneak.canGetUp || (Input.GetButton("Sneak") || Input.GetAxis("Sneak")>0.5f))){
-			updatedMidPoint=Mathf.Clamp(updatedMidPoint-goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
+			if(hidingController.hiding){
+				updatedMidPoint=Mathf.Clamp(updatedMidPoint-goingUpDownRatio*Time.deltaTime,hidingMidpointLimit,midpoint);
+			} else {
+				updatedMidPoint=Mathf.Clamp(updatedMidPoint-goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);
+			}
 		} else {
 			if(sneak.canGetUp){
 				updatedMidPoint=Mathf.Clamp(updatedMidPoint+goingUpDownRatio*Time.deltaTime,lowerMidpointLimit,midpoint);

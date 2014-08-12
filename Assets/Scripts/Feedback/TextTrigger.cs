@@ -83,8 +83,10 @@ public class TextTrigger : MonoBehaviour {
 			
 			//Add Nursery Rhyme Message
 			if(variable==GlobalVariables.NurseryRhymePiece){
+				LevelState.getInstance().rhymesFound++;
 				showText.ShowMessage("I've found "+(LevelState.getInstance().rhymesFound+1)+" out of 4 pieces so far.", xPosition, yPosition);
 			} else if(variable==GlobalVariables.NurseryRhymes){
+				LevelState.getInstance().rhymesFound++;
 				showText.ShowMessage("I've found "+(LevelState.getInstance().rhymesFound)+" out of 4 pieces so far.", xPosition, yPosition);
 			}
 			

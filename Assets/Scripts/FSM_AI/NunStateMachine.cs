@@ -460,8 +460,8 @@ public class NunStateMachine : StateMachineBase {
 		if (angle > viewAngle) //if outside cone of vision
 			return LineOfSight.NotInRange;
 		if(Physics.Raycast(transform.position, targetDir, out hit, Mathf.Infinity))
-		{
-			if(hit.collider == kid.collider)
+		{ 
+ 			if(hit.collider == kid.GetComponentInChildren<OVRCameraController>().collider)
 			{
 				if (hit.distance <= chaseRange) //if in chase range
 					return LineOfSight.ChaseRange;

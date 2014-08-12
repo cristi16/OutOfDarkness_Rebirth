@@ -73,6 +73,7 @@ public class OVRCamera : OVRComponent
 	static private List<OVRCameraGameObject> CameraLocalSetList = new List<OVRCameraGameObject>();
 
     static private RenderTexture[] CameraTexture = new RenderTexture[2];
+	private float fov;
 	#endregion
 	
 	#region Monobehaviour Member Functions	
@@ -90,7 +91,6 @@ public class OVRCamera : OVRComponent
 	new void Start()
 	{
 		base.Start ();
-		
 		// Get the OVRCameraController
 		CameraController = gameObject.transform.parent.GetComponent<OVRCameraController>();
 		
@@ -163,7 +163,10 @@ public class OVRCamera : OVRComponent
 			GL.wireframe = false;
 	}
 	#endregion
-	
+
+	void LateUpdate(){
+	}
+
 	#region OVRCamera Functions
 
 	/// <summary>

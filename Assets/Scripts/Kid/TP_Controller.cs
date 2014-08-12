@@ -204,6 +204,11 @@ public class TP_Controller : MonoBehaviour {
 		CameraController.SetYRotation(YRotation+motor.YOffset);
 
 
+		if (Input.GetKey(KeyCode.I)) 
+			XRotation -= rotateInfluence * rotationCoef;  
+		if (Input.GetKey(KeyCode.K)) 
+			XRotation += rotateInfluence * rotationCoef; 
+
 		float vr = Input.GetAxis ("VerticalRotation");
 		
 		if (vr<-0.3f) 

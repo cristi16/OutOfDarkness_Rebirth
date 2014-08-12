@@ -37,9 +37,10 @@ public class NoiseTrigger : MonoBehaviour {
 
 		player_sneak = player.GetComponent<SneakWalkRunController>();
 	}		
-	
+	 
 	void OnTriggerStay(Collider collider){
 		// if the kid enters the trigger radius && the kid is not sneaking && the nun is not investigating or chasing
+		 
 		if(collider.CompareTag("Kid") && nun_ai.CurrentStateEqualTo(NunStateMachine.NunStates.Default)
 			&& !player_sneak.getSneak())
 		{
