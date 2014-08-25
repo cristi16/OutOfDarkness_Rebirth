@@ -217,7 +217,7 @@ public class TP_Controller : MonoBehaviour {
 			XRotation += rotateInfluence * rotationCoef * vr;  
 		
 		//comment here to remove second analog going up and down
-		//CameraController.SetXRotation(XRotation);
+		CameraController.SetXRotation(XRotation);
 
 		}
 

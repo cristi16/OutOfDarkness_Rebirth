@@ -33,6 +33,7 @@ public class LevelState : MonoBehaviour {
 	public bool mapActivated = true;
 	public bool sneakActivated = true;
 	public bool runActivated = true;
+	public bool notepadActivated = false;
 	internal bool shownMoveFeedback=false;	
 	public bool foundClueToKey=false;
 	public int rhymesFound=0;	
@@ -57,6 +58,7 @@ public class LevelState : MonoBehaviour {
 	internal int resolution;
 
 	public int chapter=-1;
+	public int objectives=0;
 
 	public static LevelState getInstance(){		
 		return instance;

@@ -9,6 +9,7 @@ public class ColliderEnabler : MonoBehaviour {
 	
 	private InteractiveTrigger hotSpot;
 	private InteractiveCollider interactiveObject;
+	public bool enableHelpIfColliderHasHelp=true;
 	
 	void Start () {
 		hotSpot = GetComponent<InteractiveTrigger>();
@@ -18,7 +19,7 @@ public class ColliderEnabler : MonoBehaviour {
 	public void Enable(){
 		foreach(Collider c in collidersToBeEnabled){ 
 			c.enabled=true;
-			if(c.GetComponent<HelpTrigger>()!=null){
+			if(enableHelpIfColliderHasHelp && c.GetComponent<HelpTrigger>()!=null){
 				c.GetComponent<HelpTrigger>().activateHelp();
 			}					
 		}

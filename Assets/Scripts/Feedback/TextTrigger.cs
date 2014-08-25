@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum GlobalVariables {None, NurseryRhymes,NurseryRhymePiece}
+public enum GlobalVariables {None, NurseryRhymes,NurseryRhymeCounter}
 
 public class TextTrigger : MonoBehaviour {
 	
@@ -82,9 +82,8 @@ public class TextTrigger : MonoBehaviour {
 			}
 			
 			//Add Nursery Rhyme Message
-			if(variable==GlobalVariables.NurseryRhymePiece){
-				LevelState.getInstance().rhymesFound++;
-				showText.ShowMessage("I've found "+(LevelState.getInstance().rhymesFound+1)+" out of 4 pieces so far.", xPosition, yPosition);
+			if(variable==GlobalVariables.NurseryRhymeCounter){
+				showText.ShowMessage("I've found "+(LevelState.getInstance().rhymesFound)+" out of 4 pieces so far.", xPosition, yPosition);
 			} else if(variable==GlobalVariables.NurseryRhymes){
 				LevelState.getInstance().rhymesFound++;
 				showText.ShowMessage("I've found "+(LevelState.getInstance().rhymesFound)+" out of 4 pieces so far.", xPosition, yPosition);
@@ -121,7 +120,7 @@ public class TextTrigger : MonoBehaviour {
 	
 	bool isGlobalVariableActivated(GlobalVariables gv){
 		if(gv==GlobalVariables.None) return false;
-		if(gv==GlobalVariables.NurseryRhymes) return LevelState.getInstance().rhymesFound>=4;
+		if(gv==GlobalVariables.NurseryRhymes || gv==GlobalVariables.NurseryRhymeCounter) return LevelState.getInstance().rhymesFound>=4;
 		return false;
 	}
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum HelpKeys{Sneak,Swap,Interact,Move,Flashlight,Map,Run,Quest,QuestCompleted,Hide,None}
+public enum HelpKeys{Sneak,Swap,Interact,Move,Flashlight,Map,Run,Quest,QuestCompleted,Hide,Notepad,None}
 
 public enum Player{Kid}
 

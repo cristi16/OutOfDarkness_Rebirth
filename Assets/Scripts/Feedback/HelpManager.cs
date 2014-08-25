@@ -14,6 +14,7 @@ public class HelpManager : MonoBehaviour {
 	public FeedbackKey questNotice;
 	public FeedbackKey questCompletedNotice;
 	public FeedbackKey hideNotice;
+	public FeedbackKey notepadHelp;
 		
 	public Queue<HelpKeys> keyQueue;
 	internal List<HelpKeys> feedbackShown;	
@@ -66,6 +67,9 @@ public class HelpManager : MonoBehaviour {
 			case HelpKeys.Hide:
 				return "Hide";
 				break;
+			case HelpKeys.Notepad:
+				return "Notepad";
+				break;
 		}
 		return null;
 	}
@@ -112,6 +116,10 @@ public class HelpManager : MonoBehaviour {
 							mapHelp.active=true;
 							activeKey=mapHelp;
 							break;
+						case HelpKeys.Notepad:
+							notepadHelp.active=true;
+							activeKey=notepadHelp;
+							break;
 						case HelpKeys.Run:
 							runHelp.active=true;
 							activeKey=runHelp;
@@ -135,7 +143,7 @@ public class HelpManager : MonoBehaviour {
 		}
 	}
 	
-	FeedbackKey GetActiveKey(){
+	internal FeedbackKey GetActiveKey(){
 		if(anyActiveKey()) return activeKey;
 		return null;
 	}

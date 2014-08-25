@@ -24,12 +24,27 @@ public class InteractiveTrigger : MonoBehaviour {
 	
 	internal bool returnControl=false;
 	private bool hasInteractiveCollider=true;
-	
+
+	public int playSoundAt=0;
+	private bool soundTimer=false;
+
 	private Key_Script key;
+	
 
 	public void DefineTextTrigger(){
 		if((triggerToActivate==null || !triggerToActivate.enabled) && transform.parent!=null){
 			triggerToActivate = transform.parent.GetComponentInChildren<TextTrigger>();		
+		}
+	}
+
+	void Update(){
+		if (soundTimer && Input.GetButtonUp("Interaction")) {
+			if(playSoundAt==0){
+				audioSource.PlayOneShot(audioClip);
+				soundTimer=false;
+			} else {
+				playSoundAt--;
+			}
 		}
 	}
 
@@ -60,11 +75,25 @@ public class InteractiveTrigger : MonoBehaviour {
 	
 	void OnTriggerStay(Collider col){
 		if(col.tag=="Kid"){
-			if(interactive!=null) interactive.inRange=true;
+			if(interactive!=null){
+				interactive.inRange=true;
+				/*RaycastHit hit;
+				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+				if (Physics.Raycast(ray, out hit)) {
+					Debug.Log(hit.collider.gameObject.name);
+				}
+				*/
+			}
 		}
 		if(col.CompareTag("Kid") && ((hasInteractiveCollider && interactive.mouseOver) || (!hasInteractiveCollider && triggerToActivate.canActivate))){
 			if((!hasInteractiveCollider || (Input.GetButton("Interaction"))) && timer < Time.time && !gui){
-				if(audioSource!=null && !audioSource.isPlaying && audioClip!=null) audioSource.PlayOneShot(audioClip);
+				if(audioSource!=null && !audioSource.isPlaying && audioClip!=null){
+					if(playSoundAt==0){
+						audioSource.PlayOneShot(audioClip);
+					} else {
+						soundTimer=true;
+					}
+				}
 				
 				gui = true;
 				

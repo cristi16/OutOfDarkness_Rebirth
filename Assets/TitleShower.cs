@@ -28,7 +28,7 @@ public class TitleShower : MonoBehaviour {
 		if (!started)
 						return;
 
-		if(Input.GetButton("Interaction")) fadingOut=true;
+		//if(Input.GetButton("Interaction")) fadingOut=true;
 
 		if (fadingIn) {
 			color.a+=(0.5f/timeToAppearDisappear) * Time.deltaTime;
@@ -60,10 +60,13 @@ public class TitleShower : MonoBehaviour {
 	}
 
 	void FadeIn(){
-		if (LevelState.getInstance ().chapter < chapter) {		
+		if (chapter==-1 || LevelState.getInstance ().chapter < chapter) {		
 			started = true;
 			fadingIn = true;
-			LevelState.getInstance ().chapter = chapter;
+			if(chapter!=-1) LevelState.getInstance ().chapter = chapter;
+			else{
+				LevelState.getInstance().objectives++;
+			}
 		}
 	}
 

@@ -13,7 +13,7 @@ public class KidPuzzleController : MonoBehaviour {
 	public GameObject bookcaseBeforePuzzle;
 	public GameObject bookcaseAfterPuzzle;
 	private TextTrigger puzzleSolvedTrigger;
-
+	public AudioSource audioSource;
 	
 	void Start () {
 		puzzleShower = GameObject.FindGameObjectWithTag ("PuzzleShower").guiTexture;
@@ -31,7 +31,8 @@ public class KidPuzzleController : MonoBehaviour {
 		    SolvePuzzle();
 			Debug.Log("Solved");
 			puzzleSolvedTrigger.ActivateTextTrigger();
-			audio.Play();
+			if(audioSource!=null) audioSource.Play();
+			else if(audio!=null) audio.Play ();
 		}
 	}
 

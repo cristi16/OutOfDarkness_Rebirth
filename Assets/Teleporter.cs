@@ -15,7 +15,7 @@ public class Teleporter : MonoBehaviour {
 		if (firstTime) {
 			transform.position = place.position;
 			LevelState.getInstance().flashlightActivated=true;
-			GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>().reduceVolumeTemp();
+			if(GameObject.FindGameObjectWithTag("Music")!=null) GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>().reduceVolumeTemp();
 			firstTime=false;
 		}
 	}
