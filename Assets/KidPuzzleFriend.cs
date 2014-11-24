@@ -5,7 +5,6 @@ public class KidPuzzleFriend : Action {
 
 	public GameObjectDestroyer god;
 	public GameObjectEnabler goe;
-	public ColliderEnabler ce;
 
 	// Use this for initialization
 	void Start () {
@@ -21,7 +20,6 @@ public class KidPuzzleFriend : Action {
 		Destroy (GetComponent<TextTrigger> ());
 		goe.Enable ();
 		god.Destroy ();
-		ce.Enable ();
 
 		if (transform.childCount>0) {
 			Transform aux = transform.GetChild(0);

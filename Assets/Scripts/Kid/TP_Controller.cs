@@ -11,6 +11,7 @@ public class TP_Controller : MonoBehaviour {
 	private AudioManager audioManager;
 	private MapManager mapManager;
 	private HelpManager helpManager;
+	public bool secondAnalogUpAndDown = false;
 
 	private GameObject[] flashlights;
 
@@ -217,7 +218,9 @@ public class TP_Controller : MonoBehaviour {
 			XRotation += rotateInfluence * rotationCoef * vr;  
 		
 		//comment here to remove second analog going up and down
-		CameraController.SetXRotation(XRotation);
+		if (secondAnalogUpAndDown) {
+			CameraController.SetXRotation (XRotation);
+		}
 
 		}
 
