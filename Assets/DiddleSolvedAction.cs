@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class DiddleSolvedAction : Action {
+public class DiddleSolvedAction : ActionOOD {
 	
 	public GameObject background;
 	public Texture2D solved;

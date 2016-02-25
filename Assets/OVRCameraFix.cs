@@ -10,7 +10,7 @@ public class OVRCameraFix : MonoBehaviour {
 		Screen.SetResolution(1024,512,true);
 
 		yield return new WaitForSeconds(0.2f);
-		GetComponent<OVRCameraController>().SetIPD (0f);
+		GetComponent<OVRCameraRig>().IPD = 0f;
 
 		yield return new WaitForSeconds(0.2f);
 		foreach (Camera c in GetComponentsInChildren<Camera>()) {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class KidPuzzleFriend : Action {
+public class KidPuzzleFriend : ActionOOD {
 
 	public GameObjectDestroyer god;
 	public GameObjectEnabler goe;

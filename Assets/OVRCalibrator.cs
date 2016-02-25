@@ -2,12 +2,11 @@
 using System.Collections;
 
 public class OVRCalibrator : MonoBehaviour {
-	private OVRCameraController con;
+
 	private float offsetX=0f;
 
 	// Use this for initialization
 	void Start () {
-		con = GetComponent<OVRCameraController> ();
 	}
 
 	void SetAspectRatio(){

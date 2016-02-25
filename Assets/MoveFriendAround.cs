@@ -20,7 +20,7 @@ public class MoveFriendAround : MonoBehaviour {
 		if (col.tag == "Friend") {
 			if(stop){
 				col.GetComponent<KidAnimationController>().Stop();
-				col.transform.root.GetComponentInChildren<Action>().execute();
+				col.transform.root.GetComponentInChildren<ActionOOD>().execute();
 			} else if(wait){
 				col.GetComponent<KidAnimationController>().anim.SetFloat("Speed", 0f);
 				yield return new WaitForSeconds(1f);

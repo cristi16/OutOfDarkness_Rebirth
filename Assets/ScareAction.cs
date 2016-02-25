@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class ScareAction : Action {
+public class ScareAction : ActionOOD {
 	
 	private bool running=false;	
 	private float time=0f;

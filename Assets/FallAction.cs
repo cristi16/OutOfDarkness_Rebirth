@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class FallAction : Action {
+public class FallAction : ActionOOD {
 		
 	private GameObject player;
 	private Vector3 originalPosition;

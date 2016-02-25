@@ -202,7 +202,7 @@ public class MenuManager : MonoBehaviour {
 			} else {
 
 				//ovrGUI.StereoDrawTexture(screenW/2f,screenH/2f,300f,300f,ref logo,Color.white);
-				float ipd = Camera.main.transform.root.GetComponentInChildren<OVRCameraController>().IPD;
+				float ipd = Camera.main.transform.root.GetComponentInChildren<OVRCameraRig>().IPD;
 
 				//GUI.DrawTexture(new Rect((screenW/2 - 100)+Screen.width*ipd/2f, screenH/4, 300, 300),logo);
 				//GUI.DrawTexture(new Rect((3*screenW/2 - 200)-Screen.width*ipd/2f, screenH/4, 300, 300),logo);

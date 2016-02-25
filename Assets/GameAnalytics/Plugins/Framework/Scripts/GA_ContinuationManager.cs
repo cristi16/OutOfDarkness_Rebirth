@@ -20,7 +20,7 @@ public static class GA_ContinuationManager
         }
         public IEnumerator Routine { get; private set; }
 		public Func<bool> Done {get; private set;}
-        public Action ContinueWith { get; private set; }
+		public ActionOOD ContinueWith { get; private set; }
     }
 
     private static readonly List<EditorCoroutine> jobs = new List<EditorCoroutine>();

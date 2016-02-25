@@ -92,7 +92,7 @@ public class TextTrigger : MonoBehaviour {
 			shown=true;				
 		} else {
 			//Special action
-			GetComponentInChildren<Action>().execute();
+			GetComponentInChildren<ActionOOD>().execute();
 			shown=true;
 		}
 	}

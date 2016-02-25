@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class ActionOnSight : MonoBehaviour {
 	
-	public List<Action> actionsToExecute;
+	public List<ActionOOD> actionsToExecute;
 	public float delay=0f;
 	private bool executed=false;	
 	private bool inTrigger=false;
@@ -20,7 +20,7 @@ public class ActionOnSight : MonoBehaviour {
 	
 	void SendNotices(){
 		if(actionsToExecute!=null){
-			foreach(Action a in actionsToExecute){
+			foreach(ActionOOD a in actionsToExecute){
 				a.execute();
 			}
 		}

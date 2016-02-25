@@ -30,7 +30,7 @@ public class PuzzleController : MonoBehaviour {
 	internal bool canExit=true;	
 	
 	public bool deactivateAtExit=false;
-	public Action actionWhenSolved;
+	public ActionOOD actionWhenSolved;
 	
 	// Use this for initialization
 	void Start () {		

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class ActivatePuzzle : Action {
+public class ActivatePuzzle : ActionOOD {
 	
 	public GameObject puzzle;
 	

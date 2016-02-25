@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DrawingAction : Action {
+public class DrawingAction : ActionOOD {
 	public GameObject drawingOne;
 
 	private Color colorToFadeOut;

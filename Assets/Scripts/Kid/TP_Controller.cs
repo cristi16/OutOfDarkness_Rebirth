@@ -19,7 +19,7 @@ public class TP_Controller : MonoBehaviour {
 	public float YRotation = 0.0f;
 	public float rotationCoef = 10f;
 	
-	private OVRCameraController CameraController;
+	private OVRCameraRig CameraController;
 
 	
 	public enum Direction
@@ -51,7 +51,7 @@ public class TP_Controller : MonoBehaviour {
 		
 		helpManager = GameObject.FindGameObjectWithTag("HelpManager").GetComponent<HelpManager>();
 
-		CameraController = gameObject.GetComponentInChildren<OVRCameraController>();
+		CameraController = gameObject.GetComponentInChildren<OVRCameraRig>();
 	}
 	
 	public void removeControl(){
@@ -202,7 +202,8 @@ public class TP_Controller : MonoBehaviour {
 		
 		YRotation = YRotation % 360;
 		if (YRotation < 0) YRotation += 360;
-		CameraController.SetYRotation(YRotation+motor.YOffset);
+		//TODO: FIX
+		//CameraController.SetYRotation(YRotation+motor.YOffset);
 
 
 		if (Input.GetKey(KeyCode.I)) 
@@ -219,7 +220,8 @@ public class TP_Controller : MonoBehaviour {
 		
 		//comment here to remove second analog going up and down
 		if (secondAnalogUpAndDown) {
-			CameraController.SetXRotation (XRotation);
+			//TODO: FIX
+			//CameraController.SetXRotation (XRotation);
 		}
 
 		}

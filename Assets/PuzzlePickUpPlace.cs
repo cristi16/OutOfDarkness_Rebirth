@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public enum KidPuzzleType{Teddy=1, Football=2, Plant=3, Colors=4, None=0}
 
-public class PuzzlePickUpPlace : Action {
+public class PuzzlePickUpPlace : ActionOOD {
 
 	public static KidPuzzleType holdingType=KidPuzzleType.None;
 	public KidPuzzleType puzzleType;
