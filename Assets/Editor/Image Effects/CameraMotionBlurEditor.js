@@ -7,8 +7,8 @@ class CameraMotionBlurEditor extends Editor
 	var serObj : SerializedObject;	
 		
   var filterType : SerializedProperty;
-  var preview : SerializedProperty;
-  var previewScale : SerializedProperty;
+  var camPreview : SerializedProperty;
+  var camPreviewScale : SerializedProperty;
   var movementScale : SerializedProperty;
   var rotationScale : SerializedProperty;
   var maxVelocity : SerializedProperty;
@@ -27,8 +27,8 @@ class CameraMotionBlurEditor extends Editor
 		
     filterType = serObj.FindProperty ("filterType");
 
-    preview = serObj.FindProperty ("preview");
-    previewScale = serObj.FindProperty ("previewScale");
+    camPreview = serObj.FindProperty ("camPreview");
+    camPreviewScale = serObj.FindProperty ("camPreviewScale");
 
     movementScale = serObj.FindProperty ("movementScale");
     rotationScale = serObj.FindProperty ("rotationScale");
@@ -83,14 +83,14 @@ class CameraMotionBlurEditor extends Editor
         EditorGUILayout.PropertyField (noiseTexture, new GUIContent(" Sample Jitter"));
       if(filterType.enumValueIndex > 2) { // DX11
           maxNumSamples.intValue = EditorGUILayout.IntSlider (" Max Sample Count", maxNumSamples.intValue, 6, 32);
-      }
+      } 
     }
 
     EditorGUILayout.Separator ();
 
-    EditorGUILayout.PropertyField (preview, new GUIContent("Preview"));
-    if (preview.boolValue)
-      EditorGUILayout.PropertyField (previewScale, new GUIContent(" Preview Scale"));    
+    EditorGUILayout.PropertyField (camPreview, new GUIContent("Preview"));
+    if (this.camPreview.boolValue)
+      EditorGUILayout.PropertyField (camPreviewScale, new GUIContent(" Preview Scale"));    
         	
     serObj.ApplyModifiedProperties();
     }

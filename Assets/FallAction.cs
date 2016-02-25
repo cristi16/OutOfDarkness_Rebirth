@@ -9,7 +9,7 @@ public class FallAction : Action {
 	
 	public override void execute(){		
 		if(!executed){
-			audio.Play();
+			GetComponent<AudioSource>().Play();
 			GetComponentInChildren<Rigidbody>().AddForce(new Vector3(-10f,-2f,10f),ForceMode.Impulse);
 			//GetComponentInChildren<Rigidbody>().AddForce(new Vector3(transform.position.x - playerPos.x,transform.position.y - playerPos.y,transform.position.z - playerPos.z).normalized * 500f);
 			executed=true;

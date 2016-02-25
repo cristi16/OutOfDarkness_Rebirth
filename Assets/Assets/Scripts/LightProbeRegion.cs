@@ -32,7 +32,7 @@ public class LightProbeRegion : MonoBehaviour
 		}
 		GameObject NewRegion = new GameObject("Light Probe Region");
 		NewRegion.transform.parent = LPUniverse.transform;
-		NewRegion.AddComponent("LightProbeRegion");
+		NewRegion.AddComponent<LightProbeRegion>();
 	}
 	
 	void Update()

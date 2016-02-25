@@ -82,7 +82,7 @@ public class DoorInteraction : MonoBehaviour {
 		doorIcon.transform.localPosition = Vector3.zero;
 		doorIcon.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
 		doorIcon.transform.eulerAngles = new Vector3(0f, 180f, 0f);
-		Destroy(doorIcon.collider);
+		Destroy(doorIcon.GetComponent<Collider>());
 		doorIcon.layer = LayerMask.NameToLayer("MapIcons");
 		
 		// dirty fix ( the amulet was set before the saved data was received from the persistent level state
@@ -95,16 +95,16 @@ public class DoorInteraction : MonoBehaviour {
 	{
 		if(LevelState.getInstance().ContainsCheckedDoor(transform.parent.gameObject.name)){
 			if(initiallyLocked && !usedKey)
-				doorIcon.renderer.material = gameManager.lockIcon;
+				doorIcon.GetComponent<Renderer>().material = gameManager.lockIcon;
 			else if(hasKey && !usedKey)
-				doorIcon.renderer.material = gameManager.keyIcon;
+				doorIcon.GetComponent<Renderer>().material = gameManager.keyIcon;
 			else
-				doorIcon.renderer.enabled = false;
+				doorIcon.GetComponent<Renderer>().enabled = false;
 		} else {
 			if(hasKey && !usedKey)
-				doorIcon.renderer.material = gameManager.keyIcon;
+				doorIcon.GetComponent<Renderer>().material = gameManager.keyIcon;
 			else
-				doorIcon.renderer.material = gameManager.unknownIcon;
+				doorIcon.GetComponent<Renderer>().material = gameManager.unknownIcon;
 		}				
 	}
 	
@@ -118,10 +118,10 @@ public class DoorInteraction : MonoBehaviour {
 		if(hasAmulet)
 			amulet.SetActive(true);
 		else if(isUnusable)
-			amulet.renderer.enabled = false;
+			amulet.GetComponent<Renderer>().enabled = false;
 		else
 		{
-			amulet.renderer.enabled = false;
+			amulet.GetComponent<Renderer>().enabled = false;
 			amulet.GetComponentInChildren<BoxCollider>().isTrigger = true;	
 		}	
 	}
@@ -201,7 +201,7 @@ public class DoorInteraction : MonoBehaviour {
 								audioSource.PlayOneShot(unlockSound,0.6f);
 								//Destroy(doorTransform.FindChild("Lockets").gameObject);	
 								usedKey = true;
-								doorIcon.renderer.enabled = false;
+								doorIcon.GetComponent<Renderer>().enabled = false;
 								//showText.ShowMessage("Unlocked the\n"+transform.parent.gameObject.name+".",0.5f,0.2f,true);
 								//interactiveTrigger.removeControl=false;
 								//interactiveTrigger.returnControl=true;
@@ -305,7 +305,7 @@ public class DoorInteraction : MonoBehaviour {
 	public void kidUnlock(){
 		//Unlock the door if the object is a key
 		hasKey = true;
-		if(doorIcon!=null && gameManager!=null) doorIcon.renderer.material = gameManager.keyIcon;
+		if(doorIcon!=null && gameManager!=null) doorIcon.GetComponent<Renderer>().material = gameManager.keyIcon;
 		if(destroyTextTriggersIfAny){
 			//transform.parent.GetComponentInChildren<TextTrigger>().enabled=false;
 			transform.parent.GetComponentInChildren<InteractiveTrigger>().removeControl=false;

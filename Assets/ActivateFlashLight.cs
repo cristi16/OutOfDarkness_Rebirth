@@ -13,9 +13,9 @@ public class ActivateFlashLight : MonoBehaviour {
 	}
 
 	private void ActivateFlashlight(){
-		if(TP_Motor.oculusRift){
+		//if(TP_Motor.oculusRift){
 			GameObject.FindGameObjectWithTag("Kid").GetComponent<TP_Controller>().EnableDisableFlashlights();
-		}
+		//}
 	}
 
 	// Update is called once per frame

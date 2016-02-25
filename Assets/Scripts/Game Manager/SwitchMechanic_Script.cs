@@ -36,7 +36,7 @@ public class SwitchMechanic_Script : MonoBehaviour {
 	void Start () {
 		kid = GameObject.FindGameObjectWithTag("Kid");
 		ghost = GameObject.Find("Ghost");
-		camera = Camera.mainCamera.gameObject;
+		camera = Camera.main.gameObject;
 		audio = GameObject.Find("Main Camera").GetComponent<AudioSource>();
 		if(kid == null || ghost == null || camera == null){
 			Debug.Log("Inizialization error in switch mechanic");
@@ -154,8 +154,8 @@ public class SwitchMechanic_Script : MonoBehaviour {
 		
 		kid.GetComponent<TP_Controller>().hasControl=false;
 		
-		Camera.mainCamera.GetComponent<ColorCorrectionCurves>().enabled=true;
-		Camera.mainCamera.GetComponent<NoiseEffect>().enabled=true;
+		Camera.main.GetComponent<ColorCorrectionCurves>().enabled=true;
+		Camera.main.GetComponent<NoiseEffect>().enabled=true;
 		
 		KidAnimationController kidAnim = kid.GetComponentInChildren<KidAnimationController>();
 		
@@ -176,9 +176,9 @@ public class SwitchMechanic_Script : MonoBehaviour {
 		
 		ghost.transform.FindChild("Point light").GetComponent<Light>().enabled = true;
 		
-		Camera.mainCamera.cullingMask = LayerMask.NameToLayer("Everything");
+		Camera.main.cullingMask = LayerMask.NameToLayer("Everything");
 		int cullingMask = 1 << LayerMask.NameToLayer("KidVision");
-		Camera.mainCamera.cullingMask = ~cullingMask;
+		Camera.main.cullingMask = ~cullingMask;
 		
 	}
 	
@@ -204,13 +204,13 @@ public class SwitchMechanic_Script : MonoBehaviour {
 		ghost.GetComponent<FloatingGhost_Script>().setControllingGhost(false);
 		
 		camera.GetComponent<TP_Camera>().targetLookAt = kid.transform.FindChild("CameraLookAtPoint");
-		Camera.mainCamera.GetComponent<ColorCorrectionCurves>().enabled=false;
-		Camera.mainCamera.GetComponent<NoiseEffect>().enabled=false;
+		Camera.main.GetComponent<ColorCorrectionCurves>().enabled=false;
+		Camera.main.GetComponent<NoiseEffect>().enabled=false;
 		ghost.transform.FindChild("Point light").GetComponent<Light>().enabled = false;
 		
-		Camera.mainCamera.cullingMask = LayerMask.NameToLayer("Everything");
+		Camera.main.cullingMask = LayerMask.NameToLayer("Everything");
 		int cullingMask = 1 << LayerMask.NameToLayer("GhostVision");
-		Camera.mainCamera.cullingMask = ~cullingMask;	
+		Camera.main.cullingMask = ~cullingMask;	
 		
 	}
 }

@@ -27,13 +27,13 @@ public static class Helper
 	{
 		ClipPlanePoints clipPlanePoints = new ClipPlanePoints();
 		
-		if (Camera.mainCamera == null)
+		if (Camera.main == null)
 			return clipPlanePoints;
 		
-		Transform transform = Camera.mainCamera.transform;
-		float halfFOV = (Camera.mainCamera.fieldOfView / 2) * Mathf.Deg2Rad;
-		float aspect = Camera.mainCamera.aspect;
-		float distance = Camera.mainCamera.nearClipPlane;
+		Transform transform = Camera.main.transform;
+		float halfFOV = (Camera.main.fieldOfView / 2) * Mathf.Deg2Rad;
+		float aspect = Camera.main.aspect;
+		float distance = Camera.main.nearClipPlane;
 		
 		float height = distance * Mathf.Tan(halfFOV);
 		float width = height * aspect;

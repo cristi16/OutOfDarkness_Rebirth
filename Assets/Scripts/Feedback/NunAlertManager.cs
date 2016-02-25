@@ -28,7 +28,7 @@ public class NunAlertManager : MonoBehaviour {
 		audio = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioSource>();
 		nunsInvestigating = new HashSet<NunStateMachine>();
 		nunsChasing = new HashSet<NunStateMachine>();
-		cameraController=Camera.mainCamera.transform.root.GetComponentsInChildren<CameraColorFeedbackController>();
+		cameraController=Camera.main.transform.root.GetComponentsInChildren<CameraColorFeedbackController>();
 		music = GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>();
 	}
 	

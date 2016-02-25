@@ -162,7 +162,7 @@ public class InteractiveTrigger : MonoBehaviour {
 				}
 				if(disableAfterUse && destroyAfterUse){
 					if(hasInteractiveCollider) Destroy (interactive);					
-					collider.enabled=false;
+					GetComponent<Collider>().enabled=false;
 					Destroy (transform.parent.gameObject,5f);					
 				}
 			}

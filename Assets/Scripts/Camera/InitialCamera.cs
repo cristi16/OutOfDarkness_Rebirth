@@ -29,7 +29,7 @@ public class InitialCamera : MonoBehaviour {
 	void Start () {
 		targetOffset = new Vector3(0, transform.position.y - target.position.y, 0);
 		
-		minDistance = Camera.mainCamera.GetComponent<TP_Camera>().distanceMin;
+		minDistance = Camera.main.GetComponent<TP_Camera>().distanceMin;
 		totalDistance = Vector3.Distance(transform.position, target.position);
 		direction = Vector3.Normalize( (target.position + targetOffset) - transform.position);
 		cameraLight = gameObject.GetComponentInChildren<Light>();
@@ -81,15 +81,15 @@ public class InitialCamera : MonoBehaviour {
 			}
 			else if(!positionSet)
 			{
-				transform.position = Vector3.Lerp(transform.position, Camera.mainCamera.transform.position, adjustmentSpeed * Time.deltaTime);
-				if(Vector3.Distance(transform.position, Camera.mainCamera.transform.position) < 0.2f)
+				transform.position = Vector3.Lerp(transform.position, Camera.main.transform.position, adjustmentSpeed * Time.deltaTime);
+				if(Vector3.Distance(transform.position, Camera.main.transform.position) < 0.2f)
 					positionSet = true;
 			}
 			else
 			{
-				transform.rotation = Quaternion.Euler(Mathf.Lerp(transform.eulerAngles.x, Camera.mainCamera.transform.localEulerAngles.x, adjustmentSpeed * Time.deltaTime),
-					Mathf.Lerp(transform.eulerAngles.y, Camera.mainCamera.transform.localEulerAngles.y, adjustmentSpeed * Time.deltaTime),
-					Mathf.Lerp(transform.eulerAngles.z, Camera.mainCamera.transform.localEulerAngles.z, adjustmentSpeed * Time.deltaTime) );
+				transform.rotation = Quaternion.Euler(Mathf.Lerp(transform.eulerAngles.x, Camera.main.transform.localEulerAngles.x, adjustmentSpeed * Time.deltaTime),
+					Mathf.Lerp(transform.eulerAngles.y, Camera.main.transform.localEulerAngles.y, adjustmentSpeed * Time.deltaTime),
+					Mathf.Lerp(transform.eulerAngles.z, Camera.main.transform.localEulerAngles.z, adjustmentSpeed * Time.deltaTime) );
 				time += Time.deltaTime;
 				if(time > timeForLastFix)
 				{

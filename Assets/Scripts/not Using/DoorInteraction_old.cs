@@ -63,11 +63,11 @@ public class DoorInteraction_old : MonoBehaviour {
 		closingSafeDistance = doorTransform.lossyScale.z + kidRadius + safeDistanceOffset;
 		
 		if(isUnusable)
-			doorTransform.gameObject.renderer.material = gameManager.unusableDoorMaterial;
+			doorTransform.gameObject.GetComponent<Renderer>().material = gameManager.unusableDoorMaterial;
 		else if(isLocked)
-			doorTransform.gameObject.renderer.material = gameManager.lockedDoorMaterial;
+			doorTransform.gameObject.GetComponent<Renderer>().material = gameManager.lockedDoorMaterial;
 		else
-			doorTransform.gameObject.renderer.material = gameManager.unlockedDoorMaterial;
+			doorTransform.gameObject.GetComponent<Renderer>().material = gameManager.unlockedDoorMaterial;
 		
 		AudioManager audio = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 		unlockSound = audio.doorKeyUnlock;
@@ -88,12 +88,12 @@ public class DoorInteraction_old : MonoBehaviour {
 		if(!SwitchMechanic_Script.getKidControl() && state == DoorState.Idle) //Modified by Mattia
 		{
 			if(hasAmulet == false)
-				doorTransform.gameObject.collider.enabled = false;
+				doorTransform.gameObject.GetComponent<Collider>().enabled = false;
 			if(!nunPassing)
 				return;
 		}
 		else
-			doorTransform.gameObject.collider.enabled = true;
+			doorTransform.gameObject.GetComponent<Collider>().enabled = true;
 		
 		// if the door is locked return
 		if(isLocked) return;
@@ -127,7 +127,7 @@ public class DoorInteraction_old : MonoBehaviour {
 				{
 					// Play unlocking door sound
 					audioSource.PlayOneShot(unlockSound);
-					doorTransform.gameObject.renderer.material = gameManager.unlockedDoorMaterial;
+					doorTransform.gameObject.GetComponent<Renderer>().material = gameManager.unlockedDoorMaterial;
 					usedKey = true;
 				}
 				

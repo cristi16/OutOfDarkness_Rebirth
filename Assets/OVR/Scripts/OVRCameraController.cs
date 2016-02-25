@@ -144,9 +144,9 @@ public class OVRCameraController : OVRComponent
 		for (int i = 0; i < cameras.Length; i++)
 		{
 			if(cameras[i].RightEye)
-				SetCameras (CameraLeft, cameras[i].camera);
+				SetCameras (CameraLeft, cameras[i].GetComponent<Camera>());
 			else
-                SetCameras(cameras[i].camera, CameraRight);
+                SetCameras(cameras[i].GetComponent<Camera>(), CameraRight);
 		}
 		
 		if(CameraLeft == null)

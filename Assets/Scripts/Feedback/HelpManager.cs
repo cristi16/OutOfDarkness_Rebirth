@@ -98,7 +98,7 @@ public class HelpManager : MonoBehaviour {
 							activeKey=sneakHelp;
 							break;
 						case HelpKeys.Swap:
-							swapHelp.active=true;
+							if(TP_Motor.oculusRift) swapHelp.active=true;
 							activeKey=swapHelp;
 							break;			
 						case HelpKeys.Move:
@@ -106,7 +106,7 @@ public class HelpManager : MonoBehaviour {
 							activeKey=moveHelp;
 							break;		
 						case HelpKeys.Flashlight:
-							if(!TP_Motor.oculusRift) flashlightHelp.active=true;
+							//if(!TP_Motor.oculusRift) flashlightHelp.active=true;
 							activeKey=flashlightHelp;
 							if(TP_Motor.oculusRift){
 								GameObject.FindGameObjectWithTag("Kid").GetComponent<TP_Controller>().EnableDisableFlashlights();
@@ -151,7 +151,8 @@ public class HelpManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {		
 		keyQueue = new Queue<HelpKeys>();
-		feedbackShown = LevelState.getInstance().feedbackShown;		
+		feedbackShown = LevelState.getInstance().feedbackShown;	
+				
 	}
 	
 	// Update is called once per frame

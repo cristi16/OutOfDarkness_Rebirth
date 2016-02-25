@@ -52,7 +52,7 @@ public class HelpTrigger : MonoBehaviour {
 				//Remove control maybe?
 				feedback.activate(helpKey);
 				if(!showHelpMoreThanOnce) feedbackShown=true;		
-				if(disableTriggerAfterUse) collider.enabled=false;
+				if(disableTriggerAfterUse) GetComponent<Collider>().enabled=false;
 				if(activateIndependently) feedback.showHelp(); 
 				if(activateFlashlight){
 					LevelState.getInstance().flashlightActivated=true;

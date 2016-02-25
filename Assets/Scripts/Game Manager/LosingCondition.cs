@@ -29,13 +29,12 @@ public class LosingCondition : MonoBehaviour {
         if (other.CompareTag("Kid") ){
 			RaycastHit hit;
 			Vector3 targetDir = (player.transform.position + new Vector3(0, player.GetComponent<CharacterController>().height / 2, 0) ) - transform.position;
-	        if (Physics.Raycast(transform.position,  targetDir, out hit) && hit.collider==player.collider){
+	        if (Physics.Raycast(transform.position,  targetDir, out hit) && hit.collider==player.GetComponent<Collider>()){
 //				chaseOn=true;
 //				agent.speed=chase_speed;
 				
 				// reset position of ghost and girl
-				
-				GA.API.Design.NewEvent("Death:"+transform.parent.name, Time.time, player.transform.position.x, player.transform.position.y, player.transform.position.z); 
+
 				gameManager.ResetLevel();
 				
 			}

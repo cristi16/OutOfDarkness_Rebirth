@@ -17,7 +17,7 @@ public class ActivateGhostTrigger : MonoBehaviour {
 	
 	private void OnTriggerEnter(Collider hit){
 	
-		if(hit.collider.tag == "Kid")
+		if(hit.GetComponent<Collider>().tag == "Kid")
 		{
 			//LevelState.getInstance().ghostFollowsKidFromStart = true;
 			//LevelState.getInstance().swapActivatedFromStart = true;

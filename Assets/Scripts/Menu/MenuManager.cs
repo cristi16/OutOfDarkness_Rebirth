@@ -83,7 +83,9 @@ public class MenuManager : MonoBehaviour {
 			if(soundNotice!=null){
 				Destroy(soundNotice.gameObject);
 			}
-			Screen.lockCursor = true;
+			Cursor.lockState = CursorLockMode.Locked; 
+			Cursor.visible = false; 
+
 			if(disableIntroMusicAtStart) GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>().reduceVolumeTemp();						
 			//notesNotice.enabled=true;		
 		}
@@ -128,14 +130,15 @@ public class MenuManager : MonoBehaviour {
 		GUI.skin = customSkin;
 		
 		if(hideCursor){ 
-			Screen.showCursor=false;			
-			Screen.lockCursor=true;
+			Cursor.lockState = CursorLockMode.Locked; 
+			Cursor.visible = false; 
+
 			hideCursor=false;
 		}
 		
 		if((isPaused || (isMainMenu && !tutorialCamera.isActivated) || isCredits || isControls)){
-			Screen.lockCursor=false;
-			Screen.showCursor = true;						
+			Cursor.lockState = CursorLockMode.None; 
+			Cursor.visible = true; 
 		}		
 		
 		if(isPaused){
@@ -262,7 +265,9 @@ public class MenuManager : MonoBehaviour {
 					if(soundNotice!=null){
 						Destroy(soundNotice.gameObject);
 					}
-					Screen.lockCursor = true;
+					Cursor.lockState = CursorLockMode.Locked; 
+					Cursor.visible = false; 
+
 					if(disableIntroMusicAtStart) GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>().reduceVolumeTemp();						
 					//notesNotice.enabled=true;						
 				}

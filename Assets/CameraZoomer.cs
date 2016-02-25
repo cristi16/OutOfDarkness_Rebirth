@@ -28,7 +28,7 @@ public class CameraZoomer : MonoBehaviour {
 				if(Camera.main.fieldOfView>finalFOV){
 					foreach(Camera c in GetComponentsInChildren<Camera>()) c.fieldOfView+=speed*Time.deltaTime;
 				}
-			} else {
+			} else { 
 				if(Camera.main.fieldOfView<initialFOV){
 					foreach(Camera c in GetComponentsInChildren<Camera>()) c.fieldOfView-=speed*Time.deltaTime;
 				}

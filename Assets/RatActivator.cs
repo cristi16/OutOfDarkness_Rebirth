@@ -18,7 +18,7 @@ public class RatActivator : MonoBehaviour {
 			foreach(GameObject g in GameObject.FindGameObjectsWithTag("Rat")){
 				g.GetComponent<RatMover>().Move(); 
 			}
-			collider.enabled = false;
+			GetComponent<Collider>().enabled = false;
 		}
 	}
 }

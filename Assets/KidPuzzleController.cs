@@ -16,7 +16,7 @@ public class KidPuzzleController : MonoBehaviour {
 	public AudioSource audioSource;
 	
 	void Start () {
-		puzzleShower = GameObject.FindGameObjectWithTag ("PuzzleShower").guiTexture;
+		puzzleShower = GameObject.FindGameObjectWithTag ("PuzzleShower").GetComponent<GUITexture>();
 		puzzleSolvedTrigger = GetComponent<TextTrigger> ();
 	}
 	
@@ -32,15 +32,15 @@ public class KidPuzzleController : MonoBehaviour {
 			Debug.Log("Solved");
 			puzzleSolvedTrigger.ActivateTextTrigger();
 			if(audioSource!=null) audioSource.Play();
-			else if(audio!=null) audio.Play ();
+			else if(GetComponent<AudioSource>()!=null) GetComponent<AudioSource>().Play ();
 		}
 	}
 
 	public void SolvePuzzle(){		
-		teddy.collider.enabled = false;
-		plant.collider.enabled = false;
-		football.collider.enabled = false;
-		colors.collider.enabled = false;
+		teddy.GetComponent<Collider>().enabled = false;
+		plant.GetComponent<Collider>().enabled = false;
+		football.GetComponent<Collider>().enabled = false;
+		colors.GetComponent<Collider>().enabled = false;
 
 		LevelState.getInstance().solvedKidPuzzle=true;
 		bookcaseAfterPuzzle.SetActive(true);
@@ -52,11 +52,11 @@ public class KidPuzzleController : MonoBehaviour {
 			puzzleShower.enabled=false;
 
 			foreach(PuzzlePickUpPlace p in GetComponentsInChildren<PuzzlePickUpPlace>()){
-				if(!p.renderer.enabled){
-					p.renderer.enabled=true;
-					p.renderer.material.mainTexture=puzzleShower.guiTexture.texture;
+				if(!p.GetComponent<Renderer>().enabled){
+					p.GetComponent<Renderer>().enabled=true;
+					p.GetComponent<Renderer>().material.mainTexture=puzzleShower.GetComponent<GUITexture>().texture;
 					p.puzzleType=PuzzlePickUpPlace.holdingType;
-					puzzleShower.guiTexture.texture=null;
+					puzzleShower.GetComponent<GUITexture>().texture=null;
 					PuzzlePickUpPlace.holdingType=KidPuzzleType.None;
 				}
 

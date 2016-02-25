@@ -41,7 +41,7 @@ public class LoadNewLevelWinningCondition : MonoBehaviour {
 	{
 		if(showTransitionTexture)
 		{
-			if(fader.fadeToBlack && fader.guiTexture.color.a > 0.95f)
+			if(fader.fadeToBlack && fader.GetComponent<GUITexture>().color.a > 0.95f)
 			{
 				fadeToTexture = true;
 				fader.fadeToBlack = false;
@@ -55,7 +55,7 @@ public class LoadNewLevelWinningCondition : MonoBehaviour {
 			else if(timeCounter < timeToShow)
 			{
 				timeCounter += Time.deltaTime;
-				if(fader.fadeToClear == true && fader.guiTexture.color.a <= 0.05f) 
+				if(fader.fadeToClear == true && fader.GetComponent<GUITexture>().color.a <= 0.05f) 
 					fader.fadeToClear = false;
 			}
 			else

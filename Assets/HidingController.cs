@@ -95,7 +95,7 @@ public class HidingController : MonoBehaviour {
 			layerMask += 1 << LayerMask.NameToLayer("Wall");
 			foreach(Collider hit in hitColliders)
 			{
-				if(hit != hidingSpot.collider)
+				if(hit != hidingSpot.GetComponent<Collider>())
 				{
 					if(Physics.Raycast(transform.position, hit.transform.position - transform.position,
 					                   out hitInfo, hidingSpotsRange, layerMask))
@@ -107,7 +107,7 @@ public class HidingController : MonoBehaviour {
 				}	
 			}
 			//hidingSpots.Add(GetCurrentHidingSpot());
-			hidingSpot.collider.enabled = true;
+			hidingSpot.GetComponent<Collider>().enabled = true;
 		}
 		return hidingSpots;
 	}

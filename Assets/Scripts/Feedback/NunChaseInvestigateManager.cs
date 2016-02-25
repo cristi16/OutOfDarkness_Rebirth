@@ -19,7 +19,7 @@ public class NunChaseInvestigateManager : MonoBehaviour {
 		audio = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioSource>();
 		nunsInvestigating = new HashSet<AI>();
 		nunsChasing = new HashSet<AI>();
-		cameraController=Camera.mainCamera.GetComponent<CameraColorFeedbackController>();	
+		cameraController=Camera.main.GetComponent<CameraColorFeedbackController>();	
 		music = GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>();
 	}
 	

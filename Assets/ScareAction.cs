@@ -13,7 +13,7 @@ public class ScareAction : Action {
 	
 	public override void execute(){		
 		running=true;
-		audio.Play();
+		GetComponent<AudioSource>().Play();
 		foreach (Camera c in Camera.allCameras) {
 			if(c.GetComponent<ScareController>()!=null){
 				c.GetComponent<ScareController>().Scared();

@@ -43,7 +43,7 @@ public class Place : MonoBehaviour {
 			{
 				puzzleController.selectedObject = placedObject;
 				placedObject.selected = true;
-				placedObject.renderer.material.shader = pickedItemShader;
+				placedObject.GetComponent<Renderer>().material.shader = pickedItemShader;
 				placedObject = null;
 			}
 			else
@@ -58,13 +58,13 @@ public class Place : MonoBehaviour {
 				placedObject = puzzleController.selectedObject;
 				placedObject.transform.position = transform.position;
 				placedObject.selected = false;
-				placedObject.renderer.material.shader = defaultShader;
+				placedObject.GetComponent<Renderer>().material.shader = defaultShader;
 				puzzleController.selectedObject = null;
 				// if it's a mixing puzzle and not a default place, we disable the item renderer and place collider
 				if(puzzleController.puzzleType == PuzzleType.Mixing && !isDefaultPlace) 
 				{
-					placedObject.renderer.enabled = false;
-					this.collider.enabled = false;
+					placedObject.GetComponent<Renderer>().enabled = false;
+					this.GetComponent<Collider>().enabled = false;
 				}
 				
 				// check if we solved the puzzle
@@ -73,12 +73,12 @@ public class Place : MonoBehaviour {
 			else if(!isDefaultPlace)// swap it (!!not able to swap between default places)
 			{
 				PlaceableObject aux;
-				placedObject.renderer.material.shader = pickedItemShader;
+				placedObject.GetComponent<Renderer>().material.shader = pickedItemShader;
 				aux = placedObject;
 				placedObject = puzzleController.selectedObject;
 				placedObject.transform.position = transform.position;
 				placedObject.selected = false;
-				placedObject.renderer.material.shader = defaultShader;
+				placedObject.GetComponent<Renderer>().material.shader = defaultShader;
 				puzzleController.selectedObject = aux;
 				puzzleController.selectedObject.selected = true;
 			}
@@ -95,7 +95,7 @@ public class Place : MonoBehaviour {
 	{
 		if(placedObject != null)
 		{
-			placedObject.renderer.material.shader = hoverShader;
+			placedObject.GetComponent<Renderer>().material.shader = hoverShader;
 			if(puzzleController.showHints)
 				puzzleController.hintsText.text = placedObject.hintText;
 		}
@@ -111,7 +111,7 @@ public class Place : MonoBehaviour {
 	{
 		if(placedObject != null)
 		{
-			placedObject.renderer.material.shader = defaultShader;
+			placedObject.GetComponent<Renderer>().material.shader = defaultShader;
 			
 			if(puzzleController.showHints)
 				puzzleController.hintsText.text = "";

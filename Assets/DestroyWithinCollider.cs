@@ -37,7 +37,7 @@ public class DestroyWithinCollider : MonoBehaviour {
 		if (col.tag == "Nun" && !destroy) {
 			destroy = true;
 			gameObjectToDestroy = col.gameObject;
-			audio=gameObjectToDestroy.GetComponentInChildren<NoiseTrigger>().audio;
+			audio=gameObjectToDestroy.GetComponentInChildren<NoiseTrigger>().GetComponent<AudioSource>();
 			speed = audio.volume/time;
 		}
 	}

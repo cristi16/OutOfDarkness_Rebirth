@@ -175,7 +175,7 @@ public class OVRDistortionMesh
 
 		mesh.vertices  = positions;
 		mesh.uv        = uvR;
-		mesh.uv1       = uvG;
+		mesh.uv2       = uvG;
 		mesh.normals   = uvB;
 		mesh.triangles = triIndices;
 

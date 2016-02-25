@@ -78,7 +78,7 @@ public class ShowText : MonoBehaviour {
 		}
 		
 		text.material = dialogueFont.material;	
-		button.guiTexture.texture = dialogueTex;
+		button.GetComponent<GUITexture>().texture = dialogueTex;
 		foreach (GUIText outline in outlines) {
 			outline.material = dialogueFont.material;
 		}
@@ -91,7 +91,7 @@ public class ShowText : MonoBehaviour {
 		}
 		
 		text.material = systemFont.material;
-		button.guiTexture.texture = systemTex;
+		button.GetComponent<GUITexture>().texture = systemTex;
 		foreach (GUIText outline in outlines) {
 			outline.material = systemFont.material;
 		}
@@ -107,6 +107,13 @@ public class ShowText : MonoBehaviour {
 		betaColor = new Color(0.0f,0.0f,0.0f,0.0f);
 		
 		text.fontSize = (int)( text.fontSize / 600f * Screen.width );
+
+		if (!TP_Motor.oculusRift) {
+			text.fontSize=Mathf.CeilToInt(text.fontSize*0.7f);
+			maxCharsPerLine*=2;
+			button.GetComponent<GUITexture>().enabled=false;
+		}
+
 		text.pixelOffset = new Vector2( (text.pixelOffset.x / 1024) * Screen.width, (text.pixelOffset.y / 768) * Screen.height);
 
 		foreach (GUIText outline in outlines) {

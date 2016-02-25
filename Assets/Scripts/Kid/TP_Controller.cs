@@ -97,7 +97,7 @@ public class TP_Controller : MonoBehaviour {
 
 	public void EnableDisableFlashlights(bool enable){
 
-		if (flashlights [0].light.enabled != enable && (!enable || player_sneak.canGetUp)) {
+		if (flashlights [0].GetComponent<Light>().enabled != enable && (!enable || player_sneak.canGetUp)) {
 			foreach(GameObject flashlight in flashlights){
 				//if(TP_Motor.oculusRift) flashlight.light.enabled=true;
 				//else 
@@ -109,7 +109,7 @@ public class TP_Controller : MonoBehaviour {
 						flashlight.GetComponent<LanternLight>().LowMidangle();
 					}
 				}*/
-				flashlight.light.enabled=enable;
+				flashlight.GetComponent<Light>().enabled=enable;
 
 			}
 
@@ -122,10 +122,10 @@ public class TP_Controller : MonoBehaviour {
 		foreach(GameObject flashlight in flashlights){
 			//if(TP_Motor.oculusRift) flashlight.light.enabled=true;
 			//else 
-				flashlight.light.enabled=!flashlight.light.enabled;
+				flashlight.GetComponent<Light>().enabled=!flashlight.GetComponent<Light>().enabled;
 				
 
-			if(flashlight.light.enabled){
+			if(flashlight.GetComponent<Light>().enabled){
 				FlashlightSound(true);
 			} else {				
 				FlashlightSound(false);
@@ -147,7 +147,7 @@ public class TP_Controller : MonoBehaviour {
 			PlayLocomotionSounds();
 		}				
 		
-		if(Input.GetKeyDown(KeyCode.M) && LevelState.getInstance().mapActivated){ 
+		/*if(Input.GetKeyDown(KeyCode.M) && LevelState.getInstance().mapActivated){ 
 			if(!mapManager.showingMap){
 				if(hasControl){
 					ActivateMap();
@@ -156,7 +156,7 @@ public class TP_Controller : MonoBehaviour {
 				DeactivateMap();
 			}
 			
-		}				
+		}*/				
 		
 		if(mapManager.showingMap && Input.GetButtonDown("Interaction")){
 			DeactivateMap();
@@ -171,12 +171,14 @@ public class TP_Controller : MonoBehaviour {
 			EnableDisableFlashlights();
 		}				
 
-		RotateOculus ();
+		if (TP_Motor.oculusRift) {
+			RotateOculus ();
+		}
 
 		if(hasControl == false)
 			return;
 		
-		if(Camera.mainCamera ==null)
+		if(Camera.main ==null)
 			return;
 		
 		GetLocomotionInput();				
@@ -295,11 +297,11 @@ public class TP_Controller : MonoBehaviour {
 	
 	void FlashlightSound(bool activate){
 		if(activate){
-			if(flashlights[0].audio!=null) flashlights[0].audio.Play();
-			else flashlights[1].audio.Play();
+			if(flashlights[0].GetComponent<AudioSource>()!=null) flashlights[0].GetComponent<AudioSource>().Play();
+			else flashlights[1].GetComponent<AudioSource>().Play();
 		} else {
-			if(flashlights[0].audio!=null) flashlights[0].audio.Play();
-			else flashlights[1].audio.Play();
+			if(flashlights[0].GetComponent<AudioSource>()!=null) flashlights[0].GetComponent<AudioSource>().Play();
+			else flashlights[1].GetComponent<AudioSource>().Play();
 		}
 	}
 	

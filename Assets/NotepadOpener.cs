@@ -17,12 +17,12 @@ public class NotepadOpener : MonoBehaviour {
 	void Update () {
 		if (!LevelState.getInstance ().notepadActivated)
 						return;
-		if (player.hasControl && Input.GetButton ("Notepad") && !notepad.renderer.enabled) {
-			notepad.renderer.material.mainTexture=notepads[LevelState.getInstance().objectives];
-			notepad.renderer.enabled=true;
+		if (player.hasControl && Input.GetButton ("Notepad") && !notepad.GetComponent<Renderer>().enabled) {
+			notepad.GetComponent<Renderer>().material.mainTexture=notepads[LevelState.getInstance().objectives];
+			notepad.GetComponent<Renderer>().enabled=true;
 			player.GetComponentInChildren<TP_Controller>().removeControl();
-		} else if(!Input.GetButton ("Notepad") && notepad.renderer.enabled) {
-			notepad.renderer.enabled=false;
+		} else if(!Input.GetButton ("Notepad") && notepad.GetComponent<Renderer>().enabled) {
+			notepad.GetComponent<Renderer>().enabled=false;
 			player.GetComponentInChildren<TP_Controller>().returnControl();
 		}
 	}

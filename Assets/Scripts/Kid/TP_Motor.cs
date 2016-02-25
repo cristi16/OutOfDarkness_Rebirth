@@ -11,7 +11,7 @@ public class TP_Motor : MonoBehaviour {
 
 	public float YOffset = 0f;
 
-	public static bool oculusRift = true;
+	public static bool oculusRift = false;
 	
 	
 	private SneakWalkRunController sneak_script;

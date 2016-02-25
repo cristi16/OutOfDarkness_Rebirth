@@ -15,13 +15,13 @@ public class ResetPuzzle : MonoBehaviour {
 	{
 		if(puzzleController.isActivated)
 		{
-			collider.enabled = true;
-			renderer.enabled = true;
+			GetComponent<Collider>().enabled = true;
+			GetComponent<Renderer>().enabled = true;
 		}
 		else
 		{
-			collider.enabled = false;
-			renderer.enabled = false;
+			GetComponent<Collider>().enabled = false;
+			GetComponent<Renderer>().enabled = false;
 		}
 	}
 	

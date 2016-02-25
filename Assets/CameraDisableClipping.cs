@@ -13,7 +13,7 @@ public class CameraDisableClipping : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		camera.nearClipPlane = 0.01f;
+		GetComponent<Camera>().nearClipPlane = 0.01f;
 	}
 
 	void OnPreCull(){

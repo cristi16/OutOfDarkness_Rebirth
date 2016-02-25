@@ -79,7 +79,7 @@ public class NunStateMachine : StateMachineBase {
 		nunManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<NunChaseInvestigateManager>();
 		audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 		audioSource = gameObject.GetComponent<AudioSource>();
-		cameraTransform = Camera.mainCamera.transform;
+		cameraTransform = Camera.main.transform;
 		cameraMotionBlur = cameraTransform.root.GetComponentsInChildren<MotionBlur>();
 		nunModel = gameObject.GetComponentInChildren<Animator>().gameObject;
 		GameObject game_manager = GameObject.FindGameObjectWithTag("GameController");
@@ -91,7 +91,7 @@ public class NunStateMachine : StateMachineBase {
 		audioFeedback = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioSource>();
 		audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 		chaseMusic = GameObject.FindGameObjectWithTag("ChaseMusic").GetComponent<AudioSource>();				
-		redLight = GetComponentInChildren<RedLight>()==null?null:GetComponentInChildren<RedLight>().light;
+		redLight = GetComponentInChildren<RedLight>()==null?null:GetComponentInChildren<RedLight>().GetComponent<Light>();
 		
 		currentState = NunStates.Default;
 	}		
@@ -461,7 +461,8 @@ public class NunStateMachine : StateMachineBase {
 			return LineOfSight.NotInRange;
 		if(Physics.Raycast(transform.position, targetDir, out hit, Mathf.Infinity))
 		{ 
- 			if(hit.collider == kid.GetComponentInChildren<OVRCameraController>().collider)
+			Collider col = TP_Motor.oculusRift?kid.GetComponentInChildren<OVRCameraController>().GetComponent<Collider>():kid.GetComponentInChildren<Camera>().GetComponent<Collider>();
+ 			if(hit.collider == col)
 			{
 				if (hit.distance <= chaseRange) //if in chase range
 					return LineOfSight.ChaseRange;

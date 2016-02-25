@@ -21,7 +21,7 @@ public class SleepingNunFSM : NunStateMachine {
 		static_spot = transform.position;
 		static_rotation = transform.rotation;
 		sleepingAudioSource = transform.FindChild("Sleeping Audio Source").GetComponent<AudioSource>();
-		alertAudioSource = GameObject.FindGameObjectWithTag("Audio").audio;
+		alertAudioSource = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioSource>();
 		base.OnAwake();
 	}
 	

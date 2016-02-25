@@ -21,7 +21,7 @@ public class KidAnimationControllerLevel1 : KidAnimationController
 				anim.SetFloat("Speed", 0.5f);
 				GetComponent<NavMeshAgent> ().SetDestination (GameObject.FindGameObjectWithTag("KidDestination").transform.position);
 				firstTime=false;
-				transform.parent.audio.Play();
+				transform.parent.GetComponent<AudioSource>().Play();
 			}		
 		}
 

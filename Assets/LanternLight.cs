@@ -24,8 +24,8 @@ public class LanternLight : MonoBehaviour {
 	void Start () {
 		lantern = GetComponent<Light>();
 		
-		midLight = lantern.light.intensity;
-		midAngle = lantern.light.spotAngle;		
+		midLight = lantern.GetComponent<Light>().intensity;
+		midAngle = lantern.GetComponent<Light>().spotAngle;		
 		originalMidAngle = midAngle;
 
 
@@ -40,7 +40,7 @@ public class LanternLight : MonoBehaviour {
 	public void LowMidangle(){
 		if (midAngle == originalMidAngle) {
 			midAngle = originalMidAngle / 3f;
-			light.spotAngle = midAngle;
+			GetComponent<Light>().spotAngle = midAngle;
 			CalculatePercentages ();
 		}
 	}
@@ -48,7 +48,7 @@ public class LanternLight : MonoBehaviour {
 	public void NormalMidangle(){
 		if (midAngle != originalMidAngle) {
 			midAngle = originalMidAngle;
-			light.spotAngle = midAngle;
+			GetComponent<Light>().spotAngle = midAngle;
 			CalculatePercentages ();
 		}
 	}
@@ -56,18 +56,18 @@ public class LanternLight : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(lightGoingUp){
-			lantern.light.intensity+=lightInterval * Time.deltaTime;
-			if(lantern.light.intensity>midLight*(1+lightPercentage)) lightGoingUp=false;
+			lantern.GetComponent<Light>().intensity+=lightInterval * Time.deltaTime;
+			if(lantern.GetComponent<Light>().intensity>midLight*(1+lightPercentage)) lightGoingUp=false;
 		} else {
-			lantern.light.intensity-=lightInterval * Time.deltaTime;
-			if(lantern.light.intensity<midLight*(1-lightPercentage)) lightGoingUp=true;
+			lantern.GetComponent<Light>().intensity-=lightInterval * Time.deltaTime;
+			if(lantern.GetComponent<Light>().intensity<midLight*(1-lightPercentage)) lightGoingUp=true;
 		}
 		if(angleGoingUp){
-			lantern.light.spotAngle+=angleInterval * Time.deltaTime;
-			if(lantern.light.spotAngle>midAngle*(1+anglePercentage*2)) angleGoingUp=false;
+			lantern.GetComponent<Light>().spotAngle+=angleInterval * Time.deltaTime;
+			if(lantern.GetComponent<Light>().spotAngle>midAngle*(1+anglePercentage*2)) angleGoingUp=false;
 		} else {
-			lantern.light.spotAngle-=angleInterval * Time.deltaTime;
-			if(lantern.light.spotAngle<midAngle*(1-anglePercentage*2)) angleGoingUp=true;
+			lantern.GetComponent<Light>().spotAngle-=angleInterval * Time.deltaTime;
+			if(lantern.GetComponent<Light>().spotAngle<midAngle*(1-anglePercentage*2)) angleGoingUp=true;
 		}		
 	}
 }

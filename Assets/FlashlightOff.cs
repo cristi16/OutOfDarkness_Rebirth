@@ -21,7 +21,7 @@ public class FlashlightOff : MonoBehaviour {
 			turnOffLight = lights[0];
 
 			foreach(GameObject light in lights){
-				if(light.audio!=null){
+				if(light.GetComponent<AudioSource>()!=null){
 					turnOffLight=light;
 				}
 			}

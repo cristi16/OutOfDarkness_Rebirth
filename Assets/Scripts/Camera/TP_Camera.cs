@@ -149,7 +149,7 @@ public class TP_Camera : MonoBehaviour
 			}
 			else
 			{
-				distance = nearestDistance - Camera.mainCamera.nearClipPlane;	// move to a safe point // possibly the same size as the raidus of the ch collider
+				distance = nearestDistance - Camera.main.nearClipPlane;	// move to a safe point // possibly the same size as the raidus of the ch collider
 				//Debug.Log("move to safe point: "+distance);			
 			}
 			
@@ -171,7 +171,7 @@ public class TP_Camera : MonoBehaviour
 		Helper.ClipPlanePoints clipPlanePoints = Helper.ClipPlaneAtNear(to);
 		
 		// Draw lines in the Editor to make it easier to visualize
-		Debug.DrawLine(from, to + this.transform.forward * -camera.nearClipPlane, Color.red); //line to a point behind the camera
+		Debug.DrawLine(from, to + this.transform.forward * -GetComponent<Camera>().nearClipPlane, Color.red); //line to a point behind the camera
 		Debug.DrawLine(from, clipPlanePoints.upperLeft);
 		Debug.DrawLine(from, clipPlanePoints.lowerLeft);
 		Debug.DrawLine(from, clipPlanePoints.upperRight);
@@ -201,7 +201,7 @@ public class TP_Camera : MonoBehaviour
 			if (hitInfo.distance < nearestDistance || nearestDistance == -1)
 				nearestDistance = hitInfo.distance;
 		
-		if(Physics.Linecast(from, to + this.transform.forward * -camera.nearClipPlane, out hitInfo, ignorePlayerMask) 
+		if(Physics.Linecast(from, to + this.transform.forward * -GetComponent<Camera>().nearClipPlane, out hitInfo, ignorePlayerMask) 
 			&& hitInfo.collider.tag != targetLookAt.gameObject.tag && hitInfo.collider.isTrigger == false)
 			if (hitInfo.distance < nearestDistance || nearestDistance == -1)
 				nearestDistance = hitInfo.distance;
@@ -263,19 +263,19 @@ public class TP_Camera : MonoBehaviour
 		
 		TP_Camera myCamera;
 		
-		if(Camera.mainCamera != null)
+		if(Camera.main != null)
 		{
-			tempCamera = Camera.mainCamera.gameObject;	
+			tempCamera = Camera.main.gameObject;	
 		}
 		else
 		{
 			tempCamera = new GameObject("Main Camera");
-			tempCamera.AddComponent("Camera");
+			tempCamera.AddComponent<Camera>();
 			tempCamera.tag = "MainCamera";
 		}
 		
 		
-		tempCamera.AddComponent("TP_Camera");
+		tempCamera.AddComponent<TP_Camera>();
 		myCamera = tempCamera.GetComponent("TP_Camera") as TP_Camera;
 		
 //		tempTargetLookAt = GameObject.Find("targetLookAt") as GameObject;

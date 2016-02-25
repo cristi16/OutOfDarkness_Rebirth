@@ -424,7 +424,7 @@ public class AI : MonoBehaviour {
 		RaycastHit hit;
 		Vector3 targetDir = (player.transform.position + new Vector3(-playerHalfWidth, playerHalfHeight, 0) ) - transform.position;
 		if(Physics.Raycast(transform.position, targetDir, out hit, Mathf.Infinity)){
-			if(hit.collider==player.collider){
+			if(hit.collider==player.GetComponent<Collider>()){
 				if (hit.distance <= viewDistance){ //if in range
 			        Vector3 forward = transform.forward;	
 			        float angle= Vector3.Angle(targetDir, forward);

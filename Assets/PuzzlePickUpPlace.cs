@@ -12,7 +12,7 @@ public class PuzzlePickUpPlace : Action {
 	private KidPuzzleController controller;
 
 	void Start () {
-		puzzleShower = GameObject.FindGameObjectWithTag ("PuzzleShower").guiTexture;
+		puzzleShower = GameObject.FindGameObjectWithTag ("PuzzleShower").GetComponent<GUITexture>();
 		controller = transform.root.GetComponent<KidPuzzleController> ();
 	}
 
@@ -25,9 +25,9 @@ public class PuzzlePickUpPlace : Action {
 		if (puzzleShower.enabled) {
 
 			auxPuzzleType = puzzleType;
-			auxTexture=renderer.material.mainTexture;
-			renderer.material.mainTexture=puzzleShower.texture;
-			renderer.enabled=true;
+			auxTexture=GetComponent<Renderer>().material.mainTexture;
+			GetComponent<Renderer>().material.mainTexture=puzzleShower.texture;
+			GetComponent<Renderer>().enabled=true;
 			puzzleType=holdingType;
 			holdingType=KidPuzzleType.None;
 		}
@@ -42,11 +42,11 @@ public class PuzzlePickUpPlace : Action {
 				puzzleShower.texture = auxTexture;
 				holdingType=auxPuzzleType;
 			} else {
-				puzzleShower.texture = renderer.material.mainTexture;
+				puzzleShower.texture = GetComponent<Renderer>().material.mainTexture;
 				holdingType=puzzleType;
 
-				renderer.material.mainTexture = null;
-				renderer.enabled = false;
+				GetComponent<Renderer>().material.mainTexture = null;
+				GetComponent<Renderer>().enabled = false;
 				puzzleType=KidPuzzleType.None;
 			}
 

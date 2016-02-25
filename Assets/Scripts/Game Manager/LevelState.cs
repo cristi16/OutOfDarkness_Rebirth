@@ -71,7 +71,8 @@ public class LevelState : MonoBehaviour {
 		}
 		
 		if(inPlay && !showCursor && !puzzleMode){			
-			Screen.lockCursor=true;
+			Cursor.lockState = CursorLockMode.Locked; 
+			Cursor.visible = false;
 		}
 		//if(puzzleMode) Screen.lockCursor=false;
 	}
@@ -93,7 +94,7 @@ public class LevelState : MonoBehaviour {
 	void Start () 
 	{
 		started=true;
-		Screen.showCursor = showCursor;
+		Cursor.visible = showCursor;
 
 		resolution = Mathf.CeilToInt (Screen.width * 0.94f);
 
@@ -285,14 +286,14 @@ public class LevelState : MonoBehaviour {
 			if (bookcasePuzzle != null) {
 				bookcasePuzzle.GetComponent<GameObjectEnabler> ().Enable ();
 
-				bookcasePuzzle.collider.enabled = false;
+				bookcasePuzzle.GetComponent<Collider>().enabled = false;
 
 				bookcasePuzzle.GetComponent<GameObjectDestroyer> ().Destroy ();
 
 				KidPuzzleFriend k = GameObject.FindObjectOfType<KidPuzzleFriend>();
 				if(k!=null){
 					k.execute();
-					k.collider.enabled=false;
+					k.GetComponent<Collider>().enabled=false;
 				}
 
 			}
@@ -316,7 +317,7 @@ public class LevelState : MonoBehaviour {
 			firstLoad = false;
 			return;
 		}
-		Destroy(GameObject.FindGameObjectWithTag("Music"));
+		if(GameObject.FindGameObjectsWithTag("Music").Length>1) Destroy(GameObject.FindGameObjectWithTag("Music"));
 		//if(initiallyLockedDoors!=null && initiallyLockedDoors.Count > 0)
 			//LoadDoorStates();
 		//if(savedKeys.Count > 0)

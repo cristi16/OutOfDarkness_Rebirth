@@ -11,7 +11,7 @@ public class EndOfLevel : MonoBehaviour {
     void Awake ()
 	{
         // Set the texture so that it is the the size of the screen and covers it.
-        whiteTexture.guiTexture.pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
+        whiteTexture.GetComponent<GUITexture>().pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
     }
 	
 	// Use this for initialization
@@ -25,12 +25,12 @@ public class EndOfLevel : MonoBehaviour {
 		if(fadeToWhite)
 		{
 			// Make sure the texture is enabled.
-	        whiteTexture.guiTexture.enabled = true;
+	        whiteTexture.GetComponent<GUITexture>().enabled = true;
 	        
-	        whiteTexture.guiTexture.color = Color.Lerp(whiteTexture.guiTexture.color, Color.white, fadeSpeed * Time.deltaTime);
+	        whiteTexture.GetComponent<GUITexture>().color = Color.Lerp(whiteTexture.GetComponent<GUITexture>().color, Color.white, fadeSpeed * Time.deltaTime);
 	        
 	        // If the screen is almost white...
-	        if(whiteTexture.guiTexture.color.a >= 0.95f)
+	        if(whiteTexture.GetComponent<GUITexture>().color.a >= 0.95f)
 			{
 	            // ... go to main menu		
 	            LevelState.getInstance().usingMainMenu = true;

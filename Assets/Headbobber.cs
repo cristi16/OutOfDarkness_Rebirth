@@ -46,7 +46,7 @@ public class Headbobber : MonoBehaviour{
 
 		runningMultiplier = 1.3f;
 		runningAmountMultiplier = 1.3f;
-		if(camera!=null) originalPerspective = camera.fieldOfView;
+		if(GetComponent<Camera>()!=null) originalPerspective = GetComponent<Camera>().fieldOfView;
 	 }
 
 	public Vector3 HeadBobbing(Vector3 cameraPosition){
@@ -105,7 +105,7 @@ public class Headbobber : MonoBehaviour{
 
 	public void RevertPerspectiveChange(){
 		changingPerspective = true;
-		perspectiveChangeSpeed = (originalPerspective - camera.fieldOfView)/timeToChangePerspective;
+		perspectiveChangeSpeed = (originalPerspective - GetComponent<Camera>().fieldOfView)/timeToChangePerspective;
 		timerPerspective = 0f;
 	}
 
@@ -113,7 +113,7 @@ public class Headbobber : MonoBehaviour{
 
 		if (changingPerspective) {
 			timerPerspective+=Time.deltaTime;
-			camera.fieldOfView+=perspectiveChangeSpeed*Time.deltaTime;
+			GetComponent<Camera>().fieldOfView+=perspectiveChangeSpeed*Time.deltaTime;
 			if(timerPerspective>=timeToChangePerspective){
 				changingPerspective=false;
 			}

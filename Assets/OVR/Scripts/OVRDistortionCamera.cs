@@ -97,7 +97,7 @@ public class OVRDistortionCamera : OVRComponent
 				);
 		}
 
-		camera.orthographic = true;
+		GetComponent<Camera>().orthographic = true;
 	}
 
 	/// <summary>

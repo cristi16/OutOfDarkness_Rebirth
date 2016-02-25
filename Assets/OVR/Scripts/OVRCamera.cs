@@ -107,7 +107,7 @@ public class OVRCamera : OVRComponent
 
         int index = (RightEye) ? 1 : 0;
 
-		if ( camera.hdr )
+		if ( GetComponent<Camera>().hdr )
 			CameraTexture[index] = new RenderTexture(  w, h, 24, RenderTextureFormat.ARGBFloat );	
 		else
             CameraTexture[index] = new RenderTexture(w, h, 24);
@@ -115,7 +115,7 @@ public class OVRCamera : OVRComponent
 		// Use MSAA settings in QualitySettings for new RenderTexture
         CameraTexture[index].antiAliasing = (QualitySettings.antiAliasing == 0) ? 1 : QualitySettings.antiAliasing;
 
-        camera.targetTexture = CameraTexture[index];
+        GetComponent<Camera>().targetTexture = CameraTexture[index];
 	}
 	
 	/// <summary>
@@ -150,7 +150,7 @@ public class OVRCamera : OVRComponent
 		{
 			CameraTexture[index].DiscardContents();
 			Graphics.SetRenderTarget(CameraTexture[index]);
-			GL.Clear (true, true, camera.backgroundColor);
+			GL.Clear (true, true, GetComponent<Camera>().backgroundColor);
 		}
 	}
 	
@@ -179,7 +179,7 @@ public class OVRCamera : OVRComponent
 		Vector3    dir = Vector3.forward;		
 		
 		// Main camera has a depth of 0, so it will be rendered first
-		if(camera.depth == 0.0f)
+		if(GetComponent<Camera>().depth == 0.0f)
 		{			
 			// If desired, update parent transform y rotation here
 			// This is useful if we want to track the current location of
@@ -196,7 +196,7 @@ public class OVRCamera : OVRComponent
 
 			if(CameraController.TrackerRotatesY == true && CameraController.TrackerRotatesX == true)
 			{
-				Vector3 a = camera.transform.rotation.eulerAngles;
+				Vector3 a = GetComponent<Camera>().transform.rotation.eulerAngles;
 				a.z = 0;
 				transform.parent.transform.eulerAngles = a;
 			}
@@ -261,12 +261,12 @@ public class OVRCamera : OVRComponent
 		
 		// * * *
 		// Update camera rotation
-		camera.transform.rotation = q;
+		GetComponent<Camera>().transform.rotation = q;
 		
 		// * * *
 		// Update camera position (first add Offset to parent transform)
-		camera.transform.position = 
-		camera.transform.parent.transform.position + NeckPosition;
+		GetComponent<Camera>().transform.position = 
+		GetComponent<Camera>().transform.parent.transform.position + NeckPosition;
 	
 		// Adjust neck by taking eye position and transforming through q
 		// Get final camera position as well as the clipping difference 
@@ -278,12 +278,12 @@ public class OVRCamera : OVRComponent
 		// For example, this location is used to update the GridCube
 		foreach(OVRCameraGameObject obj in CameraLocalSetList)
 		{
-			if(obj.CameraController.GetCameraDepth() == camera.depth)
+			if(obj.CameraController.GetCameraDepth() == GetComponent<Camera>().depth)
 			{
 				// Initial difference
 				Vector3 newPos = -(qp * CameraPositionOffset);
 				// Final position
-				newPos += camera.transform.position;
+				newPos += GetComponent<Camera>().transform.position;
 			
 				// Set the game object info
 				obj.CameraGameObject.transform.position = newPos;
@@ -292,7 +292,7 @@ public class OVRCamera : OVRComponent
 		}
 
 		// Adjust camera position with offset/clipped cam location
-		camera.transform.position += qp * newCamPos;
+		GetComponent<Camera>().transform.position += qp * newCamPos;
 
 		// PGG: Call delegate function with new CameraOrientation / newCamPos here
 		// This location will be used to update the arrow pointer
@@ -312,7 +312,7 @@ public class OVRCamera : OVRComponent
 		// move eyes out by x (IPD)
 		Vector3 newEyePos = Vector3.zero;
 		newEyePos.x = EyePosition.x;
-		camera.transform.position += q * newEyePos;
+		GetComponent<Camera>().transform.position += q * newEyePos;
 	}
 
 	/// <summary>
@@ -369,7 +369,7 @@ public class OVRCamera : OVRComponent
 	public void UpdateDistortionMeshParams (ref OVRLensCorrection lc, bool rightEye, bool flipY)
 	{
 		float fovH = GetHorizontalFOV();
-		eyeMesh.SetFOV(fovH, camera.fieldOfView);
+		eyeMesh.SetFOV(fovH, GetComponent<Camera>().fieldOfView);
 		eyeMesh.UpdateParams(ref lc, rightEye, flipY);
 	}
 	
@@ -379,7 +379,7 @@ public class OVRCamera : OVRComponent
 	/// <returns>The horizontal FO.</returns>
 	public float GetHorizontalFOV()
 	{
-		return camera.fieldOfView * camera.aspect;
+		return GetComponent<Camera>().fieldOfView * GetComponent<Camera>().aspect;
 
 //		float vFOVInRads =  camera.fieldOfView * Mathf.Deg2Rad;
 //		float hFOVInRads = 2 * Mathf.Atan( Mathf.Tan(vFOVInRads / 2) * camera.aspect);

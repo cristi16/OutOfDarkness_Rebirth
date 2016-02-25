@@ -24,7 +24,7 @@ public class HelpTriggerEnabler : MonoBehaviour {
 			if(hotSpot.getGui()){
 				//help.gameObject.SetActive(true);
 				if(activateHelpInstantly) help.activateHelp();
-				else help.collider.enabled=true;
+				else help.GetComponent<Collider>().enabled=true;
 				Destroy (this);
 			}
 		}
@@ -33,7 +33,7 @@ public class HelpTriggerEnabler : MonoBehaviour {
 			if(interactiveObject.activateHelpCondition() && ((interactiveObject.showingInteractiveObject) || activateHelpBeforeInteraction)){
 				//help.gameObject.SetActive(true);
 				if(activateHelpInstantly) help.activateHelp();
-				else help.collider.enabled=true;
+				else help.GetComponent<Collider>().enabled=true;
 				Destroy (this);
 			}		
 		}		

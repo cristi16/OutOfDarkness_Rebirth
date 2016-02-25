@@ -19,9 +19,9 @@ public class PuzzleEnablerDisabler : MonoBehaviour {
 	
 	public void EnablePuzzleColliders(){
 		transform.GetChild(0).gameObject.SetActive(true);
-		GetComponentInChildren<InteractiveTrigger>().collider.enabled=true;
+		GetComponentInChildren<InteractiveTrigger>().GetComponent<Collider>().enabled=true;
 		GetComponentInChildren<InteractiveTrigger>().enabled=true;
-		GetComponentInChildren<InteractiveCollider>().collider.enabled=true;
+		GetComponentInChildren<InteractiveCollider>().GetComponent<Collider>().enabled=true;
 		GetComponentInChildren<InteractiveCollider>().enabled=true;	
 		GetComponentInChildren<PuzzleController>().isActivated=false;
 		transform.GetChild(0).gameObject.SetActive(false);

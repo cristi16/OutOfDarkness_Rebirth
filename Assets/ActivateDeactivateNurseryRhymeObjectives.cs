@@ -13,14 +13,14 @@ public class ActivateDeactivateNurseryRhymeObjectives : MonoBehaviour {
 	void Update () {
 		if (LevelState.getInstance().rhymesFound==4 && firstTime) {
 			firstTime=false;
-			collider.enabled=true;
+			GetComponent<Collider>().enabled=true;
 		}
 	}
 
 	void OnTriggerEnter(Collider other){
 		if(other.tag=="Kid"){
 			foreach(GameObject g in GameObject.FindGameObjectsWithTag("NurseryRhymeObjectives")){
-				g.collider.enabled=false;
+				g.GetComponent<Collider>().enabled=false;
 			}
 		}
 	}

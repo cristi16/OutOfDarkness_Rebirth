@@ -8,7 +8,7 @@ public class FlippableObject : PlaceableObject {
 	
 	public void Awake()
 	{
-		mat = renderer.material;	
+		mat = GetComponent<Renderer>().material;	
 	}
 	
 	public override ObjectState GetObjectState ()

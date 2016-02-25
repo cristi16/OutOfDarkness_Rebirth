@@ -24,7 +24,7 @@ public class TutorialStartCamera : MonoBehaviour {
 	
 	private float lightIntensity;
 	private float lightRange;	
-	public Camera gameCamera;
+	private Camera gameCamera;
 	
 	// Use this for initialization
 	void Start () {
@@ -32,7 +32,9 @@ public class TutorialStartCamera : MonoBehaviour {
 		cameraLight = gameObject.GetComponentInChildren<Light>();
 		lightIntensity = cameraLight.intensity;
 		lightRange = cameraLight.range;
-		
+
+		gameCamera = GameObject.FindGameObjectWithTag ("Kid").GetComponentInChildren<Camera>();
+
 		GameObject temp = GameObject.FindGameObjectWithTag("GameController");
 		gameManager = temp.GetComponent<CheckpointsManager_Script>();
 		menuManager = temp.GetComponent<MenuManager>();
@@ -55,7 +57,7 @@ public class TutorialStartCamera : MonoBehaviour {
 		if(firstTime)
 		{
 			sunrise = gameObject.transform.position;
-			sunset = Camera.mainCamera.transform.position;
+			sunset = Camera.main.transform.position;
 
 
 			slerpStartTime = Time.time;
@@ -86,7 +88,7 @@ public class TutorialStartCamera : MonoBehaviour {
 				transform.rotation = Quaternion.Slerp(transform.rotation, gameCamera.transform.rotation, fracComplete);	
 				
 				//Interpolate field of view
-				camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, gameCamera.fieldOfView, fracComplete/2);
+				GetComponent<Camera>().fieldOfView = Mathf.Lerp(GetComponent<Camera>().fieldOfView, gameCamera.fieldOfView, fracComplete/2);
 			}
 			// fade out light
 			cameraLight.intensity = Mathf.Lerp(lightIntensity, 0f, fracComplete);
@@ -101,6 +103,7 @@ public class TutorialStartCamera : MonoBehaviour {
 				Destroy(this.gameObject);
 			}
 		}
-		GameObject.FindGameObjectWithTag("CameraController").transform.position=gameObject.transform.position;
+		if(TP_Motor.oculusRift) GameObject.FindGameObjectWithTag("CameraController").transform.position=gameObject.transform.position;
+		//else GameObject.FindGameObjectWithTag("MainCamera").transform.position=gameObject.transform.position;
 	}
 }

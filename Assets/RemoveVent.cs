@@ -11,7 +11,7 @@ public class RemoveVent : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		if(activated){
-			if(renderer!=null) renderer.material = openVentMaterial;
+			if(GetComponent<Renderer>()!=null) GetComponent<Renderer>().material = openVentMaterial;
 		}
 		trigger = GetComponent<InteractiveTrigger>();
 		collider = GetComponent<InteractiveCollider>();
@@ -30,7 +30,7 @@ public class RemoveVent : MonoBehaviour {
 			if(!activated)
 			{
 				activated = true;				
-				renderer.material = openVentMaterial;		
+				GetComponent<Renderer>().material = openVentMaterial;		
 			}
 		}
 	}

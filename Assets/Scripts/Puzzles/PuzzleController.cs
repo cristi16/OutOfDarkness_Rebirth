@@ -36,12 +36,12 @@ public class PuzzleController : MonoBehaviour {
 	void Start () {		
 		places = GetComponentsInChildren<Place>();
 		numberOfPlaces = GetNumberOfPlaces(places);
-		puzzleCamera = Camera.mainCamera.transform.parent.root.GetComponentInChildren<PuzzleCamera>();
+		puzzleCamera = Camera.main.transform.parent.root.GetComponentInChildren<PuzzleCamera>();
 		target = transform.FindChild("LookAtPoint");
 		GetComponent<SphereCollider>().isTrigger = true;
 		
 		foreach(Place place in places)
-			place.collider.enabled = false;
+			place.GetComponent<Collider>().enabled = false;
 		
 		if(showHints)
 			hintsText = transform.FindChild("Hints").GetComponent<TextMesh>();
@@ -196,12 +196,12 @@ public class PuzzleController : MonoBehaviour {
 		LevelState.getInstance().puzzleMode = true;
 		puzzleCamera.ActivateLookAt(target, cameraStopDistance, cameraJourneyTime);
 		foreach(Place place in places)
-			place.collider.enabled = true;
+			place.GetComponent<Collider>().enabled = true;
 		
 		if(GetComponentInChildren<InteractiveTrigger>()!=null){
 			GetComponentInChildren<InteractiveTrigger>().enabled=false;
 			GetComponentInChildren<InteractiveCollider>().enabled=false;
-			GetComponentInChildren<InteractiveCollider>().collider.enabled=false;
+			GetComponentInChildren<InteractiveCollider>().GetComponent<Collider>().enabled=false;
 		}
 	}		
 	
@@ -210,14 +210,17 @@ public class PuzzleController : MonoBehaviour {
 		if(isActivated){
 			ResetPuzzle();
 			StartCoroutine(SetActivated(false));
-			Screen.lockCursor=true;
-			Screen.showCursor=false;
+
+			Cursor.lockState = CursorLockMode.Locked; 
+			Cursor.visible = false; 
+
+			Cursor.visible=false;
 			LevelState.getInstance().puzzleMode = false;
 			puzzleCamera.DeactivateLookAt();
 			foreach(Place place in places)
-				place.collider.enabled = false;
+				place.GetComponent<Collider>().enabled = false;
 			if(GetComponentInChildren<InteractiveTrigger>()!=null)
-				GetComponentInChildren<InteractiveTrigger>().collider.enabled=false;							
+				GetComponentInChildren<InteractiveTrigger>().GetComponent<Collider>().enabled=false;							
 		}		
 	}
 	
@@ -237,9 +240,9 @@ public class PuzzleController : MonoBehaviour {
 	
 	public void EnablePuzzle(){
 		if(GetComponentInChildren<InteractiveTrigger>()!=null){
-			GetComponentInChildren<InteractiveTrigger>().collider.enabled=true;
+			GetComponentInChildren<InteractiveTrigger>().GetComponent<Collider>().enabled=true;
 			GetComponentInChildren<InteractiveTrigger>().enabled=true;
-			GetComponentInChildren<InteractiveCollider>().collider.enabled=true;
+			GetComponentInChildren<InteractiveCollider>().GetComponent<Collider>().enabled=true;
 			GetComponentInChildren<InteractiveCollider>().enabled=true;	
 		}
 	}
@@ -286,7 +289,7 @@ public class PuzzleController : MonoBehaviour {
 			else
 			{
 				if(puzzleType == PuzzleType.Mixing)
-					place.collider.enabled = true;
+					place.GetComponent<Collider>().enabled = true;
 				place.placedObject = null;	
 			}
 		}

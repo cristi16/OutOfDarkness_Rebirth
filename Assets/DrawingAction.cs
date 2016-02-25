@@ -12,7 +12,7 @@ public class DrawingAction : Action {
 
 	public override void execute(){		
 		running = true;	
-		colorToFadeOut = drawingOne.renderer.material.color;
+		colorToFadeOut = drawingOne.GetComponent<Renderer>().material.color;
 		audioSource.Play();
 	}
 
@@ -30,7 +30,7 @@ public class DrawingAction : Action {
 				running=false;
 			}
 
-			drawingOne.renderer.material.color=colorToFadeOut;
+			drawingOne.GetComponent<Renderer>().material.color=colorToFadeOut;
 		}
 	}
 }

@@ -48,11 +48,11 @@ public abstract class StateMachineBase : MonoBehaviour {
 	{
 		
 		gameObject = gameObjectToRepresent;
-		collider = gameObject.collider;
+		collider = gameObject.GetComponent<Collider>();
 		transform = gameObject.transform;
-		animation = gameObject.animation;
-		rigidbody = gameObject.rigidbody;
-		networkView = gameObject.networkView;
+		animation = gameObject.GetComponent<Animation>();
+		rigidbody = gameObject.GetComponent<Rigidbody>();
+		networkView = gameObject.GetComponent<NetworkView>();
 		controller = gameObject.GetComponent<CharacterController>();
 		OnRepresent();
 	}

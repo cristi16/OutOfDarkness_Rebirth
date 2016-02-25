@@ -12,10 +12,10 @@ public class HelpHider : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (guiTexture.color.a>0 && Input.GetButton ("Notepad")) {
+		if (GetComponent<GUITexture>().color.a>0 && Input.GetButton ("Notepad")) {
 			helpManager.hideHelp();
 			hiding=true;
-		} else if (hiding && guiTexture.color.a>0 && !Input.GetButton ("Notepad")) {
+		} else if (hiding && GetComponent<GUITexture>().color.a>0 && !Input.GetButton ("Notepad")) {
 			helpManager.showHelp();
 			hiding=false;
 		}

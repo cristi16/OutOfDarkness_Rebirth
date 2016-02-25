@@ -29,7 +29,7 @@ public class Checkpoint_Script : MonoBehaviour {
 		}
 		
 		if(activated){
-			if(renderer!=null) renderer.material = manager.openVentMaterial;
+			if(GetComponent<Renderer>()!=null) GetComponent<Renderer>().material = manager.openVentMaterial;
 		}
 		
 		trigger = GetComponent<InteractiveTrigger>();

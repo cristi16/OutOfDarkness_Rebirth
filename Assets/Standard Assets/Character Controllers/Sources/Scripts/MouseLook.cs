@@ -60,8 +60,8 @@ public class MouseLook : MonoBehaviour {
 	{
 		rotationY = 0;
 		// Make the rigid body not change rotation
-		if (rigidbody)
-			rigidbody.freezeRotation = true;
+		if (GetComponent<Rigidbody>())
+			GetComponent<Rigidbody>().freezeRotation = true;
 	}
 	
 	public void restoreNormalRotation(float timeToChange){

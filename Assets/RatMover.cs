@@ -23,6 +23,6 @@ public class RatMover : MonoBehaviour {
 
 	public void Move(){
 		start = true;
-		audio.Play(); 
+		GetComponent<AudioSource>().Play(); 
 	}
 }
